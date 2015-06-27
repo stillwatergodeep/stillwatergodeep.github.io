@@ -2,40 +2,50 @@
 layout: default
 ---
 
-{% assign minutes = content | number_of_words | divided_by: 180 %}
-{% if minutes == 0 %}
-{% assign minutes = 1 %}
-{% endif %}
-
-<div class="post-header mb2">
-  {% if page.hide_title %}
-	<!-- title is hide -->
-  {% else %}
-  <h1 class="py2">{{ page.title }}</h1>
-  {% endif %}
-  <span class="post-meta">{{ page.date | date: "%m月 %d日, %Y" }}</span><br>
-  {% if page.update_date %}
-    <span class="post-meta">Updated: {{ page.update_date | date: "%m月 %d日, %Y" }}</span><br>
-  {% endif %}
-  <span class="post-meta small">{{ minutes }} minute read</span>
-</div>
-
-<article class="post-content">
-  {{ content }}
-</article>
-
-{% if site.show_post_footers %}
-  {% include post_footer.html %}
-{% endif %}
-
-{% if site.show_related_posts %}
-  <h3 class="related-post-title">Related Posts</h3>
-  {% for post in site.related_posts %}
-    <div class="post ml2">
-      <a href="{{ post.url | prepend: site.baseurl }}" class="post-link">
-        <h4 class="post-title">{{ post.title }}</h4>
-        <p class="post-summary">{{ post.summary }}</p>
-      </a>
+<!-- Post Header -->
+<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{{ page.header-img }}')" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>{{ page.title }}</h1>
+                    {% if page.subtitle %}
+                    <h2 class="subheading">{{ page.subtitle }}</h2>
+                    {% endif %}
+                    <span class="meta">Posted by {{ page.author }}  {{ post.date | date: "%B %-d, %Y" }}</span>
+                </div>
+            </div>
+        </div>
     </div>
-  {% endfor %}
-{% endif %}
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				{{ content }}
+
+                <hr>
+
+
+
+                <ul class="pager">
+                    {% if page.previous.url %}
+                    <li class="previous">
+                        <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">&larr; Previous Post</a>
+                    </li>
+                    {% endif %}
+                    {% if page.next.url %}
+                    <li class="next">
+                        <a href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title}}">Next Post &rarr;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>

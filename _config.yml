@@ -1,38 +1,21 @@
-# Site settings
-title:       pixell中文版 
-email:       youremail@example.com 
-author:      John Otander
-description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
-baseurl:     ""
-url:         "http://pixyll.maxee.info"
+# Site settings Update for my Blog : spaceg.github.io Do.9.April 15.49:24 2015 
+title: l.g
+email: lucasgatsas@gmail.com
+description: "Hello, My Name is Lucas Gatsas, I'm a Front End Engineer and Web Developer from Switzerland. This is my Personal Notice and Archive Work Experience Work Blog. My Official Website will be Up soon! Code and Space!"
+baseurl: ""
+url: "http://lucasgatsas.ch"
+twitter_username: LucasGatsas
+github_username:  spaceg
+google_username:  https://plus.google.com/101826267816845608605/posts
+instagram_username:  lucasgatsas
 
-#Duoshuo short Name / 多说的shortname
-duoshuo: 
-
-#Baidu analytics / 百度统计(异步的js码，注意使用异步版本的)
-baidu_analyze: 3908cbb144cf558ba6a823230d653fc22 
-
-# Google analytics
-google_analytics:
-
-# Optional features
-animated:           false
-show_related_posts: false
-show_post_footers:  false
-
-# Social icons
-show_social_icons: false
-github_username:
-twitter_username:
-google_plus_id:
-linkedin_username:
-bitcoin_url:
-paypal_url:
-flattr_button:
 
 # Build settings
-markdown:     kramdown
-permalink:    pretty
-paginate:     3
-sass:
-  compressed: true
+markdown: kramdown
+highlighter: pygments
+permalink: pretty
+paginate: 
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+
+paginate: 5 #posts per page
+
