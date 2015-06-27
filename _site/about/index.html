@@ -67,41 +67,48 @@ var _hmt = _hmt || [];
     <h1 class="h2">关于Pixyll 中文版</h1>
   </header>
   <article class="post-content">
-  <h2 id="section">中文版说明</h2>
-<p>这是pixyll的汉化版，主要改动如下:</p>
+  <h2 id="equations">Equations</h2>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [ ['$', '$'], ["\\(", "\\)"] ],
+        displayMath: [ ['$$', '$$'], ["\\[", "\\]"] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
 
-<ol>
-  <li>语言汉化</li>
-  <li>加入<strong>多说</strong>评论功能</li>
-  <li>加入<strong>百度统计</strong>(可用google统计和百度统计)</li>
-  <li>fonts.googleapis.com更改为360字体cdn，大幅增加国内访问速度</li>
-</ol>
+    function addBlankTargetForLinks () {
+      $('a[href^="http"]').each(function(){
+        $(this).attr('target', '_blank');
+      });
+    }
 
-<p>关于如何使用，请参考：<a href="http://pixyll.maxee.info">中文版使用说明</a></p>
+    $(document).bind('DOMNodeInserted', function(event) {
+      addBlankTargetForLinks();
+    });
 
-<h2 id="section-1">原版说明</h2>
-<p>This Jekyll theme was crafted with &lt;3 by <a href="http://johnotander.com">John Otander</a>
-(<a href="https://twitter.com/4lpine">@4lpine</a>).</p>
+</script>
 
-<p>Checkout the <a href="https://github.com/johnotander/pixyll">Github repository</a> to download it,
-request a feature, report a bug, or contribute. It’s free, and open source
-(<a href="http://opensource.org/licenses/MIT">MIT</a>).</p>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 
-<p>Thanks to the following:</p>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
 
-<ul>
-  <li><a href="http://basscss.com">BASSCSS</a></li>
-  <li><a href="http://jekyllrb.com">Jekyll</a></li>
-  <li><a href="http://refills.bourbon.io/">Refills</a></li>
-  <li><a href="http://ethanschoonover.com/solarized">Solarized</a></li>
-</ul>
+<script type="math/tex">
+a^2+b
+</script>
+
+<p><br />
+(E=mc^2)，<script type="math/tex">x_{1,2} = \frac{-b \pm \sqrt{b^2-4ac}}{2b}.</script></p>
 
   </article>
 </div>
 
+		
 	
-		<!-- we don't need duoshuo -->
-	
+
+      	
       </div>
     </div>
   </div>
