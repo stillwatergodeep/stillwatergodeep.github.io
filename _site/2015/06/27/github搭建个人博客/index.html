@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<head>
+
+    <!-- Microsoft Internet Explorer documentMode compatMode setting IE Modus --> 
+    <script type="text/javascript">
+    var IE = null;
+    if (window.navigator.appName == "Microsoft Internet Explorer") {
+      if (document.documentMode) {
+
+        IE = document.documentMode; 
+    } else {
+
+        IE = 5; 
+        if (document.compatMode) {
+          if (document.compatMode == "CSS1Compat")
+              IE = 11; 
+      }
+  }
+}
+</script>
+
+<meta charset="utf-8">
+<!-- X-UA --> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<link rel="author" title="stillwater" href="https://plus.google.com/u/0/101869488504092117335/posts"/>
+
+
+<meta name="google-site-verification" content="F5lkHug5Hdw4XRPcwJuQsK01auhET-yWy1o5SrCM-Sw" />
+
+<meta name="google" content="notranslate" />
+<!-- Viewport --> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- index ROBOTS follow --> 
+<meta name="robots"    content="index, follow" />
+<!-- Site Desciption --> 
+<meta name="description" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. ">
+<!-- Site Desciption --> 
+<meta name="keywords" content="stillwater,victorylee, Web Developer, Front End Engineer">
+<!-- Favicon --> 
+<link rel="shortcut icon" href="/img/favicon-7326478236.png" type="image/x-icon" />
+<!-- Blog Title -->
+<title>stillwaterli - A software Engineer and Web Developer from China.  </title>
+
+    <!--     <title>github搭建个人博客 - stillwater</title>
+--> 
+<!-- Property Metas --> 
+<meta property="og:image" content="/img/93TyTG3x.png"/>
+<meta property="og:title" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
+<meta property="og:site_name" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
+<!-- Canonical -->
+<link rel="canonical" href="stillwater.me/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+<!-- StyleSheet -->
+<link rel="stylesheet" href="/css/pygments.css">
+<link rel="stylesheet" href="/css/duoshuo.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="/css/spaceg.stylesheets.css">
+<!-- Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+
+        <!-- Loading front stylesheet here --> 
+        <style>
+
+        .post-heading h1,.post-heading h2,.post-heading span{
+            color:black !important;
+        }
+        .intro{
+            margin: 50px;
+            text-align: center;
+        }
+        .intro .post-heading h1{font-size:35px;}
+        .intro .post-heading .subheading,.intro-header .post-heading .meta{line-height:1.1;display:block}
+        .intro .post-heading .subheading{font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;margin:10px 0 30px;font-weight:400;color:white;}
+        .intro .post-heading .meta{font-family:'Playfair Display', Times, serif;font-style:italic;font-weight:300;font-size:20px;color:white;}
+        .intro .post-heading .meta a{color:#fff}
+        @media only screen and (min-width: 768px){.intro .post-heading h1{font-size:55px}
+        .intro .post-heading .subheading{font-size:30px;color:white;}}
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            /* change if the mask should have another color then white */
+            z-index: 99;
+            /* makes sure it stays on top */
+        }
+
+        #status {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 50%;
+            /* centers the loading animation horizontally one the screen */
+            top: 50%;
+            /* centers the loading animation vertically one the screen */
+            background-image: url("img/preloader.gif");
+            /* path to your loading animation */
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: -100px 0 0 -100px;
+            /* is width and height divided by two */
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 10px;
+            list-style: none;
+        }
+
+        .navbar-inverse {
+            background-color: #FFF;
+            border-color: #FFFFFF;
+        }
+        </style>
+        <link rel="stylesheet" href="/css/prettify.css">
+        <style>header.intro-header {
+            background: #6f5499;
+            background: no-repeat center center;
+            background-attachment: scroll;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+            }/* Preloader */#preloader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #fff;
+                /* change if the mask should have another color then white */
+                z-index: 99;
+                /* makes sure it stays on top */
+            }
+
+            #status {
+                width: 200px;
+                height: 200px;
+                position: absolute;
+                left: 50%;
+                /* centers the loading animation horizontally one the screen */
+                top: 50%;
+                /* centers the loading animation vertically one the screen */
+                background-image:;
+                /* path to your loading animation */
+                background-repeat: no-repeat;
+                background-position: center;
+                margin: -100px 0 0 -100px;
+                /* is width and height divided by two */
+            }
+
+            li {
+                list-style: none;
+            }
+            li 
+            {list-style: none;}
+            body.modal-open 
+            {overflow: hidden;padding-right: 0px;
+            }
+            </style>
+            <!-- end Loading front stylesheet here --> 
+        </head>
+
+
+
+<body>
+
+	
+<div id="preloader">
+    <div id="status">
+
+    </div>
+
+</div>  
+
+    
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                <!--
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapses-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button> -->
+            <a class="navbar-brand" href="/" id="blog-title-left-top">ME</a>
+        </div>   
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#portfolioModal2" data-toggle="modal"><i class="fa fa-random" id="icon-top"></i></a>
+                <ul class="dropdown-menu"></ul>
+            </li>
+            <li><a href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo" id="icon-top"></i></a></li>
+
+            <li><a href="/about" target="_blank">About</a></li>
+            <li><a href="/archive/">Archive</a></li>
+            <li><a href="https://www.github.com/superstar4" id="roundbutton" target="_blank"><i class="fa fa-github"></i>stillwater</a></li>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+</div>
+<!-- /.container -->
+</nav>
+<!-- Portfolio Modals -->
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" style="padding-right:0px; overflow: hidden;">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <h1 class="font-style-inline-small-h1">stillwater</h1>
+                        <hr class="star-primary">
+                        <img src="/img/photo.jpg" class="img-responsive img-centered" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">
+                        <p class="font-style-inline-small">
+                            Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China.  <br>
+                            <a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
+                            <a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
+
+                            <a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+
+                            <a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
+                        </p>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Menu Modals Add New Sa.21.Feb.2015 03:22:25 -->
+<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true" style="padding-right:0px; overflow: hidden;">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <h1 class="font-style-inline-small-h1">stillwater</h1>
+                        <hr class="star-primary">
+                        <!--     <img src="https://pbs.twimg.com/profile_images/598639420363923456/zLAW5YPs_400x400.jpg" class="img-responsive img-centered" alt=""> -->
+                        <p class="font-style-inline-small">
+                           <a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
+                            <a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
+
+                            <a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+
+                            <a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
+                        
+                             <br>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/about">About Me</a></li>
+                            <li><a href="/archive/">Archive</a></li>
+                        </p>
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Post Header -->
+ 
+    <header class="intro">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>github搭建个人博客</h1>
+                    
+                    <h2 class="subheading">My Blog Views</h2>
+                    
+                    <span class="meta">Posted by stillwater  </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<h3>GitHub+Markdown+Jekyll 搭建个人博客</h3>
+
+<hr />
+
+<blockquote><p>首先以下所有内容都是针对mac的，不同系统装的软件差不多，但过程千差万别，如果是其他系统凉快去。</p></blockquote>
+
+<h3><em>准备工作</em>：</h3>
+
+<p>mac中自带git和gem.这两者就不用安装了，gem是一种文件组织的包，一般的ruby的很多插件都有由这种各种的包提供。安装Jekyll需要它的支持。</p>
+
+<h4><em>安装jekyll</em></h4>
+
+<pre><code>$ sudo gem update —system
+$ sudo gem install jekyll
+</code></pre>
+
+<p>注意需要sudo，否则 no permission.
+直接运行以上命令会出现一些错误。运行以下命令
+    $ gem sources -l
+可以看到终端显示
+*** CURRENT SOURCES ***</p>
+
+<p>https://rubygems.org
+可见gem的源默认是https://rubygems.org/，
+所以首先更换gem源，换源之前首先删除旧源
+    $ gem sources --remove https://rubygems.org
+注意不要多字符或少字符，不然会出现
+source https://rubygems.org not present in cache
+remove前是—，否则会
+source emove not present in cache</p>
+
+<h4><em>添加新源</em></h4>
+
+<pre><code>$ gem sources -a https://ruby.taobao.org/
+</code></pre>
+
+<p>这是一个完整 rubygems.org 镜像，你可以用此代替官方版本，同步频率目前为15分钟一次以保证尽量与官方服务同步。
+添加完成之后查看一下是否更换成功</p>
+
+<pre><code>$ gem sources -l
+</code></pre>
+
+<p>更换markdown模板解释器
+安装模板,默认的模板是Maruku,我们替 换为RDiscount。
+    $ sudo gem install rdiscount
+Maruku是纯ruby写的Markdown模板解释 器。 RDiscount是C写的模板解释器。速度快上很多。</p>
+
+<p>安装完jekyll之后，我们需要创建网站的各种目录结构和源文件。由于这些文件最终在github中管理，如何利用github创建网站可以看github pages.这里直接直接将整个过程融入一个完整blog的构建过程。
+让github管理本地文件有两种方式：
+由于github托管的网站必须是username.github.io,对应的仓库也是username.github.io
+1.首先git clone username.github.io到本地，会在本地创建一个 username.github.io文件夹，cd进去一看是空的，输入命令ls -a可以发现有一个.git文件，这个文件联系起了本地和远程git服务器。</p>
+
+<pre><code>$ git clone git@username.github.io.git
+$ cd username.github.io
+$ jekyll new blog
+$ cd blog
+$ jekyll serve
+</code></pre>
+
+<p>2.可以事先在本地创建完blog之后，在创建git文件</p>
+
+<pre><code>$ jekyll new blog
+$ cd blog
+$ git init
+</code></pre>
+
+<p>git init会在本地创建一个.git文件,Initialized empty Git repository in yourPath/.git/</p>
+
+<pre><code>$ git add */git add —all
+$ git commit -m “commit”
+$ git remote add origin 
+git@git@username.github.io.git
+</code></pre>
+
+<p>(若是第一次提交该项目的文件或是修改项目文件名后则需要这行这个命令，以后就可不用执行该命令)</p>
+
+<pre><code>git push -u origin master
+</code></pre>
+
+<p>如果之前已经 add origin，则会报出如下错误：
+fatal: remote origin already exists.
+解决方法：</p>
+
+<pre><code>git remote set-url origin git@git@username.github.io.git
+</code></pre>
+
+<p>这将替换之前添加的orgin。</p>
+
+<p>此时访问username.github.io，将会看到你刚刚创建的网站。
+可以看到Jekyll目录结构</p>
+
+<p>  |--<em>config.yml>
+  |--</em>drafts
+     |--articles1.textile
+     |--articles2.md
+  |--<em>includes
+    |--footer.html
+    |--header.html
+  |--</em>layouts
+    |--default.html
+    |--post.html
+  |--<em>posts
+     |--2014-06-17-articles1.textile
+     |--2014-06-17-articles1.md
+  |--</em>site
+     |--index.html
+  |--other files</p>
+
+<p><em>config.yml :保存配置数据。
+</em>drafts :存放未发布的文章。<br/>
+<em>includes :存放页面片段,即页头 ( head.html )、页脚<br/>
+( footer.html )、导航<br/>
+( navigation.html )、评论
+( disqus_comments.html )等,这些 资源通过标签添加到index.html中,从而形 成一个完整的页面。
+</em>layouts :存放模板文件。文章模板、 关于页面模板、首页模板等。
+<em>posts :存放文章的文件。并且文章文 件名称要符合 YEAR-MONTH-DAY- title.MARKUP 格式。
+</em>site :经过jekyll转换的页面。
+index.html :网站首页。
+other files :其他文件,存放css、 js、image等。</p>
+
+<p>Jekyll解析流程
+首先会加载<em>posts及文件夹下的所有文章, 将其参数和文章内容组织保存在内存中,所 有的文章的内容、参数都在site.posts对象 (其他文件夹下的文章不会放入site.posts 中)。
+其次加载</em>layouts文件夹下的所有模板。 再次加载<em>includes文件夹下的所有需要被引入的内容。
+最后根据每一篇需要编译的文章选择的其参 数定义的模板来创建一个模板,并将当前文 章的内容、参数等进行扩展后放在page对 象、content对象中,然后进行模板的编 译,生成html文件,并按照一定规则放在 </em>site文件夹下。也就是说在创建一篇文章 时,其实所有文章的内容都已经被读取出来 了,这也为文章相互之间的关联提供了可 能。</p>
+
+
+                <hr>
+
+
+<div id="ds-thread" class="ds-thread" data-url="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-title="github搭建个人博客" data-thread-key="github搭建个人博客"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name: "stillwater"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2012/10/26/PNG-Loading/" data-toggle="tooltip" data-placement="top" title="（转）使用 PNG 图片制作动态 Loading">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" data-toggle="tooltip" data-placement="top" title="利用sublime快速编写markdown">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center">
+          <li>
+            <a href="/feed.xml" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme" target="_blank">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/superstar4" target="_blank">
+              <span class="fa-stack fa-lg">
+
+                <i class="fa fa-arrow-circle-o-down"></i>
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="http://weibo.com/u/3948730723" target="_blank">
+              <span class="fa-stack fa-lg">
+
+                <i class="fa fa-arrow-circle-o-down"></i>
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; stillwater 2015 - 2016.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<script src="/js/spaceg.stylesheets.min.js"></script> 
+
+<script src="/js/bootstrap.min.js "></script>
+
+
+
+
+<script type="text/javascript">
+  //<![CDATA[
+    $(window).load(function() { // makes sure the whole site is loaded
+      $('#status').fadeOut(); // will first fade out the loading animation
+      $('#preloader').delay(150).fadeOut('fast'); // will fade out the white DIV that covers the website.
+      $('body').delay(100).css({'overflow':'visible'});
+    })
+  //]]>
+  </script> 
+
+  <script>
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+  </script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53988504-1', 'auto');
+  ga('send', 'pageview');
+
+  </script> 
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63212709-1', 'auto');
+  ga('send', 'pageview');
+
+  </script>
+<script>
+$(function(){
+    $('pre code').each(function(){
+        var lines = $(this).text().split('\n').length-1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+            .addClass('has-numbering')
+            .parent()
+            .append($numbering);
+        for(i=1;i<=lines;i++){
+            $numbering.append($('<li><span></span></li>').text(i));
+        }
+    });
+});
+
+</script>
+
+
+    
+
+</body>
+
+</html>

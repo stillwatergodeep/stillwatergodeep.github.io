@@ -50,7 +50,10 @@
 <!-- Canonical -->
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 <!-- StyleSheet -->
+<link rel="stylesheet" href="/css/pygments.css">
+<link rel="stylesheet" href="/css/duoshuo.css">
 <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
+
 <link rel="stylesheet" href="{{ "/css/spaceg.stylesheets.css" | prepend: site.baseurl }}">
 <!-- Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
@@ -64,10 +67,25 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-<link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+        <link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+
         <!-- Loading front stylesheet here --> 
         <style>
 
+        .post-heading h1,.post-heading h2,.post-heading span{
+            color:black !important;
+        }
+        .intro{
+            margin: 50px;
+            text-align: center;
+        }
+        .intro .post-heading h1{font-size:35px;}
+        .intro .post-heading .subheading,.intro-header .post-heading .meta{line-height:1.1;display:block}
+        .intro .post-heading .subheading{font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;margin:10px 0 30px;font-weight:400;color:white;}
+        .intro .post-heading .meta{font-family:'Playfair Display', Times, serif;font-style:italic;font-weight:300;font-size:20px;color:white;}
+        .intro .post-heading .meta a{color:#fff}
+        @media only screen and (min-width: 768px){.intro .post-heading h1{font-size:55px}
+        .intro .post-heading .subheading{font-size:30px;color:white;}}
         #preloader {
             position: fixed;
             top: 0;
@@ -107,7 +125,8 @@
             border-color: #FFFFFF;
         }
         </style>
-        <link rel="stylesheet" href="{{ "/css/prettify.css" | prepend: site.baseurl }}"><style>header.intro-header {
+        <link rel="stylesheet" href="{{ "/css/prettify.css" | prepend: site.baseurl }}">
+        <style>header.intro-header {
             background: #6f5499;
             background: no-repeat center center;
             background-attachment: scroll;

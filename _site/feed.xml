@@ -5,490 +5,279 @@
     <description>Hello, My Name is stillwater, I&#39;m a software Engineer and Web Developer from China. </description>
     <link>stillwater.me/</link>
     <atom:link href="stillwater.me/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 28 Jun 2015 12:48:49 +0800</pubDate>
-    <lastBuildDate>Sun, 28 Jun 2015 12:48:49 +0800</lastBuildDate>
+    <pubDate>Sun, 28 Jun 2015 23:20:30 +0800</pubDate>
+    <lastBuildDate>Sun, 28 Jun 2015 23:20:30 +0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
-        <title>First Preview of the UI/UX Design</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;Multiple Layouts and UI/UX Design&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;Hardwork on User Interface &amp;amp; User Experience Design&quot;&lt;/h2&gt;
+        <title>利用sublime快速编写markdown</title>
+        <description>&lt;p&gt;插件实现插入带时间功能的说明：&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h4&gt;1. 创建插件：&lt;/h4&gt;
 
-&lt;p&gt;This is Our First Preview on our Settings Pages (UI/UX-Design). I Can understanding every good developer, how strong and epic Work Front-End Engineering is. This is Design. Coding 10 Hours on the same Work (Details). At the Moment I’m working really hard on the main Core of our Web App. This is why i don’t write alot on my Blog. And now is always Mo. 15. of Juni 01:58:29 Programming is like do you write a Book in 10 Hours. Really Epic, but i really Love it. 
-Love my Work! Now I’m going still back to Work. -&lt;/p&gt;
+&lt;p&gt;Tools → New Plugin:&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sublime_plugin&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;addInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sublime_plugin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TextCommand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;edit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;run_command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;insert_snippet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;quot;contents&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;---&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#you have to start with contents&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;quot; layout:      post&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;quot; title:      &amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;quot; subtitle:      &amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;quot; author:      stillwater&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;quot; dateTime:  &amp;quot;&lt;/span&gt;  &lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strftime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;%Y-%m-&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%d&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; %H:%M:%S&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;quot; description: Description&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&amp;quot;---&amp;quot;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;a href=&quot;/img/lucas-gatsas-01234.png&quot;&gt;
-    &lt;img src=&quot;/img/lucas-gatsas-01234.png&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;@Work UI/UX Design for our Start Up.&lt;/blockquote&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;保存为Sublime Text 2\Packages\User\ addInfo.py&lt;/p&gt;
 
-&lt;p&gt;This is my Sketch from our App Tree. Sketching your App is always a good idea. But, sometimes, i don’t need Sketches, everything is inside the Head and Brain. :)&lt;/p&gt;
+&lt;h4&gt;2. 创建快捷键：&lt;/h4&gt;
 
-&lt;p&gt;&lt;a href=&quot;/img/app-tree-lucas-gatsas-12345.png&quot;&gt;
-    &lt;img src=&quot;/img/app-tree-lucas-gatsas-12345.png&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Preference → Key Bindings - User:&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/img/lucas-gatsas-123456.png&quot;&gt;
-    &lt;img src=&quot;/img/lucas-gatsas-123456.png&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;Variant of the UI/UX Interface Part I&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;a href=&quot;/img/lucas-gatsas-1234567.png&quot;&gt;
-    &lt;img src=&quot;/img/lucas-gatsas-1234567.png&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;Variant of the UI/UX Interface Part II&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;a href=&quot;/img/password.png&quot;&gt;
-    &lt;img src=&quot;/img/password.png&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;Variant of the UI/UX Interface Part III from the Password Settings! &lt;/blockquote&gt;
-
-&lt;p&gt;There are now two New Contributors on our Branch. Our Team is now rising Up! If you have intress to work with Us on our Start Up and Open Source Project.
-Contact me! If you are a good in SysAdmin on Root/ Linux Ubnutu Servers running with &lt;a href=&quot;http://blog.nodejs.org/&quot;&gt; node.js &lt;/a&gt; - &lt;a href=&quot;https://github.com/jashkenas/backbone&quot;&gt;backbone.js&lt;/a&gt; and of course the Awesome &lt;a href=&quot;https://github.com/balderdashy/sails&quot;&gt;sails.js.&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Links: &lt;a href=&quot;http://de.wikipedia.org/wiki/User_Experience&quot;&gt;User Experience&lt;/a&gt;
-Links: &lt;a href=&quot;http://de.wikipedia.org/wiki/Interfacedesign&quot;&gt;User Interface&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;space.lucasgatsas.ch/waves&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Common, Common, Common.... !!!” 
-&lt;/blockquote&gt;
+&lt;pre&gt;
+[
+    {
+        &quot;command&quot;: &quot;add_info&quot;,
+        &quot;keys&quot;: [
+            &quot;ctrl+shift+,&quot;#注意这里我试了一些字母而非标点，貌似没有作用，有可能是因为冲突，没有细究。
+        ]
+    }
+]
+&lt;/pre&gt;
 
 </description>
-        <pubDate>Mon, 15 Jun 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/06/15/first-preview-of-the-ux-ui-design-from-our-start-up/</link>
-        <guid isPermaLink="true">stillwater.me/2015/06/15/first-preview-of-the-ux-ui-design-from-our-start-up/</guid>
+        <pubDate>Mon, 29 Jun 2015 05:08:30 +0800</pubDate>
+        <link>stillwater.me/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/</link>
+        <guid isPermaLink="true">stillwater.me/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/</guid>
         
         
       </item>
     
       <item>
-        <title>Hacker Camps - Start Up Camps in Switzerland 2016</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;Hacker Camps - Start Up Camps&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;Hack Night in Switzerland - 2016 &quot;&lt;/h2&gt;
+        <title>github搭建个人博客</title>
+        <description>&lt;h3&gt;GitHub+Markdown+Jekyll 搭建个人博客&lt;/h3&gt;
 
-&lt;p&gt;Would like to Share this Post with you, becuase I’m current have some New Ideas and Start Up’s Projects and these would be great to realize it. 
-A Outdoor or Indoor Camp with lot of good Developers.&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;Front-End Engineering / Developers
- Back-End Engineering / Developers
- UI/UX - Interface - Interactive / Developers / Designer - 
- Web - Design&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;首先以下所有内容都是针对mac的，不同系统装的软件差不多，但过程千差万别，如果是其他系统凉快去。&lt;/p&gt;&lt;/blockquote&gt;
 
-&lt;p&gt;Themes:&lt;/p&gt;
+&lt;h3&gt;&lt;em&gt;准备工作&lt;/em&gt;：&lt;/h3&gt;
 
-&lt;p&gt;New Front -End Engineering 
- New Back -End Engineering
- New UI/UX Designs&lt;/p&gt;
+&lt;p&gt;mac中自带git和gem.这两者就不用安装了，gem是一种文件组织的包，一般的ruby的很多插件都有由这种各种的包提供。安装Jekyll需要它的支持。&lt;/p&gt;
 
-&lt;p&gt;Themes:&lt;/p&gt;
+&lt;h4&gt;&lt;em&gt;安装jekyll&lt;/em&gt;&lt;/h4&gt;
 
-&lt;p&gt;Security - White, Grey, Black Hats&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo gem update —system
+$ sudo gem install jekyll
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;a href=&quot;/img/lucas-gatsas-0111.jpg&quot;&gt;
-    &lt;img src=&quot;/img/lucas-gatsas-0111.jpg&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;注意需要sudo，否则 no permission.
+直接运行以上命令会出现一些错误。运行以下命令
+    $ gem sources -l
+可以看到终端显示
+*** CURRENT SOURCES ***&lt;/p&gt;
 
-&lt;p&gt;I have a lot of projects that I still want to organize Next Year 2016. One of my favorite projekt is a New Hacker Camp and Start Up Camp for a Week here in Switzerland.
-But it should more a Camp to attract new Start Ups. But so far we are still working on our current Start Up.&lt;/p&gt;
+&lt;p&gt;https://rubygems.org
+可见gem的源默认是https://rubygems.org/，
+所以首先更换gem源，换源之前首先删除旧源
+    $ gem sources --remove https://rubygems.org
+注意不要多字符或少字符，不然会出现
+source https://rubygems.org not present in cache
+remove前是—，否则会
+source emove not present in cache&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/img/lucas-gatsas-switzerland-ccc1.jpg&quot;&gt;
-    &lt;img src=&quot;/img/lucas-gatsas-switzerland-ccc1.jpg&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;The &lt;strong&gt;&lt;a href=&quot;http://www.ccc.de/&quot;&gt;CCC&lt;/a&gt;&lt;/strong&gt; - Hacker Camp in Germany&lt;/blockquote&gt;
+&lt;h4&gt;&lt;em&gt;添加新源&lt;/em&gt;&lt;/h4&gt;
 
-&lt;p&gt;Waves!
-&lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;space.lucasgatsas.ch/waves&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ gem sources -a https://ruby.taobao.org/
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;这是一个完整 rubygems.org 镜像，你可以用此代替官方版本，同步频率目前为15分钟一次以保证尽量与官方服务同步。
+添加完成之后查看一下是否更换成功&lt;/p&gt;
 
-&lt;p&gt;Links: &lt;a href=&quot;http://www.ccc.de/de/hackerethics&quot;&gt;CCC - Club&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ gem sources -l
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Ich breche die Brücken hinter mir ab. Man verliert dann keine Zeit mit Rückblicken, wo es schon genug Mühe macht, die Augen nach vorn zu richten. Es gibt also keine andere Wahl, als vorwärts zu gehen.” 
-&lt;/blockquote&gt;
+&lt;p&gt;更换markdown模板解释器
+安装模板,默认的模板是Maruku,我们替 换为RDiscount。
+    $ sudo gem install rdiscount
+Maruku是纯ruby写的Markdown模板解释 器。 RDiscount是C写的模板解释器。速度快上很多。&lt;/p&gt;
 
+&lt;p&gt;安装完jekyll之后，我们需要创建网站的各种目录结构和源文件。由于这些文件最终在github中管理，如何利用github创建网站可以看github pages.这里直接直接将整个过程融入一个完整blog的构建过程。
+让github管理本地文件有两种方式：
+由于github托管的网站必须是username.github.io,对应的仓库也是username.github.io
+1.首先git clone username.github.io到本地，会在本地创建一个 username.github.io文件夹，cd进去一看是空的，输入命令ls -a可以发现有一个.git文件，这个文件联系起了本地和远程git服务器。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git clone git@username.github.io.git
+$ cd username.github.io
+$ jekyll new blog
+$ cd blog
+$ jekyll serve
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2.可以事先在本地创建完blog之后，在创建git文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ jekyll new blog
+$ cd blog
+$ git init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;git init会在本地创建一个.git文件,Initialized empty Git repository in yourPath/.git/&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git add */git add —all
+$ git commit -m “commit”
+$ git remote add origin 
+git@git@username.github.io.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(若是第一次提交该项目的文件或是修改项目文件名后则需要这行这个命令，以后就可不用执行该命令)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果之前已经 add origin，则会报出如下错误：
+fatal: remote origin already exists.
+解决方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git remote set-url origin git@git@username.github.io.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这将替换之前添加的orgin。&lt;/p&gt;
+
+&lt;p&gt;此时访问username.github.io，将会看到你刚刚创建的网站。
+可以看到Jekyll目录结构&lt;/p&gt;
+
+&lt;p&gt;  |--&lt;em&gt;config.yml&gt;
+  |--&lt;/em&gt;drafts
+     |--articles1.textile
+     |--articles2.md
+  |--&lt;em&gt;includes
+    |--footer.html
+    |--header.html
+  |--&lt;/em&gt;layouts
+    |--default.html
+    |--post.html
+  |--&lt;em&gt;posts
+     |--2014-06-17-articles1.textile
+     |--2014-06-17-articles1.md
+  |--&lt;/em&gt;site
+     |--index.html
+  |--other files&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;config.yml :保存配置数据。
+&lt;/em&gt;drafts :存放未发布的文章。&lt;br/&gt;
+&lt;em&gt;includes :存放页面片段,即页头 ( head.html )、页脚&lt;br/&gt;
+( footer.html )、导航&lt;br/&gt;
+( navigation.html )、评论
+( disqus_comments.html )等,这些 资源通过标签添加到index.html中,从而形 成一个完整的页面。
+&lt;/em&gt;layouts :存放模板文件。文章模板、 关于页面模板、首页模板等。
+&lt;em&gt;posts :存放文章的文件。并且文章文 件名称要符合 YEAR-MONTH-DAY- title.MARKUP 格式。
+&lt;/em&gt;site :经过jekyll转换的页面。
+index.html :网站首页。
+other files :其他文件,存放css、 js、image等。&lt;/p&gt;
+
+&lt;p&gt;Jekyll解析流程
+首先会加载&lt;em&gt;posts及文件夹下的所有文章, 将其参数和文章内容组织保存在内存中,所 有的文章的内容、参数都在site.posts对象 (其他文件夹下的文章不会放入site.posts 中)。
+其次加载&lt;/em&gt;layouts文件夹下的所有模板。 再次加载&lt;em&gt;includes文件夹下的所有需要被引入的内容。
+最后根据每一篇需要编译的文章选择的其参 数定义的模板来创建一个模板,并将当前文 章的内容、参数等进行扩展后放在page对 象、content对象中,然后进行模板的编 译,生成html文件,并按照一定规则放在 &lt;/em&gt;site文件夹下。也就是说在创建一篇文章 时,其实所有文章的内容都已经被读取出来 了,这也为文章相互之间的关联提供了可 能。&lt;/p&gt;
 </description>
-        <pubDate>Wed, 10 Jun 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/06/10/hacker-camp-switzerland-hack-night/</link>
-        <guid isPermaLink="true">stillwater.me/2015/06/10/hacker-camp-switzerland-hack-night/</guid>
+        <pubDate>Sat, 27 Jun 2015 22:00:44 +0800</pubDate>
+        <link>stillwater.me/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+        <guid isPermaLink="true">stillwater.me/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
         
         
       </item>
     
       <item>
-        <title>Team Up</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;Team Up&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;We Hire some Fresh Developers for our Start Up&quot;&lt;/h2&gt;
+        <title>（转）使用 PNG 图片制作动态 Loading</title>
+        <description>&lt;p&gt;曾经遇到过在一个 GIF 图片里面制作一个半透明的 Loading，无论怎么折腾，总有锯齿，非常不好处理。最后无奈地使用了非半透明的“菊花”，视觉有所降级。&lt;/p&gt;
 
-&lt;p&gt;We Hire and Search some Fresh Developers for our Start Up to be Bigger and Faster. If you in Intress to get a Team Up with us. Contact Us/Me
-&lt;a href=&quot;mailto:lucasgatsas@gmail.com&quot;&gt;here&lt;/a&gt; More Infos you will get in our Introduction Mail.&lt;/p&gt;
+&lt;p&gt;其实如果不兼容 IE 的话，还是可以使用 CSS3 + PNG 图片完成这个动态的 GIF Loading 的。具体效果见 &lt;a href=&quot;http://pizn.github.io/demo/loading.html&quot; target=&quot;_blank&quot; title=&quot;demo&quot;&gt;DEMO&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;What we Need:&lt;/p&gt;
+&lt;p&gt;实现的方法和代码如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;-A good &lt;a href=&quot;http://de.wikipedia.org/wiki/Computerfreak&quot;&gt;freakish&lt;/a&gt; (Men/Women, Old or Young) &lt;br /&gt;
-	SysAdmin (Root/ Linux Ubuntu Servers - Digital Ocean)&lt;/strong&gt;&lt;/p&gt;
+&lt;pre name=&quot;colorcode&quot; class=&quot;css&quot;&gt;
+#loading {
+     width: 36px;
+     height: 36px;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     margin: -18px 0 0 -18px;
+     text-indent: -9999em;
+     overflow: hidden;
+     /** loading 图片地址 **/
+     background: url(loading.png) no-repeat 0 0;
+     /** webkit **/
+     -webkit-animation-name: loadRotate;
+     -webkit-animation-duration: 1s;
+     -webkit-animation-iteration-count: infinite;
+     -webkit-animation-timing-function: linear;
+     /** firefox **/ 
+     -moz-animation-name: loadRotate;
+     -moz-animation-duration: 1s;
+     -moz-animation-iteration-count: infinite;
+     -moz-animation-timing-function: linear;
+     /** w3c **/
+     animation-name: loadRotate;
+     animation-duration: 1s;
+     animation-iteration-count: infinite;
+     animation-timing-function: linear;
+ }
+ /** webkit **/
+ @-webkit-keyframes loadRotate {
+     from {
+         -webkit-transform:rotate(0deg);
+     }
+     25% {
 
-&lt;p&gt;&lt;strong&gt;-A good &lt;a href=&quot;http://de.wikipedia.org/wiki/Computerfreak&quot;&gt;freakish&lt;/a&gt; (Men/Women, Old or Young) &lt;br /&gt;
-	Back-End Developer (sails.js - backbone.js - node.js Back-End Developer)&lt;/strong&gt;&lt;/p&gt;
+     }
+     to {
+         -webkit-transform:rotate(360deg);
+     }
+ }
+ /** firefox **/
+ @-moz-keyframes loadRotate {
+     from {
+         -moz-transform:rotate(0deg);
+     }
+     to {
+         -moz-transform:rotate(360deg);
+     }
 
-&lt;p&gt;Waves!
-&lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;space.lucasgatsas.ch/waves&lt;/a&gt;&lt;/p&gt;
+ }
+ /** w3c **/
+ @keyframes loadRotate {
+     form {
+         transform: rotate(0deg);
+     }
+     to {
+         transform: rotate(360deg);
+     }
+ }
+&lt;/pre&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Ich breche die Brücken hinter mir ab. Man verliert dann keine Zeit mit Rückblicken, wo es schon genug Mühe macht, die Augen nach vorn zu richten. Es gibt also keine andere Wahl, als vorwärts zu gehen.” 
-&lt;/blockquote&gt;
+&lt;p&gt;HTML 代码如下：&lt;/p&gt;
 
+&lt;pre class=&quot;html&quot; name=&quot;colorcode&quot;&gt;
+&amp;lt;p id=&quot;loading&quot;&amp;gt;Loading&amp;lt;/p&amp;gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;恩，这样就 OK 了。&lt;/p&gt;
+
+&lt;p&gt;后话：Loading 的“菊花”样式，有一个 JS 可以实现，就是 &lt;a href=&quot;http://fgnass.github.com/spin.js/&quot; title=&quot;spin.js&quot; target=&quot;_blank&quot;&gt;spin.js&lt;/a&gt;，也能兼容 IE 。但其兼容 IE 的方式是使用滤镜，对性能有所影响。&lt;/p&gt;
 </description>
-        <pubDate>Mon, 08 Jun 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/06/08/studying-startup-we-hire-team-up/</link>
-        <guid isPermaLink="true">stillwater.me/2015/06/08/studying-startup-we-hire-team-up/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Run some Robots</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;Robots - SEO&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;Remove and Delete things from the Internet with Robots&quot;&lt;/h2&gt;
-
-&lt;p&gt;Last two Weeks, I am concerned with removing things from the Internet. First Part a Part of my Past Work and soem Details. 
-Now after some trouble to remove things from the Internet. I tried to reach the Webmaster from some Website etc. but, these don’t answered my Questions etc.
-This was make me very confussed. After some Bomb Mails, some of these Webmaster have sended and answered me a e-mail and some Webmaster have removed the Content.&lt;/p&gt;
-
-&lt;p&gt;[1.] Write to the Webmaster&lt;/p&gt;
-
-&lt;p&gt;[2.] Write to the Host and their Provider to find out who is behind, (if you get a answer) if not, find out self with some Tools :) !Whois LookUp, with your (Netzwerkdienstprogramm)&lt;/p&gt;
-
-&lt;p&gt;[3.] Find a Lawyer in your Country and City&lt;/p&gt;
-
-&lt;p&gt;[4.] Write to Google (if they can remove the content from their Index.)&lt;/p&gt;
-
-&lt;p&gt;[5.] Go to their Office.&lt;/p&gt;
-
-&lt;p&gt;[6.] Write a Article about it.&lt;/p&gt;
-
-&lt;p&gt;[7.] And another Way you can remove it.. is…. :) ! But these Ways are with some obstacles! The Life is in your Hand.&lt;/p&gt;
-
-&lt;p&gt;At the first Moment I’m was a bit frustrated and angry about these Things! After some shaking the head  and bored about Ideas how remove it.
-I wrote a robot. With the &lt;a href=&quot;https://accounts.google.com/ServiceLogin?service=sitemaps&amp;amp;passive=1209600&amp;amp;continue=https%3A%2F%2Fwww.google.com%2Fwebmasters%2Ftools%2Fhome%3Fhl%3Den&amp;amp;followup=https%3A%2F%2Fwww.google.com%2Fwebmasters%2Ftools%2Fhome%3Fhl%3Den&amp;amp;hl=en&quot;&gt;Google Webmaster Tools &lt;/a&gt;
-Then write a &lt;code&gt;robots.txt&lt;/code&gt; File &lt;a href=&quot;https://support.google.com/webmasters/answer/6078399?hl=de&amp;amp;ref_topic=6061961&quot;&gt;Test your Crawling&lt;/a&gt;
-Go to the &lt;a href=&quot;http://www.robotstxt.org/db.html&quot;&gt;The Robots Database lists robot software implementations and operators.&lt;/a&gt; and find your Perfect Bot, Spider and Crawler. :)&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;space.lucasgatsas.ch/waves&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Ich breche die Brücken hinter mir ab. Man verliert dann keine Zeit mit Rückblicken, wo es schon genug Mühe macht, die Augen nach vorn zu richten. Es gibt also keine andere Wahl, als vorwärts zu gehen.” 
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Sun, 07 Jun 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/06/07/google-and-google-robots-and-run-a-robot/</link>
-        <guid isPermaLink="true">stillwater.me/2015/06/07/google-and-google-robots-and-run-a-robot/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Waves</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;WAVES&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;This will be my Inspiration Site&quot;&lt;/h2&gt;
-&lt;p&gt;Need a few days break. I need the beautiful places to be able to pull me Back. Here is my New Page! 
-&lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;space.lucasgatsas.ch/waves&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
-&lt;div&gt;
-
-&lt;div class=&quot;row&quot;&gt;
-            &lt;div class=&quot;col-lg-12&quot;&gt;
-              &lt;h1 class=&quot;page-header&quot;&gt;Bei Nacht im Freien unterwegs zu sein, unter dem schweigenden Himmel, an einem still strömenden Gewässer, das ist stets geheimnisvoll und regt die Gründe der Seele auf.
-             &lt;small&gt;SpaceTravels&lt;/small&gt;
-          &lt;/h1&gt;
-     &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;row&quot;&gt;
-            &lt;div class=&quot;col-md-6 portfolio-item&quot;&gt;
-                &lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;
-                    &lt;img class=&quot;img-responsive&quot; src=&quot;http://lucasgatsas.ch/img/lucas-gatsas-0001.jpg&quot; alt=&quot;lucas gatsas&quot; /&gt;
-                &lt;/a&gt;
-                &lt;h3&gt;
-                    &lt;a href=&quot;#&quot;&gt;Space [01]&lt;/a&gt;
-                &lt;/h3&gt;
-              &lt;!--  &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.&lt;/p&gt; --&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;col-md-6 portfolio-item&quot;&gt;
-                &lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;
-                    &lt;img class=&quot;img-responsive&quot; src=&quot;http://lucasgatsas.ch/img/lucas-gatsas-0002.jpg&quot; alt=&quot;lucas gatsas&quot; /&gt;
-                &lt;/a&gt;
-                &lt;h3&gt;
-                    &lt;a href=&quot;#&quot;&gt;Space [02]&lt;/a&gt;
-                &lt;/h3&gt;
-              &lt;!--  &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.&lt;/p&gt; --&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-&lt;div class=&quot;row&quot;&gt;
-            &lt;div class=&quot;col-md-6 portfolio-item&quot;&gt;
-                &lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;
-                    &lt;img class=&quot;img-responsive&quot; src=&quot;http://lucasgatsas.ch/img/lucas-gatsas-0003.jpg&quot; alt=&quot;lucas gatsas&quot; /&gt;
-                &lt;/a&gt;
-                &lt;h3&gt;
-                    &lt;a href=&quot;#&quot;&gt;Space [03]&lt;/a&gt;
-                &lt;/h3&gt;
-            &lt;!--    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.&lt;/p&gt; --&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;col-md-6 portfolio-item&quot;&gt;
-                &lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;
-                    &lt;img class=&quot;img-responsive&quot; src=&quot;http://lucasgatsas.ch/img/lucas-gatsas-0004.jpg&quot; alt=&quot;lucas gatsas&quot; /&gt;
-                &lt;/a&gt;
-                &lt;h3&gt;
-                    &lt;a href=&quot;#&quot;&gt;Space [04]&lt;/a&gt;
-                &lt;/h3&gt;
-            &lt;!--    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.&lt;/p&gt; --&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-&lt;div class=&quot;row&quot;&gt;
-            &lt;div class=&quot;col-md-6 portfolio-item&quot;&gt;
-                &lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;
-                    &lt;img class=&quot;img-responsive&quot; src=&quot;http://lucasgatsas.ch/img/lucas-gatsas-00010.jpg&quot; alt=&quot;lucas gatsas&quot; /&gt;
-                &lt;/a&gt;
-                &lt;h3&gt;
-                    &lt;a href=&quot;#&quot;&gt;Space [05]&lt;/a&gt;
-                &lt;/h3&gt;
-            &lt;!--    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.&lt;/p&gt; --&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;col-md-6 portfolio-item&quot;&gt;
-                &lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;
-                    &lt;img class=&quot;img-responsive&quot; src=&quot;http://lucasgatsas.ch/img/lucas-gatsas-00011.jpg&quot; alt=&quot;lucas gatsas&quot; /&gt;
-                &lt;/a&gt;
-                &lt;h3&gt;
-                    &lt;a href=&quot;#&quot;&gt;Space [06]&lt;/a&gt;
-                &lt;/h3&gt;
-            &lt;!--    &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.&lt;/p&gt; --&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-
- &lt;hr /&gt;
-&lt;br /&gt;
-
-
-
-&lt;a href=&quot;http://space.lucasgatsas.ch/waves&quot;&gt;space.lucasgatsas.ch/waves&lt;/a&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-
-&lt;br /&gt;
-&lt;blockquote&gt;
-“Ich breche die Brücken hinter mir ab. Man verliert dann keine Zeit mit Rückblicken, wo es schon genug Mühe macht, die Augen nach vorn zu richten. Es gibt also keine andere Wahl, als vorwärts zu gehen.” 
-&lt;/blockquote&gt;
-
-&lt;/div&gt;
-</description>
-        <pubDate>Thu, 04 Jun 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/06/04/www:space:lucasgatsas:ch:waves/</link>
-        <guid isPermaLink="true">stillwater.me/2015/06/04/www:space:lucasgatsas:ch:waves/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Everyday Shutdown</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;I&#39;m already counting the days down to the Start&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;Shutdown Things in the Internet&quot;&lt;/h2&gt;
-
-&lt;p&gt;I’m ready to Shut Down some Services soon from the whole WWW. If you have Interess please feel free to Contact me to be Bigger!
-Reason: To forget the Past! You Know. &lt;code&gt;91%&lt;/code&gt; of the Internet is Bullshit. So many silly services etc. and alot of Bullshit in the Internet!
-All these bunch of … heades should be banned from the WWW. Specialy services like www.vebidoo.de, www.google.com, www.pinterest.com, www.photobucket.com etc. with their Bullshit image engine! I don’t see the reason or sense why these Services are so Important? Tell me? ! I can run a host to uplaod and show my Images. Don’t need these silly Web Apps! if you want delete your Past! You can do that with that dumb and silly Formular from “google” here &lt;a href=&quot;https://support.google.com/legal/contact/lr_eudpa?product=websearch&amp;amp;hl=de&quot;&gt; Google Formular&lt;/a&gt; Der Antrag auf Entfernen von Suchergebnissen nach europäischem Datenschutzrecht.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt; More to follow soon! Waiting for my Answers from Google!&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;iframe width=&quot;100%&quot; height=&quot;515&quot; src=&quot;https://www.youtube.com/embed/Gi9tJ8QoBus&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://space.lucasgatsas.ch/&quot;&gt;space.lucasgatsas.ch&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Gewinnes halber dient auch, wer zum Sklaven nicht geboren ist.” 
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Mon, 01 Jun 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/06/01/this-is-why-we-hate-google/</link>
-        <guid isPermaLink="true">stillwater.me/2015/06/01/this-is-why-we-hate-google/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Modify .htaccess</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;Modify .htaccess&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;Separat Things on cPanel&quot;&lt;/h2&gt;
-
-&lt;p&gt;To Run a .htaccess File on your cPanel Server. &lt;code&gt; ErrorDocument 404 /404.html&lt;/code&gt; Create One, Save it as &lt;code&gt;.htaccess&lt;/code&gt; and create a &lt;code&gt;404.html&lt;/code&gt; or &lt;code&gt;505.html&lt;/code&gt;. &lt;strong&gt;Notice:&lt;/strong&gt; Do you don’t will see this File on your Machine or Computer. Becuase it’s a invisible and hidden File.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://space.lucasgatsas.ch/64376473647637467364634376437647364736473647356736537657365763576375673657365763756376&quot;&gt;space.lucasgatsas.ch&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Um sich in der heutigen Welt zurechtzufinden,
-ist es besser, intelligent als gebildet zu sein.” 
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Mon, 01 Jun 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/06/01/htaccess-404-cpanel/</link>
-        <guid isPermaLink="true">stillwater.me/2015/06/01/htaccess-404-cpanel/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>100 Days Online - Non Stop</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;Hello World&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;space.lucasgatsas.ch&quot;&lt;/h2&gt;
-
-&lt;p&gt;Update my Main WebSpace on &lt;a href=&quot;http://space.lucasgatsas.ch&quot;&gt;space.lucasgatsas.ch&lt;/a&gt; have a take a look! 
-Best View in Google Chrome, Safari and Opera! In Firefox is the default Theme of space.lucasgatsas.ch ! 
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://space.lucasgatsas.ch&quot;&gt;space.lucasgatsas.ch&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;!--
-&lt;div class=&quot;row&quot;&gt;
-        &lt;div class=&quot;col-md-4&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;col-lg-4 col-sm-12 text-center&quot;&gt;&lt;img class=&quot;img-circle img-responsive img-center&quot; src=&quot;/img/uccnFS0T-1.jpg&quot; alt=&quot;Lucas Gatsas - Sebastian Senf&quot;&gt;  &lt;h3&gt;Sebastian Senf aka. Mustardamus&lt;br&gt;
-                    &lt;small&gt; Full Stack Web Developer @ Akrasia - Germany&lt;/small&gt;&lt;br&gt;
-                    &lt;small&gt;&lt;a href=&quot;http://akrasia.me/#/about&quot; class=&quot;text-center&quot;&gt;www.akrasia.me&lt;/a&gt;&lt;/small&gt;
-
-                &lt;/h3&gt;&lt;/div&gt;
-        &lt;div class=&quot;col-md-4&quot;&gt;&lt;/div&gt;
-      &lt;/div&gt;
---&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Den Intelligenzgrad eines Menschen erkennst du am leichtesten daran, wie genau er das sagt, was du denkst.” 
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Sat, 30 May 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/05/30/space.lucasgatsas.ch/</link>
-        <guid isPermaLink="true">stillwater.me/2015/05/30/space.lucasgatsas.ch/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Inspiration</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt; Inspiration&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;Waves and Beaches&quot;&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;/img/Lucas_Gatsas_lucas_gatsas_0257.jpg&quot;&gt;
-    &lt;img src=&quot;/img/Lucas_Gatsas_lucas_gatsas_0257.jpg&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/img/Lucas_Gatsas_lucas_gatsas_0261.jpg&quot;&gt;
-    &lt;img src=&quot;/img/Lucas_Gatsas_lucas_gatsas_0261.jpg&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/img/Lucas_Gatsas_lucas_gatsas_0268.jpg&quot;&gt;
-    &lt;img src=&quot;/img/Lucas_Gatsas_lucas_gatsas_0268.jpg&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/img/Lucas_Gatsas_lucas_gatsas_0260.jpg&quot;&gt;
-    &lt;img src=&quot;/img/Lucas_Gatsas_lucas_gatsas_0260.jpg&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/img/Lucas_Gatsas_lucas_gatsas_0254.jpg&quot;&gt;
-    &lt;img src=&quot;/img/Lucas_Gatsas_lucas_gatsas_0254.jpg&quot; alt=&quot;Lucas Gatsas lucas gatsas&quot; title=&quot;lucas gatsas Lucas Gatsas&quot; style=&quot;width:100%&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://space.lucasgatsas.ch/waves/&quot;&gt;space.lucasgatsas.ch&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;!--
-&lt;div class=&quot;row&quot;&gt;
-        &lt;div class=&quot;col-md-4&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;col-lg-4 col-sm-12 text-center&quot;&gt;&lt;img class=&quot;img-circle img-responsive img-center&quot; src=&quot;/img/uccnFS0T-1.jpg&quot; alt=&quot;Lucas Gatsas - Sebastian Senf&quot;&gt;  &lt;h3&gt;Sebastian Senf aka. Mustardamus&lt;br&gt;
-                    &lt;small&gt; Full Stack Web Developer @ Akrasia - Germany&lt;/small&gt;&lt;br&gt;
-                    &lt;small&gt;&lt;a href=&quot;http://akrasia.me/#/about&quot; class=&quot;text-center&quot;&gt;www.akrasia.me&lt;/a&gt;&lt;/small&gt;
-
-                &lt;/h3&gt;&lt;/div&gt;
-        &lt;div class=&quot;col-md-4&quot;&gt;&lt;/div&gt;
-      &lt;/div&gt;
---&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Es ist ein altes, gutes Sprichwort – ich fürchte leider, ein französisches –: &quot;Um geistreich zu sein, braucht man nur vor nichts mehr Respekt zu haben.” 
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Fri, 29 May 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/05/29/inspiration-waves/</link>
-        <guid isPermaLink="true">stillwater.me/2015/05/29/inspiration-waves/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>DNS, Domain &amp; Nameserver - local ISPs</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;DNS Nameserver&lt;/h2&gt;
-&lt;h2 class=&quot;section-heading&quot;&gt;&quot;Set Up Name Server on cPanel &quot;&lt;/h2&gt;
-
-&lt;p&gt;Update Post!&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://server8.kproxy.com/invalid.jsp&quot;&gt;server8.kproxy.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;!--
-&lt;div class=&quot;row&quot;&gt;
-        &lt;div class=&quot;col-md-4&quot;&gt;&lt;/div&gt;
-        &lt;div class=&quot;col-lg-4 col-sm-12 text-center&quot;&gt;&lt;img class=&quot;img-circle img-responsive img-center&quot; src=&quot;/img/uccnFS0T-1.jpg&quot; alt=&quot;Lucas Gatsas - Sebastian Senf&quot;&gt;  &lt;h3&gt;Sebastian Senf aka. Mustardamus&lt;br&gt;
-                    &lt;small&gt; Full Stack Web Developer @ Akrasia - Germany&lt;/small&gt;&lt;br&gt;
-                    &lt;small&gt;&lt;a href=&quot;http://akrasia.me/#/about&quot; class=&quot;text-center&quot;&gt;www.akrasia.me&lt;/a&gt;&lt;/small&gt;
-
-                &lt;/h3&gt;&lt;/div&gt;
-        &lt;div class=&quot;col-md-4&quot;&gt;&lt;/div&gt;
-      &lt;/div&gt;
---&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-“Intelligenz, behaupten die Intelligenten, ist die Fähigkeit, sich der Situation anzupassen. Wenn du ein Buch verkehrt in die Hand genommen hast, lerne, es verkehrt zu lesen.” 
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Thu, 28 May 2015 22:00:44 +0800</pubDate>
-        <link>stillwater.me/2015/05/28/dns-and-nameserver-local-ISPs/</link>
-        <guid isPermaLink="true">stillwater.me/2015/05/28/dns-and-nameserver-local-ISPs/</guid>
+        <pubDate>Fri, 26 Oct 2012 00:00:00 +0800</pubDate>
+        <link>stillwater.me/2012/10/26/PNG-Loading/</link>
+        <guid isPermaLink="true">stillwater.me/2012/10/26/PNG-Loading/</guid>
         
         
       </item>

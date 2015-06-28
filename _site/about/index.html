@@ -55,7 +55,10 @@
 <!-- Canonical -->
 <link rel="canonical" href="stillwater.me/about/">
 <!-- StyleSheet -->
+<link rel="stylesheet" href="/css/pygments.css">
+<link rel="stylesheet" href="/css/duoshuo.css">
 <link rel="stylesheet" href="/css/bootstrap.min.css">
+
 <link rel="stylesheet" href="/css/spaceg.stylesheets.css">
 <!-- Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
@@ -69,10 +72,25 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-<link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+        <link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+
         <!-- Loading front stylesheet here --> 
         <style>
 
+        .post-heading h1,.post-heading h2,.post-heading span{
+            color:black !important;
+        }
+        .intro{
+            margin: 50px;
+            text-align: center;
+        }
+        .intro .post-heading h1{font-size:35px;}
+        .intro .post-heading .subheading,.intro-header .post-heading .meta{line-height:1.1;display:block}
+        .intro .post-heading .subheading{font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;margin:10px 0 30px;font-weight:400;color:white;}
+        .intro .post-heading .meta{font-family:'Playfair Display', Times, serif;font-style:italic;font-weight:300;font-size:20px;color:white;}
+        .intro .post-heading .meta a{color:#fff}
+        @media only screen and (min-width: 768px){.intro .post-heading h1{font-size:55px}
+        .intro .post-heading .subheading{font-size:30px;color:white;}}
         #preloader {
             position: fixed;
             top: 0;
@@ -112,7 +130,8 @@
             border-color: #FFFFFF;
         }
         </style>
-        <link rel="stylesheet" href="/css/prettify.css"><style>header.intro-header {
+        <link rel="stylesheet" href="/css/prettify.css">
+        <style>header.intro-header {
             background: #6f5499;
             background: no-repeat center center;
             background-attachment: scroll;
@@ -191,7 +210,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button> -->
-            <a class="navbar-brand" href="/" id="blog-title-left-top">S</a>
+            <a class="navbar-brand" href="/" id="blog-title-left-top">ME</a>
         </div>   
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -284,8 +303,9 @@
 
 
     <!-- Page Header -->
+
 <header class="intro-header" style="background-image: url('/')" alt="stillwater victory" title="stillwater victory">
-    <div class="container head">
+        <div class="container head">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
@@ -297,7 +317,7 @@
         Start Ups
         </h1>
       <!--    <hr class="small"> -->
-      <span class="subheading" id="textfloat">This is what I do. - I'm current work on a few new Start Up's!
+      <span class="subheading" id="textfloat">May be it's like a empty shell now, but i will add interesting things into it continuously.
          <br> <br>
          <!-- ///// Fade Out Navbar Profile Picture -///// New Adding Front Profile Picture Mo. 6. April 2015 --> 
                        <!--
@@ -439,7 +459,22 @@
   ga('send', 'pageview');
 
   </script>
+<script>
+$(function(){
+    $('pre code').each(function(){
+        var lines = $(this).text().split('\n').length-1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+            .addClass('has-numbering')
+            .parent()
+            .append($numbering);
+        for(i=1;i<=lines;i++){
+            $numbering.append($('<li><span></span></li>').text(i));
+        }
+    });
+});
 
+</script>
 
 
     

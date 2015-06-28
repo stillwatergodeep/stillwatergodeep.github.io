@@ -3,7 +3,11 @@ layout: default
 ---
 
 <!-- Post Header -->
+ {% if page.header-img %}
 <header class="intro-header" style="background-image: url('{{ site.baseurl }}/{{ page.header-img }}')" alt="stillwater victory" title="stillwater victory">
+    {% else %}
+    <header class="intro">
+{% endif %}
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -30,6 +34,17 @@ layout: default
                 <hr>
 
 
+<div id="ds-thread" class="ds-thread" data-url="{{ page.url }}" data-title="{{ page.title }}" data-thread-key="{{ page.title }}"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name: "stillwater"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
 
                 <ul class="pager">
                     {% if page.previous.url %}
@@ -49,3 +64,4 @@ layout: default
     </div>
 </article>
 <hr>
+

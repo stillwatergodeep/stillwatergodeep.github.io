@@ -2,11 +2,12 @@
 layout: default
 ---
 
-
-
 <!-- Page Header -->
+{% if page.header-img %}
 <header class="intro-header" style="background-image: url('{{ site.baseurl }}/{{ page.header-img }}')" alt="stillwater victory" title="stillwater victory">
-    <div class="container head">
+    {% else %}
+    <header class="intro">
+{% endif %}    <div class="container head">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">

@@ -9,7 +9,7 @@ github_username:  superstar4
 google_username:  https://plus.google.com/u/0/101869488504092117335/posts
 weibo_username:  http://weibo.com/u/3948730723
 # Build settings
-markdown: kramdown
+#markdown: kramdown
 highlighter: pygments
 permalink: pretty
 paginate: 
@@ -17,9 +17,19 @@ exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 
 paginate: 5 #posts per page
 
+markdown: RDiscount
+
 compress_html:
 clippings: [div, p, ul, td, h1, h2]
-comments: []
 endings: []
 ignore:
 envs: []
+
+comments :
+    provider : duoshuo
+    duoshuo : 
+      short_name : stillwater
+
+owner :
+    name : stillwater
+    interest : Program

@@ -55,7 +55,10 @@
 <!-- Canonical -->
 <link rel="canonical" href="stillwater.me/archive/">
 <!-- StyleSheet -->
+<link rel="stylesheet" href="/css/pygments.css">
+<link rel="stylesheet" href="/css/duoshuo.css">
 <link rel="stylesheet" href="/css/bootstrap.min.css">
+
 <link rel="stylesheet" href="/css/spaceg.stylesheets.css">
 <!-- Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
@@ -69,10 +72,25 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-<link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+        <link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+
         <!-- Loading front stylesheet here --> 
         <style>
 
+        .post-heading h1,.post-heading h2,.post-heading span{
+            color:black !important;
+        }
+        .intro{
+            margin: 50px;
+            text-align: center;
+        }
+        .intro .post-heading h1{font-size:35px;}
+        .intro .post-heading .subheading,.intro-header .post-heading .meta{line-height:1.1;display:block}
+        .intro .post-heading .subheading{font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;margin:10px 0 30px;font-weight:400;color:white;}
+        .intro .post-heading .meta{font-family:'Playfair Display', Times, serif;font-style:italic;font-weight:300;font-size:20px;color:white;}
+        .intro .post-heading .meta a{color:#fff}
+        @media only screen and (min-width: 768px){.intro .post-heading h1{font-size:55px}
+        .intro .post-heading .subheading{font-size:30px;color:white;}}
         #preloader {
             position: fixed;
             top: 0;
@@ -112,7 +130,8 @@
             border-color: #FFFFFF;
         }
         </style>
-        <link rel="stylesheet" href="/css/prettify.css"><style>header.intro-header {
+        <link rel="stylesheet" href="/css/prettify.css">
+        <style>header.intro-header {
             background: #6f5499;
             background: no-repeat center center;
             background-attachment: scroll;
@@ -191,7 +210,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button> -->
-            <a class="navbar-brand" href="/" id="blog-title-left-top">S</a>
+            <a class="navbar-brand" href="/" id="blog-title-left-top">ME</a>
         </div>   
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -298,84 +317,25 @@ padding-top: 100px;
                      
                       <ul class="this">
                       
-                      <li><time>15 Jun</time> <a href="/2015/06/15/first-preview-of-the-ux-ui-design-from-our-start-up/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">First Preview of the UI/UX Design</a></li>
+                      <li><time>29 Jun</time> <a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">利用sublime快速编写markdown</a></li>
                       
                      
                       
                       
                       
                       
-                      <li><time>10 Jun</time> <a href="/2015/06/10/hacker-camp-switzerland-hack-night/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">Hacker Camps - Start Up Camps in Switzerland 2016</a></li>
+                      <li><time>27 Jun</time> <a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">github搭建个人博客</a></li>
                       
                      
                       
                       
                       
-                      
-                      <li><time>08 Jun</time> <a href="/2015/06/08/studying-startup-we-hire-team-up/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">Team Up</a></li>
-                      
-                     
-                      
+                      </ul>
+                      <h2>2012</h2>
+                      <ul class="past">
                       
                       
-                      
-                      <li><time>07 Jun</time> <a href="/2015/06/07/google-and-google-robots-and-run-a-robot/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">Run some Robots</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>04 Jun</time> <a href="/2015/06/04/www:space:lucasgatsas:ch:waves/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">Waves</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>01 Jun</time> <a href="/2015/06/01/this-is-why-we-hate-google/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">Everyday Shutdown</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>01 Jun</time> <a href="/2015/06/01/htaccess-404-cpanel/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">Modify .htaccess</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>30 May</time> <a href="/2015/05/30/space.lucasgatsas.ch/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">100 Days Online - Non Stop</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>29 May</time> <a href="/2015/05/29/inspiration-waves/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">Inspiration</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>28 May</time> <a href="/2015/05/28/dns-and-nameserver-local-ISPs/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">DNS, Domain & Nameserver - local ISPs</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>22 May</time> <a href="/2015/05/22/new-contributors-sebastian-senf-on-the-board-at-our-start-up-open-source/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">New Contributor on Board.</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>21 May</time> <a href="/2015/05/21/analystic-from-the-blog/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">Analystic</a></li>
+                      <li><time>26 Oct</time> <a href="/2012/10/26/PNG-Loading/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">（转）使用 PNG 图片制作动态 Loading</a></li>
                       
                       </ul>
                       <!--    <hr class="small"> -->
@@ -492,7 +452,22 @@ padding-top: 100px;
   ga('send', 'pageview');
 
   </script>
+<script>
+$(function(){
+    $('pre code').each(function(){
+        var lines = $(this).text().split('\n').length-1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+            .addClass('has-numbering')
+            .parent()
+            .append($numbering);
+        for(i=1;i<=lines;i++){
+            $numbering.append($('<li><span></span></li>').text(i));
+        }
+    });
+});
 
+</script>
 
 
     

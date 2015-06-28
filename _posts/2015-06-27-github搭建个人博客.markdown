@@ -1,0 +1,115 @@
+---
+layout:     post
+title:      "github搭建个人博客"
+subtitle:   "My Blog Views"
+date:       2015-06-27 14:00:44
+author:     "stillwater"
+---
+
+### GitHub+Markdown+Jekyll 搭建个人博客
+---- 
+> 首先以下所有内容都是针对mac的，不同系统装的软件差不多，但过程千差万别，如果是其他系统凉快去。
+
+
+
+### *准备工作*：
+mac中自带git和gem.这两者就不用安装了，gem是一种文件组织的包，一般的ruby的很多插件都有由这种各种的包提供。安装Jekyll需要它的支持。
+#### *安装jekyll*
+	$ sudo gem update —system
+	$ sudo gem install jekyll
+注意需要sudo，否则 no permission.
+直接运行以上命令会出现一些错误。运行以下命令
+	$ gem sources -l
+可以看到终端显示
+\*\*\* CURRENT SOURCES \*\*\*
+
+https://rubygems.org
+可见gem的源默认是https://rubygems.org/，
+所以首先更换gem源，换源之前首先删除旧源
+	$ gem sources --remove https://rubygems.org
+注意不要多字符或少字符，不然会出现
+source https://rubygems.org not present in cache 
+remove前是—，否则会
+source emove not present in cache
+
+
+#### *添加新源*
+	$ gem sources -a https://ruby.taobao.org/
+这是一个完整 rubygems.org 镜像，你可以用此代替官方版本，同步频率目前为15分钟一次以保证尽量与官方服务同步。
+添加完成之后查看一下是否更换成功
+
+	$ gem sources -l
+
+更换markdown模板解释器
+安装模板,默认的模板是Maruku,我们替 换为RDiscount。 
+	$ sudo gem install rdiscount
+Maruku是纯ruby写的Markdown模板解释 器。 RDiscount是C写的模板解释器。速度快上很多。 
+
+安装完jekyll之后，我们需要创建网站的各种目录结构和源文件。由于这些文件最终在github中管理，如何利用github创建网站可以看github pages.这里直接直接将整个过程融入一个完整blog的构建过程。
+让github管理本地文件有两种方式：
+由于github托管的网站必须是username.github.io,对应的仓库也是username.github.io
+1.首先git clone username.github.io到本地，会在本地创建一个 username.github.io文件夹，cd进去一看是空的，输入命令ls -a可以发现有一个.git文件，这个文件联系起了本地和远程git服务器。
+
+	$ git clone git@username.github.io.git
+	$ cd username.github.io
+	$ jekyll new blog
+	$ cd blog
+	$ jekyll serve
+
+2.可以事先在本地创建完blog之后，在创建git文件
+
+	$ jekyll new blog
+	$ cd blog
+	$ git init
+git init会在本地创建一个.git文件,Initialized empty Git repository in yourPath/.git/
+
+	$ git add */git add —all
+	$ git commit -m “commit”
+	$ git remote add origin 
+	git@git@username.github.io.git
+(若是第一次提交该项目的文件或是修改项目文件名后则需要这行这个命令，以后就可不用执行该命令)
+
+	git push -u origin master
+如果之前已经 add origin，则会报出如下错误：
+fatal: remote origin already exists.
+解决方法：
+
+	git remote set-url origin git@git@username.github.io.git
+这将替换之前添加的orgin。
+
+此时访问username.github.io，将会看到你刚刚创建的网站。
+可以看到Jekyll目录结构
+
+  |--_config.yml\>
+  |--_drafts
+ 	 |--articles1.textile
+ 	 |--articles2.md
+  |--_includes
+  	|--footer.html
+  	|--header.html
+  |--_layouts
+  	|--default.html
+  	|--post.html
+  |--_posts
+ 	 |--2014-06-17-articles1.textile
+ 	 |--2014-06-17-articles1.md
+  |--_site
+ 	 |--index.html
+  |--other files
+
+_config.yml :保存配置数据。 
+_drafts :存放未发布的文章。  
+_includes :存放页面片段,即页头 ( head.html )、页脚  
+( footer.html )、导航  
+( navigation.html )、评论 
+( disqus_comments.html )等,这些 资源通过标签添加到index.html中,从而形 成一个完整的页面。 
+_layouts :存放模板文件。文章模板、 关于页面模板、首页模板等。 
+_posts :存放文章的文件。并且文章文 件名称要符合 YEAR-MONTH-DAY- title.MARKUP 格式。 
+_site :经过jekyll转换的页面。 
+index.html :网站首页。 
+other files :其他文件,存放css、 js、image等。 
+
+Jekyll解析流程 
+首先会加载_posts及文件夹下的所有文章, 将其参数和文章内容组织保存在内存中,所 有的文章的内容、参数都在site.posts对象 (其他文件夹下的文章不会放入site.posts 中)。 
+其次加载_layouts文件夹下的所有模板。 再次加载_includes文件夹下的所有需要被引入的内容。 
+最后根据每一篇需要编译的文章选择的其参 数定义的模板来创建一个模板,并将当前文 章的内容、参数等进行扩展后放在page对 象、content对象中,然后进行模板的编 译,生成html文件,并按照一定规则放在 _site文件夹下。也就是说在创建一篇文章 时,其实所有文章的内容都已经被读取出来 了,这也为文章相互之间的关联提供了可 能。 
