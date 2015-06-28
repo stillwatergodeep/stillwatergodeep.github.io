@@ -1,6 +1,6 @@
-siteurl: http://lucasgatsas.ch/
-url: "http://lucasgatsas.ch"
-baseurl: "http://lucasgatsas.ch"
+siteurl: stillwater.me
+url: "stillwater.me"
+baseurl: "stillwater.me"
 markdown: maruku
 pygments: false
-paginate: 
+paginate: 5
