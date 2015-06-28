@@ -40,10 +40,10 @@ feature: abstract-1.jpg
 					</div>
 
 					{% if post.link %}
-					<h1 class="post-title" id="post-title-h1"><a href="{{ site.url }}{{ post.url }}" class="permalink" rel="bookmark" title="{{ post.title }}"><i class="fa fa-bookmark"></i></a> <a href="{{ post.link }}">{{ post.title }}</a></h1>
+					<h1 class="post-title" id="post-title-h1"><a href="{{ post.url }}" class="permalink" rel="bookmark" title="{{ post.title }}"><i class="fa fa-bookmark"></i></a> <a href="{{ post.link }}">{{ post.title }}</a></h1>
 					{% else %}
-					<h1 class="post-title"><a href="{{ site.url }}{{ post.url }}" id="post-title-h1" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.title }}</a></h1>
-					<h1 class="post-title-readmore"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+					<h1 class="post-title"><a href="{{ post.url }}" id="post-title-h1" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.title }}</a></h1>
+					<h1 class="post-title-readmore"><a href="{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url" id="readmore-link"> ReadMore</a></h1>
 
 					{% endif %}
 
