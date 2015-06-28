@@ -465,6 +465,202 @@
 				<div>
 					<div class="post-meta">
 						<span class="entry-date date published updated">
+							<time datetime="2015-06-29T00:00:00+08:00">
+								<a href="stillwater.me/2015/06/29/(%E8%AF%91)bigtable%20%E6%B5%85%E6%9E%90/">June 29, 2015</a>
+							</time>
+						</span>
+						<span class="author vcard">
+							<span class="fn">
+								<a href="stillwater.me/about/" title="About stillwater">stillwater</a>
+							</span>
+						</span>
+						
+					</div>
+
+					
+					<h1 class="post-title"><a href="/2015/06/29/(%E8%AF%91)bigtable%20%E6%B5%85%E6%9E%90/" id="post-title-h1" rel="bookmark" title="(译)bigtable 浅析" itemprop="url">(译)bigtable 浅析</a></h1>
+					<h1 class="post-title-readmore"><a href="/2015/06/29/(%E8%AF%91)bigtable%20%E6%B5%85%E6%9E%90/" rel="bookmark" title="(译)bigtable 浅析" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+
+					
+
+				</div>
+				</header>
+			</article>
+			<article class="container hentry">
+				<div class="entry-content">
+					<hr />
+
+<p> layout:      post
+ title:      "bigtable 浅析"
+ subtitle:<br/>
+ author:      stillwater</p>
+
+<h2> date:  2015-06-29 00:08:30</h2>
+
+<p>    Bigtable 是一个用来管理结构化数据的分布式存储系统，具有很好的伸缩性，能够在几千台应用服务器上处理PB数量级数据。谷歌有许多项目都把数据存储在Bigtable中，包括web indexing,Google Earth, and Google Finance. 这些应用对Bigtable的侧重点不同，但是他们都是海量数据和实时性的应用。尽管需求变化多端，Bigtable很好的提供了一个灵活多变，高性能额解决方案。</p>
+
+<h3>1.INTRODUCTION</h3>
+
+<p>    在很多方面Bigtable都与数据库类似：他们有同样的实现策略。并行数据库和主存数据库都具有高伸缩性和高性能的特点。但是Bigtable提供了一种不同的接个口。Bigtable不支持完全的关系数据模型；相反，它给客户端提供了一种简单的数据模型，这种数据模型支持对数据分布和格式的动态控制，并且允许客户端推出底层存储中数据的分布特性。Bigtable的数据可以使用任意字符的行列进行索引，Bigtable也把数据当作不可解释的字符串（uninterpreted strings），尽管客户端常常把不同形式的结构化、半结构化的数据序列化形成这些字符。客户端可以控制通过进行选择模式控制数据的位置。最后一点，调整Bigtable的模式参数能让客户端动态控制是从内存还是硬盘提供数据。
+ </p>
+
+<h3>2. DATA MODEL</h3>
+
+<p>    一个Bigtable 集群是一系列运行Bigtable软件的进程。每一个集群都有一组tables。Bigtable中的表是稀疏的、分布式、持久的多维有序map。其数据有三个维度：行、列、时间戳。
+(row:string, column:string, time:int64) → string
+    我们称由一个特定行键、列键、时间戳指定的部分为一个单元(cell)。多行组合起来形成负载平衡的基本单元，多列组合起来形成访问控制和资源分配的基本单元。
+ 
+  考虑这样一个具体的列子：一个大量网页和相关信息的集合，该集合会被大量不同的应用利用。假设我们称此表为Webtable。在Webtable中，URL为行键，网页的不同方面成为列键，存储网页的内容。时间戳指的是网页被获取的时间。如下图所示
+ <img src="http://images.cnitblog.com/blog/424079/201312/21094651-0e8286ecd46f45f39977ff7045bd5422.jpg" alt="" />
+    Rows. Bigtable以行键的字典序存储数据，而表中的行键是任意的字符串（目前能达到64KB，尽管对于大部分用户来说10-100字节就够了）。单行数据的读写是串行的（无论该行数据有多少不同的列正被读或者写），这种设计使得客户端能够在对某行数据进行并行更新的时候很容易知道系统的行为。换句话说，行是Bigtable控制事务一致性的基本单元，也就是意味着他不支持跨行事务。
+    具有连续键值的行组合成tablets，这是数据分布和负载平衡的基本单元。这样的好处是读取很少的行范围内的数是高效并且一般仅仅需要和少量的机器交互。客户端可以利用这个数据局部性实现高效的数据访问。例如：在Webtable中，相同域名的网页分成一组分布在相邻（contiguous）行，存储的时候把URL的主机部分逆向存储。maps.google.com/index.html会以com.google.maps/index.html作为键存储。把相同域名的网页临近存放使得某些域名和主机分析更加高效。
+    Columns. 列键放在一起称为列家族，它是访问控制的基本单元。在一个列族中存放的数据通常是相同类型的。在数据用key存储之前必须显式创建列族。在列族创建完成之后，该族任意的列键都可以使用：数据可以在不影响表模式的前提下存储在这样的列键中。我们的想法是让不同列族数比较少（最多上百），并且这样的列族在操作过程中几本不会改变；这种限制控制了共享元数据的大小。但是其对列数是没有任何限制的。
+    改变一个表模式可能会删掉所有的列族，在这种情况下，该族任意列键存储的数据都将被删掉。由于Bigtable并不支持跨行事务，如果数据被存储在多行，特定的列键被删除，其对应的数据可能不会被删掉。
+    列键是用如下的语法命名的：族：标识符。列族的名字必须是可打印的，但是标识符没有限制。关于Webtable的一个列族例子是网页编写的语言。在语言族中我们仅使用一个列键和一个空的标识符来存储每个网页的语言ID。该表另一个有用的列族是anchor；该族中的每一个列键都代表一个anchor。标识符就是所指向网址的名字。单元（cell）则包含与链接相关的文本。
+    访问控制以及磁盘内存分配调度都使在列族层次上的。在Webtable例子中，这些控制允许我们控制几种不同类型的应用：有些应用新增底层数据，有些则读取底层数据和创建新建的列族，有些仅仅允许访问已存在的数据（甚至由于隐私的原因，不允许访问所有存在的族的数据）
+ 
+    TimeStamps. 表中不同单元格可以包含同样数据的不同版本，版本是通过timestamp索引的。Bigtable的时间戳是64位整数。他们可以被Bigtable隐式赋值，这种情况是“实时的”，精确到毫秒级，或者可以被客户端显式赋值。应用程序必须产生唯一的时间戳来避免冲突。不同版本的单元格以降序存储，这样最新版本会被最先读取。
+    为了简化版本管理，我们支持两个per-column-family 告诉Bigtable自动进行垃圾版本回收。客户端既可以选择保存最近的几个版本，也可以选择保存足够新的版本（例如，仅保存最近七天写入的）
+    在Webtable例子中，我们可以把时间戳存储在扒取网页的内容中：这列意味着这些网页版本实际扒取的时间。上面描述的垃圾回收机制使得Bigtable仅保存每个网页的最近三个版本。
+ </p>
+
+<h3>3. API</h3>
+
+<p> 
+    Bigtable的API提供了创建和删除表和列族的函数。同样也提供了改变集群、表和列族元数据的函数，例如访问控制权限。
+    客户端程序可以删除Bigtable中的值或者向Bigtable中写入数据，从单行中检索数据，或者对表中数据子集进行迭代。
+ 
+图2描述了C++代码使用RowMutation抽象进行一系列更新操作。（无关细节略去了）调用Apply执行对Webtable的原子操作：向www.cnn.com增加了一个anchor，同时删除了一个不同的anchor。
+ 
+    图3 描述了C++使用一个Scanner抽象对某一个特定row的所有anchor进行迭代。客户机可以在不同的列族进行迭代，不过也有一些机制来限制scan可以遍历的行、列、时间戳。例如：我们可以限制让scan仅仅扫描那些匹配正则表达式的列，或者对时间戳进行限制来选择。
+    Bigtable支持不同的特性让用户能够以复杂多变的方式操作数据。首先，Bigtable支持单行事务，这个特性使得对单行数据可以执行原子的读写序列。Bigtable目前还不迟滞跨行事务，尽管其给客户机提供了一个接口可以跨行批量写入。第二，Bigtable允许单元格充当整数计数器。第三，Bigtable支持客户端提供的脚本在服务器地址空间中执行。
+ 
+<img src="http://images.cnitblog.com/blog/424079/201312/21094749-fbb3aadf1bdb4cd494db36491d939e13.jpg" alt="" /></p>
+
+<h3>4. BUILDING BLOCKS</h3>
+
+<p>    Bigtable 是基于其他几个Google基本结构的。一个Bigtable集群通常在运行各种各样分布式应用程序的共享机器上运行。Bigtable依赖于谷歌的集群管理系统来调度任务，管理资源，监控机器状态，处理异常机器。Bigtable进程与其他应用程序进程共享机器。如图4所示，一个Bigtable服务器可能与MapReduce、应用服务器、GFS服务器等运行在同一个机器上。
+<img src="http://images.cnitblog.com/blog/424079/201312/21094819-4e0e8bbefbf44428bf8b08c2adbc8db6.jpg" alt="" />
+    Bigtable 使用GFS来存储日志和数据文件。GFS是一个分布式文件系统，可以保存每个文件的多个备份以提高可靠性和易用性。
+    Bigtable使用Google SSTable不变文件格式存储Bigtable数据文件。一个SSTable提供了一个持久的有序不变的从key到values的map。用户可以通过指定的key查找关联的value，也可以对指定的key范围内数据迭代。每一个SSTable都包含了连续的几个块（默认情况下，每个块64KB，但是大小是可以配置的）块索引（存放在SSTable的最后）是用来定位块的；当SStable打开时索引就被加载进内存。这样查询只需要一次磁盘寻道:首先通过对内存索引进行二分查找找到对应的块。根据实际情况，一个SSTable可以完全被映射到内存，从而在执行查找和扫描是无需访问硬盘。
+    Bigtable依赖一个高易用性、持久化的分布式锁机制——Chubby。一个Chubby服务由五个活动的副本组成，其中一个被选为主要的用来处理请求。当大部分副本都处于运行状态并且相通信时Chubby处于活动状态，Chubby使用Paxos算法来保证在遇到问题时副本之间的一致性。Chubby还提供了一个由目录和小文件组成的名字空间。每一个目录或文件都可以当作锁，读写文件都是原子操作。Chubby客户端库都提供了对Chubby文件的一致映射。每一个Chubby客户端都和Chubby服务维持一个会话（session）.当客户端session不能够在到期之前续期就会失效，当session失效后，它将失去所有的锁。Chubby客户端可以对文件或目录注册一个回调函数以便在session超期或发生改变时接受通知。
+    Bigtable的Chubby可以处理不同的任务：保证任何时候之多只有一个master；存储Bigtable数据的启动位置（见5.1）；寻找tablet服务器以及确定tablet服务器的死亡（见5.2）；存储Bigtable模式（见5.5）。如果Chubby服务在一段时间内不可用，Bigtable就会不可用</p>
+
+<h3>5.IMPLEMENTATION</h3>
+
+<p>    Bigtable的实现主要包括三哥主要部分：一个链接到每个客户端的库，一个master服务器，许多tablet服务器。Tablet 服务器可动态添加到集群（或删除）以适应不同的负载。
+    master服务器负责把tablets分配到tablet服务器上，检测tablet服务器的增加和超期，平衡tablet服务器负载，对GFS进行垃圾收集。此外，还能处理模式改变，例如列族的创建和删除。
+    每一个tablet服务器都管理一组tablets(一般每个tablet服务器上有10-1000个tablets)。tablet服务器处理对该服务器上tablets的读写请求，也能够将特别大的tablets分成几个。
+    像许多单master的分布式存储系统一样，客户端的数据不会移动到master上：客户端直接与tablet服务器进行读写交互。因为Bigtable客户端无需通过master知道tablet的位置信息，大部分client从来都不喝master交互。这样，在实际中，master的负载就会特别小。
+    一个Bigtable集群存储了大量的tables。每一个表都由一组tablets构成，每一个tablet包含一个行范围内的数据。初始情况下，每个表仅包含一个tablet。随着表大小的增长，它会自动分裂成多个tablets，默认每个表可以达到1GB。
+    尽管，我们的模型支持任意大小的数据，但是目前的Bigtable的实现还不能非常大的数据。下面的部分江介绍Bigtable实现的细节情况。</p>
+
+<h4>5.1 Tablet Location</h4>
+
+<p>    我们使用一个类似于B+树的三层结构存储位置信息。第一层是存储在Chubby中的文件，该文件包含root tablet的位置信息。root tablet包含一个特殊METADATA table所有teblets的位置信息.每一个tablet包含许多用户tablets的位置信息。root tablet和其他tablet有所不同——从来不会分裂——这种特性使得tablet位置层次结构不会超过三层。
+    METADATA表用一行存储一个tablet的位置信息，位置信息包括tablet表标识符的编码和末行号。每一个METADATA行大约占用1KB的内存。而每个METADATA表的上限是128MB，这样我们三层结构能够处理2<sup>34</sup>的tablets。
+    客户端库遍历位置层次结构定位tablets，并且缓存寻找到的tablet的位置。如果client不知道一个tablet的位置，或者它发现它缓存的信息是错误的，那么它将第贵的在位置层次结构中移动。如果客户端缓存是空的，这种寻找算法需要三次来回传递消息，包括一次从Chubby中读取。如果客户端缓存中的信息过时了，这中算法需要6次来回消息传递才能找到某一个tablet，由于过时的缓存项只有在miss的情况下才会发现。尽管tablet位置信息存储在内存中，无需GFS访问，我们通过客户端库预取tablet位置信息进一步减少这种通常情况下的开销：不管什么时候客户端读取METADATA表时多读取几个tablet的metadata。
+    我们同样在METADATA表中存储了耳机信息，包括与每一个tablet相关的所有事件的日志（如服务器向其提供服务的时间）这种信息对调试和性能分析的作用是很大的。
+ </p>
+
+<h4>5.2 Tablet Assignment</h4>
+
+<p>        每一个tablet一次至多只能分配给一个tablet服务器。master服务器跟踪这些活动的tablet 服务器以及当前正被分配给tablet 服务器的tablet，包括违背分配的tablets.当一个tablet是未分配的，tablet server 有足够的空间容纳一个tablet，master就会通过向tablet server发送一个tablet装载请求给tablet分配服务器。分配只有在一个master的失效备援工作之前tablet装载请求还没有收到：因为tablet server 仅接受当前master的装载请求。因此当一个master服务器发送了一个装载请求，它可以假设这个tablet被赋给了某个tablet服务器知道该服务器死亡，或者该tablet服务器通知master它已经卸载了该tablet.
+        Bigtable使用Chubby跟踪这些tablet服务器，当一个tablet服务器启动时，在一个特定的Chubby目录下，对一个唯一名字的文件创建一个排它锁。master监测此目录来发现tablet服务器。当tablet失去排它锁时，就会停止对其上的tablets提供服务。例如：网络中断可能导致服务器失去和Chubby的会话。tablet服务尝试重新获取一文件的排它锁只要它的文件依旧存在。如果它的文件不存在了，服务器将不能提供任何服务，它就会终结它自己。不论什么时候tablet服务器终止，它将尝试释放自己的锁，以便master可以更快的给它的tablets分配新的服务器。
+        master负责检测tablet服务器不再向tablets提供服务的情形，尽可能快的重新分配这些tablets。为了检测一个tablet 服务器不再向tablet提供服务，master周期性询问每一个tablet服务器的锁的状态。如果某个tablet服务器告诉master它丢失了它的锁，或者master几经尝试都不能够到达一个tablet服务器.master就会尝试获取服务器文件排它锁。如果master能够获取该锁，这说明chubby正常并且tablet服务器要么终结了要么不能够到达Chubby.master将会通过删除它的服务器文件保证该tablet服务器永远都不能够再提供服务。一旦一个服务器文件被删除，master就会将之前分配给他的tablets重新变成未分配的。为了确保master和Chubby之间不易受到网络问题的影响，master终结自己当它与Chubby之间的会话插旗。master失败并不会影响tablets分配。
+    当一个master被集群管理系统启动时，在改变tablet分配之前，它需要知道当前的tablet分配情况。在启动时，master会执行以下的步骤：
+    （1）首先master会在Chubby中获取一个为一个master lock,此锁可以避免并行的master实例
+    （2）master扫描Chubby的servers目录发现活动的tablet 服务器
+    （3）master与每一个活动的tablet server交互发现那些tablets已经分配到每一个服务器，更新当前master所了解到的信息（任何之前masters发送的tablet装载请求都会被拒绝)
+    （4）master扫描METADATA表知道有哪些tablets.不论什么时候扫描到一个没有被分配的tablet,master把这个tablet放到未分配tablet集合中，这样可以是得tablet分配更加方便。
+        
+        一个比较复杂的事情是只有当METADATA tablets已经被分配之后才能够扫描METADATA表。因此，在开始扫描之前（第四步），master把root tablet加到未分配tablet集合中如果在第三步中没有对root tablet进行分配。这会保证root tablet会被分配。因为root tablet包含所有的METADATA表的名字，master在扫描完root tablet之后就会知道所有的METADATA表的名字。
+        这些tablets集合只有在表创建或删除的时候、俩个tablets合并成一个更大的tablet,或者一个tablet分裂成俩个更小的tablets时才会改变。master能够跟踪这些改变因为除了最后一个操作，其他操作都是由master初始化的。对于tablets分裂需要特殊对待，因为这个操作是由tablet servers启动的。tablet server 分裂过程是这样的，在METADATA表中记录新的tablet server的信息。在执行分裂之后，tablet server通知master.如果分裂通知丢失（由于tablet server或者master死亡）。master会发现该新的tablet当其要求tablet server加载已经分裂的tablet的时候。tablet server会告知master关于该分裂，因为master发现在METADATA表中的tablet项仅能描述它要求加载tablet的一部分信息。
+ </p>
+
+<h4>5.3 Tablet Serving</h4>
+
+<p>        tablet的持久化信息被存储在GFS中，如图6所示</p>
+
+<p> <img src="http://images.cnitblog.com/blog/424079/201312/21094848-56256e5d4b4b4f8aa5088e027c5edd80.jpg" alt="" />
+        更新信息都被提交到一个存储恢复记录的commit log中。最近提交的信息都被存储在内存中的一个叫做memtable的有序缓冲中。一个memtable保存了row-by-row basis的更新，每一行都通过写时复制来保证行层次的一致性。更早的更新存储在一系列的SSTables中（不可改变）
+        为了恢复一个tablet，tablet server从METADATA表中读取元数据。这些元素据包括组成tablet和一系列的还原点的SSTables，这些元数据可能包含tablet数据的提交日志的指针。server把SSTables的索引读进内存，通过还原点中更新记录重构memetable。
+        当tablet server接受到一个写操作请求，server检查该请求是否是良定义的，发送者是否有权限执行该操作。检查权限是通过Chubby文件中一个允许写的列表（该文件在CHubby客户端缓存中，几乎每次都能命中）。合法的改变都会写入到提交日志中。批量提交小的改变可以提高系统吞吐量。当写操作提交之后，内容就被插入到memtable总。
+        当tablet server接收到一个读操作时，同样先检查其形式和权限。
+        当tablets正在分裂或者合并的时候读写操作仍然可以继续。当tablets在被压缩时，读写操作仍然可以进行。</p>
+
+<h4>5.4 Compactions</h4>
+
+<p>        当执行写操作时，memtable大小增加。当memtable大小达到阈值时memtable就会被冻结，一个新的memtable会被创建，冻结的memtable会被转换成SSTable并被写入到GFS中。这种小型压缩过程有两个目的：减少tablet server的内存消耗，减少在server死亡情况下恢复过程中需要从commit log中读取的数据量
+        每一次微小压缩（minor compaction）都会创建一个新的SSTable。如果这种行为不受约束，读操作可能需要合并任意数量的SSTable中的更新记录。相反，如果我们限制了这些文件的数目通过在后台周期性执行一个合并压缩。合并压缩读取几个SSTable和memtable的内容，写入到一个新的SStable中。当压缩完成后，输入SSTables和memtable可以被丢弃掉。
+        把所有SSTables中的内容写入到一个SSTable的合并操作称之为大的合并。由小型压缩产生的SSTables可以包含特殊的删除项，该删除项可以限制在比较老的SStable中仍然存活着的数据。另一方面，大的压缩产生的SSTable不包含任何删除信息或数据。Bigtable周期性的检测所有的tablets并且周期性应用大的压缩。这些大的压缩让Bigtable回首被删除数据使用的水资源，同时也能保证让需删除的数据机试从系统中小时，这一点对于存储敏感数据的服务很重要。
+        Bigtable读性能得以与GFS的局部性优化。当文件被写入时，GFS尝试把数据的副本放在写者的机器上。当读取GFS文件时，读取的数据来源于最近可用的副本中。因此，在tablet servers与GFS servers共享机器时，tablet servers会压缩到在硬盘上有副本的SStables中，这样可以在处理连续的读请求时快速访问这些SSTables
+ </p>
+
+<h4>5.5模式管理</h4>
+
+<p>        BigTable的模式存储在Chubby中。Chubby给Bigtable模式提供了一个搞笑的交流基质，它提供了对整个文件原子写操作和小文件的一致性缓存。列入，假设一个客户端程序想要删除表中的某些列族。master执行访问控制检查，验证结果模式是梁定义的，然后向Chubby中重写相应的模式来安装新的模式。不论什么时候tablet servers需要决定那些列族存在，仅需要读取Chubby中相应的模式，这在Chubby的客户端缓存中常常是存在的。因为Chubby缓存是一致的，tablet servers 一定能够看到对那个文件的所有改变。
+ 
+ 
+        参考资料：
+　　　　Bigtable: A Distributed Storage System for Structured Data</p>
+
+				</div>
+
+
+
+				<!-- <div id="disqus_thread"></div> -->
+				<script type="text/javascript">
+				/* * * CONFIGURATION VARIABLES * * */
+				// var disqus_shortname = 'lucasgatsas2015';
+
+				// /* * * DON'T EDIT BELOW THIS LINE * * */
+				// (function() {
+				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				// })();
+				</script>
+				<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+				<br>
+
+
+
+				<div class="[ col-xs-12 ] meine-visitenkarte"
+				style="  background-color: #F7F7F7;
+				padding-left: 20px;
+				padding-bottom: 20px;
+				border-radius: 4px;
+				padding-top: 20px;
+				text-align: -webkit-center;
+				line-height: 30px;
+				border: 1px solid rgba(0, 0, 0, 0.09);
+				">
+				<td colspan="999">
+					<a href="">Stillwater </a> 
+					<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
+					<a href="">follow:</a>
+					<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
+					<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
+
+					<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+
+					<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
+				</td>
+			</div>
+
+		</article>
+
+		
+	<article>
+		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
+			 -->
+			
+				<header class="intro">
+				
+				<div>
+					<div class="post-meta">
+						<span class="entry-date date published updated">
 							<time datetime="2015-06-27T22:00:44+08:00">
 								<a href="stillwater.me/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">June 27, 2015</a>
 							</time>
