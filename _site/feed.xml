@@ -5,8 +5,8 @@
     <description>Hello, My Name is stillwater, I&#39;m a software Engineer and Web Developer from China. </description>
     <link>stillwater.me/</link>
     <atom:link href="stillwater.me/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 29 Jun 2015 00:06:25 +0800</pubDate>
-    <lastBuildDate>Mon, 29 Jun 2015 00:06:25 +0800</lastBuildDate>
+    <pubDate>Tue, 30 Jun 2015 00:17:58 +0800</pubDate>
+    <lastBuildDate>Tue, 30 Jun 2015 00:17:58 +0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -61,22 +61,17 @@
       </item>
     
       <item>
-        <title>(译)bigtable 浅析</title>
-        <description>&lt;hr /&gt;
+        <title>bigtable 浅析</title>
+        <description>&lt;h3&gt;bigtable 浅析&lt;/h3&gt;
 
-&lt;p&gt; layout:      post
- title:      &quot;bigtable 浅析&quot;
- subtitle:&lt;br/&gt;
- author:      stillwater&lt;/p&gt;
-
-&lt;h2&gt; date:  2015-06-29 00:08:30&lt;/h2&gt;
+&lt;hr /&gt;
 
 &lt;p&gt;    Bigtable 是一个用来管理结构化数据的分布式存储系统，具有很好的伸缩性，能够在几千台应用服务器上处理PB数量级数据。谷歌有许多项目都把数据存储在Bigtable中，包括web indexing,Google Earth, and Google Finance. 这些应用对Bigtable的侧重点不同，但是他们都是海量数据和实时性的应用。尽管需求变化多端，Bigtable很好的提供了一个灵活多变，高性能额解决方案。&lt;/p&gt;
 
 &lt;h3&gt;1.INTRODUCTION&lt;/h3&gt;
 
 &lt;p&gt;    在很多方面Bigtable都与数据库类似：他们有同样的实现策略。并行数据库和主存数据库都具有高伸缩性和高性能的特点。但是Bigtable提供了一种不同的接个口。Bigtable不支持完全的关系数据模型；相反，它给客户端提供了一种简单的数据模型，这种数据模型支持对数据分布和格式的动态控制，并且允许客户端推出底层存储中数据的分布特性。Bigtable的数据可以使用任意字符的行列进行索引，Bigtable也把数据当作不可解释的字符串（uninterpreted strings），尽管客户端常常把不同形式的结构化、半结构化的数据序列化形成这些字符。客户端可以控制通过进行选择模式控制数据的位置。最后一点，调整Bigtable的模式参数能让客户端动态控制是从内存还是硬盘提供数据。
- &lt;/p&gt;
+ &lt;!-- more --&gt;&lt;/p&gt;
 
 &lt;h3&gt;2. DATA MODEL&lt;/h3&gt;
 
@@ -179,9 +174,9 @@
         参考资料：
 　　　　Bigtable: A Distributed Storage System for Structured Data&lt;/p&gt;
 </description>
-        <pubDate>Mon, 29 Jun 2015 00:00:00 +0800</pubDate>
-        <link>stillwater.me/2015/06/29/(%E8%AF%91)bigtable%20%E6%B5%85%E6%9E%90/</link>
-        <guid isPermaLink="true">stillwater.me/2015/06/29/(%E8%AF%91)bigtable%20%E6%B5%85%E6%9E%90/</guid>
+        <pubDate>Sun, 28 Jun 2015 22:00:44 +0800</pubDate>
+        <link>stillwater.me/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/</link>
+        <guid isPermaLink="true">stillwater.me/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/</guid>
         
         
       </item>
@@ -229,6 +224,9 @@ source emove not present in cache&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ gem sources -l
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;!-- more --&gt;
+
 
 &lt;p&gt;更换markdown模板解释器
 安装模板,默认的模板是Maruku,我们替 换为RDiscount。

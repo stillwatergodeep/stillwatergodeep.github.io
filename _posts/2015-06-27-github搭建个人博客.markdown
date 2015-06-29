@@ -39,7 +39,7 @@ source emove not present in cache
 添加完成之后查看一下是否更换成功
 
 	$ gem sources -l
-
+<!-- more -->
 更换markdown模板解释器
 安装模板,默认的模板是Maruku,我们替 换为RDiscount。 
 	$ sudo gem install rdiscount
