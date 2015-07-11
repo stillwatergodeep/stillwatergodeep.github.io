@@ -46,14 +46,14 @@
 <!-- Blog Title -->
 <title>stillwaterli - A software Engineer and Web Developer from China.  </title>
 
-    <!--     <title>Archive - stillwater</title>
+    <!--     <title>jekyll read more  - stillwater</title>
 --> 
 <!-- Property Metas --> 
 <meta property="og:image" content="/img/93TyTG3x.png"/>
 <meta property="og:title" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <meta property="og:site_name" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <!-- Canonical -->
-<link rel="canonical" href="stillwater.me/archive/">
+<link rel="canonical" href="stillwater.me/2015/06/28/preview%20to%20Jekyll%20without%20plugins/">
 <!-- StyleSheet -->
 <link rel="stylesheet" href="/css/pygments.css">
 <link rel="stylesheet" href="/css/duoshuo.css">
@@ -302,69 +302,131 @@
 
 
 
-    <style>
-section#archive {
-padding-top: 100px;
-}</style>
-<section id="archive">
-   <div class="container">
+    <!-- Post Header -->
+ 
+    <header class="intro">
+
+    <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                  <span class="subheading" id="textfloat">This is my Archive List</span>
-                  <h2>This Years Archive.</h2>
+                <div class="post-heading">
+                    <h1>jekyll read more </h1>
                     
-                     
-                      <ul class="this">
-                      
-                      <li><time>10 Jul</time> <a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">数据库悲观锁乐观锁</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>29 Jun</time> <a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">利用sublime快速编写markdown</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>28 Jun</time> <a href="/2015/06/28/preview%20to%20Jekyll%20without%20plugins/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">jekyll read more </a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>28 Jun</time> <a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">bigtable 浅析</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>27 Jun</time> <a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">github搭建个人博客</a></li>
-                      
-                     
-                      
-                      
-                      
-                      </ul>
-                      <h2>2012</h2>
-                      <ul class="past">
-                      
-                      
-                      <li><time>26 Oct</time> <a href="/2012/10/26/PNG-Loading/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">（转）使用 PNG 图片制作动态 Loading</a></li>
-                      
-                      </ul>
-                      <!--    <hr class="small"> -->
+                    <span class="meta">Posted by stillwater  </span>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<h3>Adding support for <!-- more --> tag to Jekyll without plugins</h3>
+
+<p>Here's a quick tip for an approach I've started using to split post content at a given point for displaying in an archive page, without using a plugin.</p>
+
+<p>Until recently the approach I took to creating a snippet of a post for my archive page just trimming the post.content to 300 characters in the following way:</p>
+
+<p>This worked well at first, but when I wrote posts that had very little text before a block of code at the start of the post, the post snippets didn't look very good:
+<img src="https://blog.omgmog.net/images/by%20default%202013-08-23%20at%2015.33.41.png"/>
+There are plugins to allow you to specify where to cut off the content for an excerpt, such as
+<a href="https://gist.github.com/stympy/986665">this plugin.</a></p>
+
+<p>But that won't work as Jekyll runs with safe: true on GitHub Pages.</p>
+
+<p>So a solution... Well, Jekyll supports the liquid filters split and first, so we can do the following:</p>
+
+<pre><code>{&amp;#37; if post.content | size &gt; 300 &amp;#37;}
+    &lt;strong&gt;Read more&lt;/strong&gt;
+{&amp;#37; endif &amp;#37;}
+</code></pre>
+
+<p>And then if we include a <!-- more --> in our post at the point that we want to split, we'll get the post to cut off the content at that point.</p>
+
+<p><img src="https://blog.omgmog.net/images/by%20default%202013-08-23%20at%2015.45.23.png"/></p>
+
+<p>So how does it work?</p>
+
+<p>The split filter</p>
+
+<p>The first step is to split the content at the <!-- more --> marker using the split filter. When we use split filter, it turns out post.content in to an array with two (or more) parts.</p>
+
+<pre><code>{&amp;#37; post.content | split:"&lt;!-- more --&gt;" &amp;#37;}
+</code></pre>
+
+<p>So we go from:</p>
+
+<pre><code>post.content =&gt;
+
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.
+
+&lt;!-- more --&gt;
+
+In in augue enim. Aenean fringilla accumsan augue, at convallis quam consequat nec."
+</code></pre>
+
+<p>Then the second step is to use the first filter to just select the part of post.content that came before the <!-- more --> marker:</p>
+
+<pre><code>{&amp;#37; post.content | split:"&lt;!-- more --&gt;" | first &amp;#37;}
+</code></pre>
+
+<p>Which gives us:</p>
+
+<pre><code>post.content =&gt;
+
+["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla."]
+</code></pre>
+
+<p>I also take the steps to strip_html and trim the text to 300 characters.</p>
+
+<p>Update: You can use Jekyll's built in "excerpt" feature these days, by doing the following:</p>
+
+<p>Define your excerpt_separator in your _config.yml: excerpt_separator: "<!-- more -->"
+Update the examples I provided before, to use post.excerpt:</p>
+
+<pre><code>{&amp;#37;post.excerpt &amp;#37;}
+</code></pre>
+
+
+                <hr>
+
+
+<div id="ds-thread" class="ds-thread" data-url="/2015/06/28/preview%20to%20Jekyll%20without%20plugins/" data-title="jekyll read more " data-thread-key="jekyll read more "></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name: "stillwater"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/" data-toggle="tooltip" data-placement="top" title="bigtable 浅析">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" data-toggle="tooltip" data-placement="top" title="利用sublime快速编写markdown">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
 
     <!-- Footer -->
 <footer>

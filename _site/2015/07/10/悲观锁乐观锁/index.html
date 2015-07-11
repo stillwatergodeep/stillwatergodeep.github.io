@@ -46,14 +46,14 @@
 <!-- Blog Title -->
 <title>stillwaterli - A software Engineer and Web Developer from China.  </title>
 
-    <!--     <title>Archive - stillwater</title>
+    <!--     <title>数据库悲观锁乐观锁 - stillwater</title>
 --> 
 <!-- Property Metas --> 
 <meta property="og:image" content="/img/93TyTG3x.png"/>
 <meta property="og:title" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <meta property="og:site_name" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <!-- Canonical -->
-<link rel="canonical" href="stillwater.me/archive/">
+<link rel="canonical" href="stillwater.me/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81/">
 <!-- StyleSheet -->
 <link rel="stylesheet" href="/css/pygments.css">
 <link rel="stylesheet" href="/css/duoshuo.css">
@@ -302,69 +302,80 @@
 
 
 
-    <style>
-section#archive {
-padding-top: 100px;
-}</style>
-<section id="archive">
-   <div class="container">
+    <!-- Post Header -->
+ 
+    <header class="intro">
+
+    <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                  <span class="subheading" id="textfloat">This is my Archive List</span>
-                  <h2>This Years Archive.</h2>
+                <div class="post-heading">
+                    <h1>数据库悲观锁乐观锁</h1>
                     
-                     
-                      <ul class="this">
-                      
-                      <li><time>10 Jul</time> <a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">数据库悲观锁乐观锁</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>29 Jun</time> <a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">利用sublime快速编写markdown</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>28 Jun</time> <a href="/2015/06/28/preview%20to%20Jekyll%20without%20plugins/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">jekyll read more </a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>28 Jun</time> <a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">bigtable 浅析</a></li>
-                      
-                     
-                      
-                      
-                      
-                      
-                      <li><time>27 Jun</time> <a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">github搭建个人博客</a></li>
-                      
-                     
-                      
-                      
-                      
-                      </ul>
-                      <h2>2012</h2>
-                      <ul class="past">
-                      
-                      
-                      <li><time>26 Oct</time> <a href="/2012/10/26/PNG-Loading/" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme">（转）使用 PNG 图片制作动态 Loading</a></li>
-                      
-                      </ul>
-                      <!--    <hr class="small"> -->
+                    <span class="meta">Posted by stillwater  </span>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>悲观锁&amp;乐观锁
+悲观锁与乐观锁是并发访问资源解决冲突不一致的常用的方式，本文将就这两种锁的特点进行讨论。</p>
+
+<p>现在大家很多东西都放在云上面，云上面有一个很不错的功能：云协作。假设有这么一个场景，有一个协作群，群中有两个用户，A&amp;B，其中有一个共享文件F.A看到文件中有一处出错，想去修改它，修改到一半，突然接到一个电话，这时候B也发现F文件中有一个错误，也想去修正，于是也尝试这区修改。A接完电话继续之前的修改。这时，如果没有一个很好地措施，文件最终的结果将很难预料。乐观锁和悲观锁这两个兄弟这时拍拍胸脯说，让我来帮你解决吧。</p>
+
+<h3>悲观锁</h3>
+
+<p>悲观锁：顾名思义，它对事物持消极态度，它假设他要修改的数据如果不加锁的话会被别人修改，所以它每次操作前先独占锁。
+悲观锁说：我有一个防护罩（锁），谁拿到谁就能修改F，于是，A改文件F之前，先问悲观锁要防护罩，如果悲观锁告诉A防护罩已经给别人了，那么A必须等待，反之，如果防护罩空闲，A可以拿到防护罩，拿到之后，罩上文件F（加完锁），A就可以放心大胆的区修改文件F了，因为这时候在防护罩里F被A独享，A可以想什么时候修改完成就什么时候修改完成，随心所欲。但这样问题就产生了，防护罩只有一个，B没有办法及时拿到，没法对F修改，只能等待A修改完成之后，那么显然，并发性将会很差。
+想象一下：你已经获得了对象A，但获得对象B之前你不想放弃对象A；但是另一个已经获得了对象B的用户，在获得对象A之前也不想放弃对象B。那么这时候就需要用到超时设置，它可以打破死锁和处理释放锁失败的情况。悲观锁很容易导致死锁的发生。</p>
+
+<h3>乐观锁</h3>
+
+<p>乐观锁则不一样，它对事物持积极态度，他假设他将操作的数据不会有人修改。
+乐观锁说：只有得到我给的口令的人才能对文件F进行修改，于是A，B纷纷想乐观锁要口令，得到口令后，AB都高兴得对文件F修改，由于A中途接电话，修改好的时间比B晚。B提前修改好之后，和乐观锁对对口令，乐观锁发现，哎，口令一致，允许修改。同时乐观锁为了保证一致性，选择保留B的劳动成果，把口令换了，等了一会，A也修改完成了，同样和乐观锁对对口令，发现哎口令不对，修改无效。
+但这将会有一个问题，就是如果有很多人同时想对F修改，最终将只有一个人修改成功，其他人还得重试，这时候效率反而会很低。</p>
+
+<p><a href="https://4loc.wordpress.com/2009/04/25/optimistic-vs-pessimistic-locking/">一个更加有趣的例子</a></p>
+
+
+                <hr>
+
+
+<div id="ds-thread" class="ds-thread" data-url="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81/" data-title="数据库悲观锁乐观锁" data-thread-key="数据库悲观锁乐观锁"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name: "stillwater"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" data-toggle="tooltip" data-placement="top" title="利用sublime快速编写markdown">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+
+
 
     <!-- Footer -->
 <footer>
