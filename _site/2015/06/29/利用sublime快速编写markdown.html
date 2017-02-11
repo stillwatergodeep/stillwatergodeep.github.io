@@ -27,8 +27,8 @@
 <!-- X-UA --> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<link rel="author" title="stillwater" href="https://plus.google.com/u/0/101869488504092117335/posts"/>
-
+<!--<link rel="author" title="stillwater" href="https://plus.google.com/u/0/101869488504092117335/posts"/>
+-->
 
 <!--<meta name="google-site-verification" content="F5lkHug5Hdw4XRPcwJuQsK01auhET-yWy1o5SrCM-Sw" />
 -->
@@ -46,14 +46,14 @@
 <!-- Blog Title -->
 <title>stillwaterli - A software Engineer and Web Developer from China.  </title>
 
-    <!--     <title>jekyll read more  - stillwater</title>
+    <!--     <title>利用sublime快速编写markdown - stillwater</title>
 --> 
 <!-- Property Metas --> 
 <meta property="og:image" content="/img/93TyTG3x.png"/>
 <meta property="og:title" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <meta property="og:site_name" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <!-- Canonical -->
-<link rel="canonical" href="stillwater.me/2015/06/28/preview%20to%20Jekyll%20without%20plugins/">
+<link rel="canonical" href="http://localhost:4000/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown.html">
 <!-- StyleSheet -->
 <link rel="stylesheet" href="/css/pygments.css">
 <link rel="stylesheet" href="/css/duoshuo.css">
@@ -72,7 +72,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+         <!-- <link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">-->
 
         <!-- Loading front stylesheet here --> 
         <style>
@@ -310,7 +310,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>jekyll read more </h1>
+                    <h1>利用sublime快速编写markdown</h1>
                     
                     <span class="meta">Posted by stillwater  </span>
                 </div>
@@ -325,77 +325,50 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<h3>Adding support for <!-- more --> tag to Jekyll without plugins</h3>
+				<p>插件实现插入带时间功能的说明：</p>
 
-<p>Here's a quick tip for an approach I've started using to split post content at a given point for displaying in an archive page, without using a plugin.</p>
+<p>####1. 创建插件：</p>
 
-<p>Until recently the approach I took to creating a snippet of a post for my archive page just trimming the post.content to 300 characters in the following way:</p>
+<p>Tools → New Plugin:</p>
 
-<p>This worked well at first, but when I wrote posts that had very little text before a block of code at the start of the post, the post snippets didn't look very good:
-<img src="https://blog.omgmog.net/images/by%20default%202013-08-23%20at%2015.33.41.png"/>
-There are plugins to allow you to specify where to cut off the content for an excerpt, such as
-<a href="https://gist.github.com/stympy/986665">this plugin.</a></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">sublime_plugin</span>
+<span class="k">class</span> <span class="nc">addInfo</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="o">.</span><span class="n">TextCommand</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="s">"insert_snippet"</span><span class="p">,</span> 
+            <span class="p">{</span>
+        <span class="s">"contents"</span><span class="p">:</span> <span class="s">"---""</span><span class="se">\n</span><span class="s">"</span><span class="c">#you have to start with contents</span>
+        <span class="s">" layout:      post""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" title:      ""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" subtitle:      ""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" author:      stillwater""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" dateTime:  "</span>  <span class="s">"</span><span class="si">%</span><span class="s">s"</span>  <span class="o">%</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"</span><span class="si">%</span><span class="s">Y-</span><span class="si">%</span><span class="s">m-</span><span class="si">%</span><span class="s">d </span><span class="si">%</span><span class="s">H:</span><span class="si">%</span><span class="s">M:</span><span class="si">%</span><span class="s">S"</span><span class="p">)</span> <span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" description: Description""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">"---"</span>
+            <span class="p">}</span>
+        <span class="p">)</span></code></pre></figure>
 
-<p>But that won't work as Jekyll runs with safe: true on GitHub Pages.</p>
+<p>保存为Sublime Text 2\Packages\User\ addInfo.py</p>
 
-<p>So a solution... Well, Jekyll supports the liquid filters split and first, so we can do the following:</p>
+<p>####2. 创建快捷键：</p>
 
-<pre><code>{&amp;#37; if post.content | size &gt; 300 &amp;#37;}
-    &lt;strong&gt;Read more&lt;/strong&gt;
-{&amp;#37; endif &amp;#37;}
-</code></pre>
-
-<p>And then if we include a <!-- more --> in our post at the point that we want to split, we'll get the post to cut off the content at that point.</p>
-
-<p><img src="https://blog.omgmog.net/images/by%20default%202013-08-23%20at%2015.45.23.png"/></p>
-
-<p>So how does it work?</p>
-
-<p>The split filter</p>
-
-<p>The first step is to split the content at the <!-- more --> marker using the split filter. When we use split filter, it turns out post.content in to an array with two (or more) parts.</p>
-
-<pre><code>{&amp;#37; post.content | split:"&lt;!-- more --&gt;" &amp;#37;}
-</code></pre>
-
-<p>So we go from:</p>
-
-<pre><code>post.content =&gt;
-
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.
-
-&lt;!-- more --&gt;
-
-In in augue enim. Aenean fringilla accumsan augue, at convallis quam consequat nec."
-</code></pre>
-
-<p>Then the second step is to use the first filter to just select the part of post.content that came before the <!-- more --> marker:</p>
-
-<pre><code>{&amp;#37; post.content | split:"&lt;!-- more --&gt;" | first &amp;#37;}
-</code></pre>
-
-<p>Which gives us:</p>
-
-<pre><code>post.content =&gt;
-
-["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla."]
-</code></pre>
-
-<p>I also take the steps to strip_html and trim the text to 300 characters.</p>
-
-<p>Update: You can use Jekyll's built in "excerpt" feature these days, by doing the following:</p>
-
-<p>Define your excerpt_separator in your _config.yml: excerpt_separator: "<!-- more -->"
-Update the examples I provided before, to use post.excerpt:</p>
-
-<pre><code>{&amp;#37;post.excerpt &amp;#37;}
-</code></pre>
+<p>Preference → Key Bindings - User:</p>
+<pre>
+[
+    {
+        "command": "add_info",
+        "keys": [
+            "ctrl+shift+,"#注意这里我试了一些字母而非标点，貌似没有作用，有可能是因为冲突，没有细究。
+        ]
+    }
+]
+</pre>
 
 
                 <hr>
 
 
-<div id="ds-thread" class="ds-thread" data-url="/2015/06/28/preview%20to%20Jekyll%20without%20plugins/" data-title="jekyll read more " data-thread-key="jekyll read more "></div>
+<div id="ds-thread" class="ds-thread" data-url="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown.html" data-title="利用sublime快速编写markdown" data-thread-key="利用sublime快速编写markdown"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name: "stillwater"};
 (function() {
@@ -410,12 +383,12 @@ var duoshuoQuery = {short_name: "stillwater"};
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/" data-toggle="tooltip" data-placement="top" title="bigtable 浅析">&larr; Previous Post</a>
+                        <a href="/2015/06/28/preview-to-Jekyll-without-plugins.html" data-toggle="tooltip" data-placement="top" title="jekyll read more ">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" data-toggle="tooltip" data-placement="top" title="利用sublime快速编写markdown">Next Post &rarr;</a>
+                        <a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html" data-toggle="tooltip" data-placement="top" title="数据库悲观锁乐观锁">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -479,7 +452,7 @@ var duoshuoQuery = {short_name: "stillwater"};
           
           
         </ul>
-        <p class="copyright text-muted">Copyright &copy; stillwater 2015 - 2016.
+        <p class="copyright text-muted">Copyright &copy; stillwater 2017 - 2016.
         </p>
       </div>
     </div>

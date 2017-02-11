@@ -27,8 +27,8 @@
 <!-- X-UA --> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
-<link rel="author" title="stillwater" href="https://plus.google.com/u/0/101869488504092117335/posts"/>
-
+<!--<link rel="author" title="stillwater" href="https://plus.google.com/u/0/101869488504092117335/posts"/>
+-->
 
 <!--<meta name="google-site-verification" content="F5lkHug5Hdw4XRPcwJuQsK01auhET-yWy1o5SrCM-Sw" />
 -->
@@ -53,7 +53,7 @@
 <meta property="og:title" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <meta property="og:site_name" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <!-- Canonical -->
-<link rel="canonical" href="stillwater.me/">
+<link rel="canonical" href="http://localhost:4000/">
 <!-- StyleSheet -->
 <link rel="stylesheet" href="/css/pygments.css">
 <link rel="stylesheet" href="/css/duoshuo.css">
@@ -72,7 +72,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">
+         <!-- <link href="https://gist-assets.github.com/assets/embed-b67021dc07195830cc157f7720b938fb.css" rel="stylesheet" type="text/css">-->
 
         <!-- Loading front stylesheet here --> 
         <style>
@@ -345,20 +345,20 @@
 						<div class="post-meta">
 							<span class="entry-date date published updated">
 								<time datetime="2015-07-10T16:00:00+08:00">
-									<a href="stillwater.me/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81/">July 10, 2015</a>
+									<a href="http://localhost:4000/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%89%AF%E6%9C%AC.html">July 10, 2015</a>
 								</time>
 							</span>
 							<span class="author vcard">
 								<span class="fn">
-									<a href="stillwater.me/about/" title="About stillwater">stillwater</a>
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
 								</span>
 							</span>
 							
 						</div>
 
 						
-						<h1 class="post-title"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81/" id="post-title-h1" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url">数据库悲观锁乐观锁</a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81/" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+						<h1 class="post-title"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%89%AF%E6%9C%AC.html" id="post-title-h1" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url">数据库悲观锁乐观锁</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%89%AF%E6%9C%AC.html" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url" id="readmore-link"> ReadMore</a></h1>
 
 						
 
@@ -376,46 +376,45 @@
 
 <p>现在大家很多东西都放在云上面，云上面有一个很不错的功能：云协作。假设有这么一个场景，有一个协作群，群中有两个用户，A&amp;B，其中有一个共享文件F.A看到文件中有一处出错，想去修改它，修改到一半，突然接到一个电话，这时候B也发现F文件中有一个错误，也想去修正，于是也尝试这区修改。A接完电话继续之前的修改。这时，如果没有一个很好地措施，文件最终的结果将很难预料。乐观锁和悲观锁这两个兄弟这时拍拍胸脯说，让我来帮你解决吧。</p>
 
-<h3>悲观锁</h3>
+<h3 id="悲观锁">悲观锁</h3>
 
 <p>悲观锁说：我有一个防护罩（锁），谁拿到谁就能修改F，于是，A改文件F之前，先问悲观锁要防护罩，如果悲观锁告诉A防护罩已经给别人了，那么A必须等待，反之，如果防护罩空闲，A可以拿到防护罩，拿到之后，罩上文件F（加完锁），A就可以放心大胆的区修改文件F了，因为这时候在防护罩里F被A独享，A可以想什么时候修改完成就什么时候修改完成，随心所欲。但这样问题就产生了，防护罩只有一个，B没有办法及时拿到，没法对F修改，只能等待A修改完成之后，那么显然，并发性将会很差。
 想象一下：你已经获得了对象A，但获得对象B之前你不想放弃对象A；但是另一个已经获得了对象B的用户，在获得对象A之前也不想放弃对象B。那么这时候就需要用到超时设置，它可以打破死锁和处理释放锁失败的情况。悲观锁很容易导致死锁的发生。
 注：Synchronized互斥锁属于悲观锁。</p>
 
-<h3>乐观锁</h3>
-
+<h3 id="乐观锁">乐观锁</h3>
 <p>乐观锁说：只有得到我给的口令的人才能对文件F进行修改，于是A，B纷纷想乐观锁要口令，得到口令后，AB都高兴得对文件F修改，由于A中途接电话，修改好的时间比B晚。B提前修改好之后，和乐观锁对对口令，乐观锁发现，哎，口令一致，允许修改。同时乐观锁为了保证一致性，选择保留B的劳动成果，把口令换了，等了一会，A也修改完成了，同样和乐观锁对对口令，发现哎口令不对，修改无效。
 但这将会有一个问题，就是如果有很多人同时想对F修改，最终将只有一个人修改成功，其他人还得重试，这时候效率反而会很低。</p>
 
 <p>可以看一下java中原子增是怎么实现的。</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AtomicInt</span> <span class="o">{</span>
-    
-       <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
-    
-       <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
-    
-           <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
-    
-        <span class="o">}</span>
-    
-    
-        <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">getAndIncrement</span><span class="o">()</span> <span class="o">{</span>
-        
-               <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
-        
-                   <span class="kt">int</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">();</span>
-        
-                   <span class="kt">int</span> <span class="n">next</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-        
-                   <span class="k">if</span> <span class="o">(</span><span class="n">compareAndSet</span><span class="o">(</span><span class="n">current</span><span class="o">,</span> <span class="n">next</span><span class="o">))</span>
-        
-                        <span class="k">return</span> <span class="n">current</span><span class="o">;</span>
-        
-               <span class="o">}</span>
-        
-            <span class="o">}</span></code></pre></div>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AtomicInt</span> <span class="o">{</span>
 
+       <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
+
+       <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
+
+           <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+
+        <span class="o">}</span>
+  
+        <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">getAndIncrement</span><span class="o">()</span> <span class="o">{</span>
+
+               <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+
+                   <span class="kt">int</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">();</span>
+
+                   <span class="kt">int</span> <span class="n">next</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+
+                   <span class="k">if</span> <span class="o">(</span><span class="n">compareAndSet</span><span class="o">(</span><span class="n">current</span><span class="o">,</span> <span class="n">next</span><span class="o">))</span>
+
+                        <span class="k">return</span> <span class="n">current</span><span class="o">;</span>
+
+               <span class="o">}</span>
+
+            <span class="o">}</span>
+</code></pre>
+</div>
 
 <p>但乐观锁同时也有一些缺点：</p>
 
@@ -426,6 +425,147 @@
 <p>③  ABA问题。CAS的核心思想是通过比对内存值与预期值是否一样而判断内存值是否被改过，但这个判断逻辑不严谨，假如内存值原来是A，后来被一条线程改为B，最后又被改成了A，则CAS认为此内存值并没有发生改变，但实际上是有被其他线程改过的，这种情况对依赖过程值的情景的运算结果影响很大。解决的思路是引入版本号，每次变量更新都把版本号加一。</p>
 
 <p><a href="https://4loc.wordpress.com/2009/04/25/optimistic-vs-pessimistic-locking/">一个更加有趣的例子</a></p>
+
+
+					
+				</div>
+
+
+
+				<!-- <div id="disqus_thread"></div> -->
+				<script type="text/javascript">
+				/* * * CONFIGURATION VARIABLES * * */
+				// var disqus_shortname = 'lucasgatsas2015';
+
+				// /* * * DON'T EDIT BELOW THIS LINE * * */
+				// (function() {
+				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				// })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<br>
+
+
+
+<div class="[ col-xs-12 ] meine-visitenkarte"
+style="  background-color: #F7F7F7;
+padding-left: 20px;
+padding-bottom: 20px;
+border-radius: 4px;
+padding-top: 20px;
+text-align: -webkit-center;
+line-height: 30px;
+border: 1px solid rgba(0, 0, 0, 0.09);
+">
+<td colspan="999">
+	<a href="">Stillwater </a> 
+	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
+	<a href="">follow:</a>
+	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
+	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
+
+	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+
+	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
+</td>
+</div>
+
+</article>
+
+
+	<article>
+		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
+			 -->
+			
+				<header class="intro">
+					
+					<div>
+						<div class="post-meta">
+							<span class="entry-date date published updated">
+								<time datetime="2015-07-10T16:00:00+08:00">
+									<a href="http://localhost:4000/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html">July 10, 2015</a>
+								</time>
+							</span>
+							<span class="author vcard">
+								<span class="fn">
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
+								</span>
+							</span>
+							
+						</div>
+
+						
+						<h1 class="post-title"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html" id="post-title-h1" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url">数据库悲观锁乐观锁</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+
+						
+
+					</div>
+				</header>
+			</article>
+			<article class="container hentry">
+				<div class="entry-content">
+					
+					<p>悲观锁&amp;乐观锁
+悲观锁与乐观锁是并发访问资源解决冲突不一致的常用的方式，本文将就这两种锁的特点进行讨论。
+悲观锁：顾名思义，它对事物持消极态度，它假设他要修改的数据如果不加锁的话会被别人修改，所以它每次操作前先独占锁。悲观者的人生观是一件事情我必须要百分之百完全控制才会去做，否则就认为这件事情一定会出问题；
+而乐观者的人生观则相反，凡事不管最终结果如何，他都会先尝试去做，大不了最后不成功。
+这就是悲观锁与乐观锁的区别，悲观锁会把整个对象加锁占为自有后才去做操作，乐观锁不获取锁直接做操作，然后通过一定检测手段决定是否更新数据</p>
+
+<p>现在大家很多东西都放在云上面，云上面有一个很不错的功能：云协作。假设有这么一个场景，有一个协作群，群中有两个用户，A&amp;B，其中有一个共享文件F.A看到文件中有一处出错，想去修改它，修改到一半，突然接到一个电话，这时候B也发现F文件中有一个错误，也想去修正，于是也尝试这区修改。A接完电话继续之前的修改。这时，如果没有一个很好地措施，文件最终的结果将很难预料。乐观锁和悲观锁这两个兄弟这时拍拍胸脯说，让我来帮你解决吧。</p>
+
+<h3 id="悲观锁">悲观锁</h3>
+
+<p>悲观锁说：我有一个防护罩（锁），谁拿到谁就能修改F，于是，A改文件F之前，先问悲观锁要防护罩，如果悲观锁告诉A防护罩已经给别人了，那么A必须等待，反之，如果防护罩空闲，A可以拿到防护罩，拿到之后，罩上文件F（加完锁），A就可以放心大胆的区修改文件F了，因为这时候在防护罩里F被A独享，A可以想什么时候修改完成就什么时候修改完成，随心所欲。但这样问题就产生了，防护罩只有一个，B没有办法及时拿到，没法对F修改，只能等待A修改完成之后，那么显然，并发性将会很差。
+想象一下：你已经获得了对象A，但获得对象B之前你不想放弃对象A；但是另一个已经获得了对象B的用户，在获得对象A之前也不想放弃对象B。那么这时候就需要用到超时设置，它可以打破死锁和处理释放锁失败的情况。悲观锁很容易导致死锁的发生。
+注：Synchronized互斥锁属于悲观锁。</p>
+
+<h3 id="乐观锁">乐观锁</h3>
+<p>乐观锁说：只有得到我给的口令的人才能对文件F进行修改，于是A，B纷纷想乐观锁要口令，得到口令后，AB都高兴得对文件F修改，由于A中途接电话，修改好的时间比B晚。B提前修改好之后，和乐观锁对对口令，乐观锁发现，哎，口令一致，允许修改。同时乐观锁为了保证一致性，选择保留B的劳动成果，把口令换了，等了一会，A也修改完成了，同样和乐观锁对对口令，发现哎口令不对，修改无效。
+但这将会有一个问题，就是如果有很多人同时想对F修改，最终将只有一个人修改成功，其他人还得重试，这时候效率反而会很低。</p>
+
+<p>可以看一下java中原子增是怎么实现的。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AtomicInt</span> <span class="o">{</span>
+
+       <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
+
+       <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
+
+           <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+
+        <span class="o">}</span>
+  
+        <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">getAndIncrement</span><span class="o">()</span> <span class="o">{</span>
+
+               <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+
+                   <span class="kt">int</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">();</span>
+
+                   <span class="kt">int</span> <span class="n">next</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+
+                   <span class="k">if</span> <span class="o">(</span><span class="n">compareAndSet</span><span class="o">(</span><span class="n">current</span><span class="o">,</span> <span class="n">next</span><span class="o">))</span>
+
+                        <span class="k">return</span> <span class="n">current</span><span class="o">;</span>
+
+               <span class="o">}</span>
+
+            <span class="o">}</span>
+</code></pre>
+</div>
+
+<p>但乐观锁同时也有一些缺点：</p>
+
+<p>①  观锁只能保证一个共享变量的原子操作。如上例子，自旋过程中只能保证value变量的原子性，这时如果多一个或几个变量，乐观锁将变得力不从心，但互斥锁能轻易解决，不管对象数量多少及对象颗粒度大小。</p>
+
+<p>②  长时间自旋可能导致开销大。假如CAS长时间不成功而一直自旋，会给CPU带来很大的开销。</p>
+
+<p>③  ABA问题。CAS的核心思想是通过比对内存值与预期值是否一样而判断内存值是否被改过，但这个判断逻辑不严谨，假如内存值原来是A，后来被一条线程改为B，最后又被改成了A，则CAS认为此内存值并没有发生改变，但实际上是有被其他线程改过的，这种情况对依赖过程值的情景的运算结果影响很大。解决的思路是引入版本号，每次变量更新都把版本号加一。</p>
+
+<p><a href="https://4loc.wordpress.com/2009/04/25/optimistic-vs-pessimistic-locking/">一个更加有趣的例子</a></p>
+
 
 					
 				</div>
@@ -485,20 +625,20 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 						<div class="post-meta">
 							<span class="entry-date date published updated">
 								<time datetime="2015-06-29T05:08:30+08:00">
-									<a href="stillwater.me/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/">June 29, 2015</a>
+									<a href="http://localhost:4000/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown.html">June 29, 2015</a>
 								</time>
 							</span>
 							<span class="author vcard">
 								<span class="fn">
-									<a href="stillwater.me/about/" title="About stillwater">stillwater</a>
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
 								</span>
 							</span>
 							
 						</div>
 
 						
-						<h1 class="post-title"><a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" id="post-title-h1" rel="bookmark" title="利用sublime快速编写markdown" itemprop="url">利用sublime快速编写markdown</a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown/" rel="bookmark" title="利用sublime快速编写markdown" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+						<h1 class="post-title"><a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown.html" id="post-title-h1" rel="bookmark" title="利用sublime快速编写markdown" itemprop="url">利用sublime快速编写markdown</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown.html" rel="bookmark" title="利用sublime快速编写markdown" itemprop="url" id="readmore-link"> ReadMore</a></h1>
 
 						
 
@@ -510,34 +650,32 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 					
 					<p>插件实现插入带时间功能的说明：</p>
 
-<h4>1. 创建插件：</h4>
+<p>####1. 创建插件：</p>
 
 <p>Tools → New Plugin:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">datetime</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">sublime_plugin</span>
 <span class="k">class</span> <span class="nc">addInfo</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="o">.</span><span class="n">TextCommand</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="s">&quot;insert_snippet&quot;</span><span class="p">,</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="s">"insert_snippet"</span><span class="p">,</span> 
             <span class="p">{</span>
-        <span class="s">&quot;contents&quot;</span><span class="p">:</span> <span class="s">&quot;---&quot;&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="c">#you have to start with contents</span>
-        <span class="s">&quot; layout:      post&quot;&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
-        <span class="s">&quot; title:      &quot;&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
-        <span class="s">&quot; subtitle:      &quot;&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
-        <span class="s">&quot; author:      stillwater&quot;&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
-        <span class="s">&quot; dateTime:  &quot;</span>  <span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&quot;</span><span class="p">)</span> <span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
-        <span class="s">&quot; description: Description&quot;&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
-        <span class="s">&quot;---&quot;</span>
+        <span class="s">"contents"</span><span class="p">:</span> <span class="s">"---""</span><span class="se">\n</span><span class="s">"</span><span class="c">#you have to start with contents</span>
+        <span class="s">" layout:      post""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" title:      ""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" subtitle:      ""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" author:      stillwater""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" dateTime:  "</span>  <span class="s">"</span><span class="si">%</span><span class="s">s"</span>  <span class="o">%</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"</span><span class="si">%</span><span class="s">Y-</span><span class="si">%</span><span class="s">m-</span><span class="si">%</span><span class="s">d </span><span class="si">%</span><span class="s">H:</span><span class="si">%</span><span class="s">M:</span><span class="si">%</span><span class="s">S"</span><span class="p">)</span> <span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" description: Description""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">"---"</span>
             <span class="p">}</span>
-        <span class="p">)</span></code></pre></div>
-
+        <span class="p">)</span></code></pre></figure>
 
 <p>保存为Sublime Text 2\Packages\User\ addInfo.py</p>
 
-<h4>2. 创建快捷键：</h4>
+<p>####2. 创建快捷键：</p>
 
 <p>Preference → Key Bindings - User:</p>
-
 <pre>
 [
     {
@@ -549,7 +687,6 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 ]
 </pre>
 
-
 					
 				</div>
 
@@ -608,20 +745,20 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 						<div class="post-meta">
 							<span class="entry-date date published updated">
 								<time datetime="2015-06-28T22:00:44+08:00">
-									<a href="stillwater.me/2015/06/28/preview%20to%20Jekyll%20without%20plugins/">June 28, 2015</a>
+									<a href="http://localhost:4000/2015/06/28/preview-to-Jekyll-without-plugins.html">June 28, 2015</a>
 								</time>
 							</span>
 							<span class="author vcard">
 								<span class="fn">
-									<a href="stillwater.me/about/" title="About stillwater">stillwater</a>
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
 								</span>
 							</span>
 							
 						</div>
 
 						
-						<h1 class="post-title"><a href="/2015/06/28/preview%20to%20Jekyll%20without%20plugins/" id="post-title-h1" rel="bookmark" title="jekyll read more " itemprop="url">jekyll read more </a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/06/28/preview%20to%20Jekyll%20without%20plugins/" rel="bookmark" title="jekyll read more " itemprop="url" id="readmore-link"> ReadMore</a></h1>
+						<h1 class="post-title"><a href="/2015/06/28/preview-to-Jekyll-without-plugins.html" id="post-title-h1" rel="bookmark" title="jekyll read more " itemprop="url">jekyll read more </a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/28/preview-to-Jekyll-without-plugins.html" rel="bookmark" title="jekyll read more " itemprop="url" id="readmore-link"> ReadMore</a></h1>
 
 						
 
@@ -631,7 +768,7 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 			<article class="container hentry">
 				<div class="entry-content">
 					
-					<h3>Adding support for 
+					<p>###Adding support for 
 					
 				</div>
 
@@ -690,20 +827,20 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 						<div class="post-meta">
 							<span class="entry-date date published updated">
 								<time datetime="2015-06-28T22:00:44+08:00">
-									<a href="stillwater.me/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/">June 28, 2015</a>
+									<a href="http://localhost:4000/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90.html">June 28, 2015</a>
 								</time>
 							</span>
 							<span class="author vcard">
 								<span class="fn">
-									<a href="stillwater.me/about/" title="About stillwater">stillwater</a>
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
 								</span>
 							</span>
 							
 						</div>
 
 						
-						<h1 class="post-title"><a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/" id="post-title-h1" rel="bookmark" title="bigtable 浅析" itemprop="url">bigtable 浅析</a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90/" rel="bookmark" title="bigtable 浅析" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+						<h1 class="post-title"><a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90.html" id="post-title-h1" rel="bookmark" title="bigtable 浅析" itemprop="url">bigtable 浅析</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90.html" rel="bookmark" title="bigtable 浅析" itemprop="url" id="readmore-link"> ReadMore</a></h1>
 
 						
 
@@ -713,140 +850,11 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 			<article class="container hentry">
 				<div class="entry-content">
 					
-					<h3>bigtable 浅析</h3>
-
-<hr />
-
+					<h2 id="bigtable-浅析">##bigtable 浅析</h2>
 <p>    Bigtable 是一个用来管理结构化数据的分布式存储系统，具有很好的伸缩性，能够在几千台应用服务器上处理PB数量级数据。谷歌有许多项目都把数据存储在Bigtable中，包括web indexing,Google Earth, and Google Finance. 这些应用对Bigtable的侧重点不同，但是他们都是海量数据和实时性的应用。尽管需求变化多端，Bigtable很好的提供了一个灵活多变，高性能额解决方案。</p>
-
-<h3>1.INTRODUCTION</h3>
-
+<h3 id="1introduction">1.INTRODUCTION</h3>
 <p>    在很多方面Bigtable都与数据库类似：他们有同样的实现策略。并行数据库和主存数据库都具有高伸缩性和高性能的特点。但是Bigtable提供了一种不同的接个口。Bigtable不支持完全的关系数据模型；相反，它给客户端提供了一种简单的数据模型，这种数据模型支持对数据分布和格式的动态控制，并且允许客户端推出底层存储中数据的分布特性。Bigtable的数据可以使用任意字符的行列进行索引，Bigtable也把数据当作不可解释的字符串（uninterpreted strings），尽管客户端常常把不同形式的结构化、半结构化的数据序列化形成这些字符。客户端可以控制通过进行选择模式控制数据的位置。最后一点，调整Bigtable的模式参数能让客户端动态控制是从内存还是硬盘提供数据。
  
-					
-				</div>
-
-
-
-				<!-- <div id="disqus_thread"></div> -->
-				<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES * * */
-				// var disqus_shortname = 'lucasgatsas2015';
-
-				// /* * * DON'T EDIT BELOW THIS LINE * * */
-				// (function() {
-				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				// })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-<br>
-
-
-
-<div class="[ col-xs-12 ] meine-visitenkarte"
-style="  background-color: #F7F7F7;
-padding-left: 20px;
-padding-bottom: 20px;
-border-radius: 4px;
-padding-top: 20px;
-text-align: -webkit-center;
-line-height: 30px;
-border: 1px solid rgba(0, 0, 0, 0.09);
-">
-<td colspan="999">
-	<a href="">Stillwater </a> 
-	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
-	<a href="">follow:</a>
-	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
-	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
-
-	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
-
-	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
-</td>
-</div>
-
-</article>
-
-
-	<article>
-		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
-			 -->
-			
-				<header class="intro">
-					
-					<div>
-						<div class="post-meta">
-							<span class="entry-date date published updated">
-								<time datetime="2015-06-27T22:00:44+08:00">
-									<a href="stillwater.me/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">June 27, 2015</a>
-								</time>
-							</span>
-							<span class="author vcard">
-								<span class="fn">
-									<a href="stillwater.me/about/" title="About stillwater">stillwater</a>
-								</span>
-							</span>
-							
-						</div>
-
-						
-						<h1 class="post-title"><a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" id="post-title-h1" rel="bookmark" title="github搭建个人博客" itemprop="url">github搭建个人博客</a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" rel="bookmark" title="github搭建个人博客" itemprop="url" id="readmore-link"> ReadMore</a></h1>
-
-						
-
-					</div>
-				</header>
-			</article>
-			<article class="container hentry">
-				<div class="entry-content">
-					
-					<h3>GitHub+Markdown+Jekyll 搭建个人博客</h3>
-
-<hr />
-
-<blockquote><p>首先以下所有内容都是针对mac的，不同系统装的软件差不多，但过程千差万别，如果是其他系统凉快去。</p></blockquote>
-
-<h3><em>准备工作</em>：</h3>
-
-<p>mac中自带git和gem.这两者就不用安装了，gem是一种文件组织的包，一般的ruby的很多插件都有由这种各种的包提供。安装Jekyll需要它的支持。</p>
-
-<h4><em>安装jekyll</em></h4>
-
-<pre><code>$ sudo gem update —system
-$ sudo gem install jekyll
-</code></pre>
-
-<p>注意需要sudo，否则 no permission.
-直接运行以上命令会出现一些错误。运行以下命令
-    $ gem sources -l
-可以看到终端显示
-*** CURRENT SOURCES ***</p>
-
-<p>https://rubygems.org
-可见gem的源默认是https://rubygems.org/，
-所以首先更换gem源，换源之前首先删除旧源
-    $ gem sources --remove https://rubygems.org
-注意不要多字符或少字符，不然会出现
-source https://rubygems.org not present in cache
-remove前是—，否则会
-source emove not present in cache</p>
-
-<h4><em>添加新源</em></h4>
-
-<pre><code>$ gem sources -a https://ruby.taobao.org/
-</code></pre>
-
-<p>这是一个完整 rubygems.org 镜像，你可以用此代替官方版本，同步频率目前为15分钟一次以保证尽量与官方服务同步。
-添加完成之后查看一下是否更换成功</p>
-
-<pre><code>$ gem sources -l
-</code></pre>
-
-
 					
 				</div>
 
@@ -990,7 +998,7 @@ $('.content').jscroll({
           
           
         </ul>
-        <p class="copyright text-muted">Copyright &copy; stillwater 2015 - 2016.
+        <p class="copyright text-muted">Copyright &copy; stillwater 2017 - 2016.
         </p>
       </div>
     </div>

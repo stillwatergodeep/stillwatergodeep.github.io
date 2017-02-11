@@ -3,16 +3,18 @@ email: victorylee201304@gmail.com
 description: "Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "
 small_description: "A software Engineer and Web Developer from China. "
 baseurl: ""
-url: "stillwater.me"
+url: "stillwatergodeep.github.io"
 twitter_username:
 github_username:  superstar4
 google_username:  https://plus.google.com/u/0/101869488504092117335/posts
 weibo_username:  http://weibo.com/u/3948730723
+# Plugins
+whitelist: []
+gems: [jekyll-paginate]
+
 # Build settings
 #markdown: kramdown
 highlighter: rouge
-permalink: pretty
-paginate: 
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 
 paginate: 5 #posts per page
