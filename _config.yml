@@ -10,7 +10,7 @@ google_username:  https://plus.google.com/u/0/101869488504092117335/posts
 weibo_username:  http://weibo.com/u/3948730723
 # Build settings
 #markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 permalink: pretty
 paginate: 
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
