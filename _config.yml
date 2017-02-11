@@ -17,7 +17,7 @@ exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
 
 paginate: 5 #posts per page
 
-markdown: RDiscount
+markdown: kramdown
 
 compress_html:
 clippings: [div, p, ul, td, h1, h2]
