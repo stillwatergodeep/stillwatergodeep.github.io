@@ -35,6 +35,7 @@ class addInfo(sublime_plugin.TextCommand):
 
 保存为Sublime Text 2\Packages\User\ addInfo.py
 
+<!-- more -->
 ####2. 创建快捷键：
 
 Preference → Key Bindings - User:

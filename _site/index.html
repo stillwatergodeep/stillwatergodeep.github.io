@@ -345,146 +345,6 @@
 						<div class="post-meta">
 							<span class="entry-date date published updated">
 								<time datetime="2015-07-10T16:00:00+08:00">
-									<a href="http://localhost:4000/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%89%AF%E6%9C%AC.html">July 10, 2015</a>
-								</time>
-							</span>
-							<span class="author vcard">
-								<span class="fn">
-									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
-								</span>
-							</span>
-							
-						</div>
-
-						
-						<h1 class="post-title"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%89%AF%E6%9C%AC.html" id="post-title-h1" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url">数据库悲观锁乐观锁</a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%89%AF%E6%9C%AC.html" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url" id="readmore-link"> ReadMore</a></h1>
-
-						
-
-					</div>
-				</header>
-			</article>
-			<article class="container hentry">
-				<div class="entry-content">
-					
-					<p>悲观锁&amp;乐观锁
-悲观锁与乐观锁是并发访问资源解决冲突不一致的常用的方式，本文将就这两种锁的特点进行讨论。
-悲观锁：顾名思义，它对事物持消极态度，它假设他要修改的数据如果不加锁的话会被别人修改，所以它每次操作前先独占锁。悲观者的人生观是一件事情我必须要百分之百完全控制才会去做，否则就认为这件事情一定会出问题；
-而乐观者的人生观则相反，凡事不管最终结果如何，他都会先尝试去做，大不了最后不成功。
-这就是悲观锁与乐观锁的区别，悲观锁会把整个对象加锁占为自有后才去做操作，乐观锁不获取锁直接做操作，然后通过一定检测手段决定是否更新数据</p>
-
-<p>现在大家很多东西都放在云上面，云上面有一个很不错的功能：云协作。假设有这么一个场景，有一个协作群，群中有两个用户，A&amp;B，其中有一个共享文件F.A看到文件中有一处出错，想去修改它，修改到一半，突然接到一个电话，这时候B也发现F文件中有一个错误，也想去修正，于是也尝试这区修改。A接完电话继续之前的修改。这时，如果没有一个很好地措施，文件最终的结果将很难预料。乐观锁和悲观锁这两个兄弟这时拍拍胸脯说，让我来帮你解决吧。</p>
-
-<h3 id="悲观锁">悲观锁</h3>
-
-<p>悲观锁说：我有一个防护罩（锁），谁拿到谁就能修改F，于是，A改文件F之前，先问悲观锁要防护罩，如果悲观锁告诉A防护罩已经给别人了，那么A必须等待，反之，如果防护罩空闲，A可以拿到防护罩，拿到之后，罩上文件F（加完锁），A就可以放心大胆的区修改文件F了，因为这时候在防护罩里F被A独享，A可以想什么时候修改完成就什么时候修改完成，随心所欲。但这样问题就产生了，防护罩只有一个，B没有办法及时拿到，没法对F修改，只能等待A修改完成之后，那么显然，并发性将会很差。
-想象一下：你已经获得了对象A，但获得对象B之前你不想放弃对象A；但是另一个已经获得了对象B的用户，在获得对象A之前也不想放弃对象B。那么这时候就需要用到超时设置，它可以打破死锁和处理释放锁失败的情况。悲观锁很容易导致死锁的发生。
-注：Synchronized互斥锁属于悲观锁。</p>
-
-<h3 id="乐观锁">乐观锁</h3>
-<p>乐观锁说：只有得到我给的口令的人才能对文件F进行修改，于是A，B纷纷想乐观锁要口令，得到口令后，AB都高兴得对文件F修改，由于A中途接电话，修改好的时间比B晚。B提前修改好之后，和乐观锁对对口令，乐观锁发现，哎，口令一致，允许修改。同时乐观锁为了保证一致性，选择保留B的劳动成果，把口令换了，等了一会，A也修改完成了，同样和乐观锁对对口令，发现哎口令不对，修改无效。
-但这将会有一个问题，就是如果有很多人同时想对F修改，最终将只有一个人修改成功，其他人还得重试，这时候效率反而会很低。</p>
-
-<p>可以看一下java中原子增是怎么实现的。</p>
-
-<div class="language-java highlighter-rouge"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AtomicInt</span> <span class="o">{</span>
-
-       <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
-
-       <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
-
-           <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
-
-        <span class="o">}</span>
-  
-        <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">getAndIncrement</span><span class="o">()</span> <span class="o">{</span>
-
-               <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
-
-                   <span class="kt">int</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">();</span>
-
-                   <span class="kt">int</span> <span class="n">next</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-
-                   <span class="k">if</span> <span class="o">(</span><span class="n">compareAndSet</span><span class="o">(</span><span class="n">current</span><span class="o">,</span> <span class="n">next</span><span class="o">))</span>
-
-                        <span class="k">return</span> <span class="n">current</span><span class="o">;</span>
-
-               <span class="o">}</span>
-
-            <span class="o">}</span>
-</code></pre>
-</div>
-
-<p>但乐观锁同时也有一些缺点：</p>
-
-<p>①  观锁只能保证一个共享变量的原子操作。如上例子，自旋过程中只能保证value变量的原子性，这时如果多一个或几个变量，乐观锁将变得力不从心，但互斥锁能轻易解决，不管对象数量多少及对象颗粒度大小。</p>
-
-<p>②  长时间自旋可能导致开销大。假如CAS长时间不成功而一直自旋，会给CPU带来很大的开销。</p>
-
-<p>③  ABA问题。CAS的核心思想是通过比对内存值与预期值是否一样而判断内存值是否被改过，但这个判断逻辑不严谨，假如内存值原来是A，后来被一条线程改为B，最后又被改成了A，则CAS认为此内存值并没有发生改变，但实际上是有被其他线程改过的，这种情况对依赖过程值的情景的运算结果影响很大。解决的思路是引入版本号，每次变量更新都把版本号加一。</p>
-
-<p><a href="https://4loc.wordpress.com/2009/04/25/optimistic-vs-pessimistic-locking/">一个更加有趣的例子</a></p>
-
-
-					
-				</div>
-
-
-
-				<!-- <div id="disqus_thread"></div> -->
-				<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES * * */
-				// var disqus_shortname = 'lucasgatsas2015';
-
-				// /* * * DON'T EDIT BELOW THIS LINE * * */
-				// (function() {
-				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				// })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-<br>
-
-
-
-<div class="[ col-xs-12 ] meine-visitenkarte"
-style="  background-color: #F7F7F7;
-padding-left: 20px;
-padding-bottom: 20px;
-border-radius: 4px;
-padding-top: 20px;
-text-align: -webkit-center;
-line-height: 30px;
-border: 1px solid rgba(0, 0, 0, 0.09);
-">
-<td colspan="999">
-	<a href="">Stillwater </a> 
-	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
-	<a href="">follow:</a>
-	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
-	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
-
-	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
-
-	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
-</td>
-</div>
-
-</article>
-
-
-	<article>
-		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
-			 -->
-			
-				<header class="intro">
-					
-					<div>
-						<div class="post-meta">
-							<span class="entry-date date published updated">
-								<time datetime="2015-07-10T16:00:00+08:00">
 									<a href="http://localhost:4000/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html">July 10, 2015</a>
 								</time>
 							</span>
@@ -512,60 +372,7 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 悲观锁与乐观锁是并发访问资源解决冲突不一致的常用的方式，本文将就这两种锁的特点进行讨论。
 悲观锁：顾名思义，它对事物持消极态度，它假设他要修改的数据如果不加锁的话会被别人修改，所以它每次操作前先独占锁。悲观者的人生观是一件事情我必须要百分之百完全控制才会去做，否则就认为这件事情一定会出问题；
 而乐观者的人生观则相反，凡事不管最终结果如何，他都会先尝试去做，大不了最后不成功。
-这就是悲观锁与乐观锁的区别，悲观锁会把整个对象加锁占为自有后才去做操作，乐观锁不获取锁直接做操作，然后通过一定检测手段决定是否更新数据</p>
-
-<p>现在大家很多东西都放在云上面，云上面有一个很不错的功能：云协作。假设有这么一个场景，有一个协作群，群中有两个用户，A&amp;B，其中有一个共享文件F.A看到文件中有一处出错，想去修改它，修改到一半，突然接到一个电话，这时候B也发现F文件中有一个错误，也想去修正，于是也尝试这区修改。A接完电话继续之前的修改。这时，如果没有一个很好地措施，文件最终的结果将很难预料。乐观锁和悲观锁这两个兄弟这时拍拍胸脯说，让我来帮你解决吧。</p>
-
-<h3 id="悲观锁">悲观锁</h3>
-
-<p>悲观锁说：我有一个防护罩（锁），谁拿到谁就能修改F，于是，A改文件F之前，先问悲观锁要防护罩，如果悲观锁告诉A防护罩已经给别人了，那么A必须等待，反之，如果防护罩空闲，A可以拿到防护罩，拿到之后，罩上文件F（加完锁），A就可以放心大胆的区修改文件F了，因为这时候在防护罩里F被A独享，A可以想什么时候修改完成就什么时候修改完成，随心所欲。但这样问题就产生了，防护罩只有一个，B没有办法及时拿到，没法对F修改，只能等待A修改完成之后，那么显然，并发性将会很差。
-想象一下：你已经获得了对象A，但获得对象B之前你不想放弃对象A；但是另一个已经获得了对象B的用户，在获得对象A之前也不想放弃对象B。那么这时候就需要用到超时设置，它可以打破死锁和处理释放锁失败的情况。悲观锁很容易导致死锁的发生。
-注：Synchronized互斥锁属于悲观锁。</p>
-
-<h3 id="乐观锁">乐观锁</h3>
-<p>乐观锁说：只有得到我给的口令的人才能对文件F进行修改，于是A，B纷纷想乐观锁要口令，得到口令后，AB都高兴得对文件F修改，由于A中途接电话，修改好的时间比B晚。B提前修改好之后，和乐观锁对对口令，乐观锁发现，哎，口令一致，允许修改。同时乐观锁为了保证一致性，选择保留B的劳动成果，把口令换了，等了一会，A也修改完成了，同样和乐观锁对对口令，发现哎口令不对，修改无效。
-但这将会有一个问题，就是如果有很多人同时想对F修改，最终将只有一个人修改成功，其他人还得重试，这时候效率反而会很低。</p>
-
-<p>可以看一下java中原子增是怎么实现的。</p>
-
-<div class="language-java highlighter-rouge"><pre class="highlight"><code>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AtomicInt</span> <span class="o">{</span>
-
-       <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
-
-       <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
-
-           <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
-
-        <span class="o">}</span>
-  
-        <span class="kd">public</span> <span class="kd">final</span> <span class="kt">int</span> <span class="nf">getAndIncrement</span><span class="o">()</span> <span class="o">{</span>
-
-               <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
-
-                   <span class="kt">int</span> <span class="n">current</span> <span class="o">=</span> <span class="n">get</span><span class="o">();</span>
-
-                   <span class="kt">int</span> <span class="n">next</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-
-                   <span class="k">if</span> <span class="o">(</span><span class="n">compareAndSet</span><span class="o">(</span><span class="n">current</span><span class="o">,</span> <span class="n">next</span><span class="o">))</span>
-
-                        <span class="k">return</span> <span class="n">current</span><span class="o">;</span>
-
-               <span class="o">}</span>
-
-            <span class="o">}</span>
-</code></pre>
-</div>
-
-<p>但乐观锁同时也有一些缺点：</p>
-
-<p>①  观锁只能保证一个共享变量的原子操作。如上例子，自旋过程中只能保证value变量的原子性，这时如果多一个或几个变量，乐观锁将变得力不从心，但互斥锁能轻易解决，不管对象数量多少及对象颗粒度大小。</p>
-
-<p>②  长时间自旋可能导致开销大。假如CAS长时间不成功而一直自旋，会给CPU带来很大的开销。</p>
-
-<p>③  ABA问题。CAS的核心思想是通过比对内存值与预期值是否一样而判断内存值是否被改过，但这个判断逻辑不严谨，假如内存值原来是A，后来被一条线程改为B，最后又被改成了A，则CAS认为此内存值并没有发生改变，但实际上是有被其他线程改过的，这种情况对依赖过程值的情景的运算结果影响很大。解决的思路是引入版本号，每次变量更新都把版本号加一。</p>
-
-<p><a href="https://4loc.wordpress.com/2009/04/25/optimistic-vs-pessimistic-locking/">一个更加有趣的例子</a></p>
-
+这就是悲观锁与乐观锁的区别，悲观锁会把整个对象加锁占为自有后才去做操作，乐观锁不获取锁直接做操作，然后通过一定检测手段决定是否更新数据
 
 					
 				</div>
@@ -673,19 +480,6 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 
 <p>保存为Sublime Text 2\Packages\User\ addInfo.py</p>
 
-<p>####2. 创建快捷键：</p>
-
-<p>Preference → Key Bindings - User:</p>
-<pre>
-[
-    {
-        "command": "add_info",
-        "keys": [
-            "ctrl+shift+,"#注意这里我试了一些字母而非标点，貌似没有作用，有可能是因为冲突，没有细究。
-        ]
-    }
-]
-</pre>
 
 					
 				</div>
@@ -855,6 +649,222 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 <h3 id="1introduction">1.INTRODUCTION</h3>
 <p>    在很多方面Bigtable都与数据库类似：他们有同样的实现策略。并行数据库和主存数据库都具有高伸缩性和高性能的特点。但是Bigtable提供了一种不同的接个口。Bigtable不支持完全的关系数据模型；相反，它给客户端提供了一种简单的数据模型，这种数据模型支持对数据分布和格式的动态控制，并且允许客户端推出底层存储中数据的分布特性。Bigtable的数据可以使用任意字符的行列进行索引，Bigtable也把数据当作不可解释的字符串（uninterpreted strings），尽管客户端常常把不同形式的结构化、半结构化的数据序列化形成这些字符。客户端可以控制通过进行选择模式控制数据的位置。最后一点，调整Bigtable的模式参数能让客户端动态控制是从内存还是硬盘提供数据。
  
+					
+				</div>
+
+
+
+				<!-- <div id="disqus_thread"></div> -->
+				<script type="text/javascript">
+				/* * * CONFIGURATION VARIABLES * * */
+				// var disqus_shortname = 'lucasgatsas2015';
+
+				// /* * * DON'T EDIT BELOW THIS LINE * * */
+				// (function() {
+				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				// })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<br>
+
+
+
+<div class="[ col-xs-12 ] meine-visitenkarte"
+style="  background-color: #F7F7F7;
+padding-left: 20px;
+padding-bottom: 20px;
+border-radius: 4px;
+padding-top: 20px;
+text-align: -webkit-center;
+line-height: 30px;
+border: 1px solid rgba(0, 0, 0, 0.09);
+">
+<td colspan="999">
+	<a href="">Stillwater </a> 
+	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
+	<a href="">follow:</a>
+	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
+	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
+
+	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+
+	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
+</td>
+</div>
+
+</article>
+
+
+	<article>
+		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
+			 -->
+			
+				<header class="intro">
+					
+					<div>
+						<div class="post-meta">
+							<span class="entry-date date published updated">
+								<time datetime="2015-06-27T22:00:44+08:00">
+									<a href="http://localhost:4000/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html">June 27, 2015</a>
+								</time>
+							</span>
+							<span class="author vcard">
+								<span class="fn">
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
+								</span>
+							</span>
+							
+						</div>
+
+						
+						<h1 class="post-title"><a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" id="post-title-h1" rel="bookmark" title="github搭建个人博客" itemprop="url">github搭建个人博客</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" rel="bookmark" title="github搭建个人博客" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+
+						
+
+					</div>
+				</header>
+			</article>
+			<article class="container hentry">
+				<div class="entry-content">
+					
+					<h3 id="githubmarkdownjekyll-搭建个人博客">GitHub+Markdown+Jekyll 搭建个人博客</h3>
+<hr />
+<blockquote>
+  <p>首先以下所有内容都是针对mac的，不同系统装的软件差不多，但过程千差万别，如果是其他系统凉快去。</p>
+</blockquote>
+
+<h3 id="准备工作"><em>准备工作</em>：</h3>
+<p>mac中自带git和gem.这两者就不用安装了，gem是一种文件组织的包，一般的ruby的很多插件都有由这种各种的包提供。安装Jekyll需要它的支持。</p>
+<h4 id="安装jekyll"><em>安装jekyll</em></h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo gem update —system
+$ sudo gem install jekyll 注意需要sudo，否则 no permission. 直接运行以上命令会出现一些错误。运行以下命令
+$ gem sources -l 可以看到终端显示 \*\*\* CURRENT SOURCES \*\*\*
+</code></pre>
+</div>
+
+<p>https://rubygems.org
+可见gem的源默认是https://rubygems.org/，
+所以首先更换gem源，换源之前首先删除旧源
+	$ gem sources –remove https://rubygems.org
+注意不要多字符或少字符，不然会出现
+source https://rubygems.org not present in cache 
+remove前是—，否则会
+source emove not present in cache</p>
+
+<h4 id="添加新源"><em>添加新源</em></h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gem sources -a https://ruby.taobao.org/ 这是一个完整 rubygems.org 镜像，你可以用此代替官方版本，同步频率目前为15分钟一次以保证尽量与官方服务同步。 添加完成之后查看一下是否更换成功
+
+$ gem sources -l &lt;!-- more --&gt; 更换markdown模板解释器 安装模板,默认的模板是Maruku,我们替 换为RDiscount。 
+$ sudo gem install rdiscount Maruku是纯ruby写的Markdown模板解释 器。 RDiscount是C写的模板解释器。速度快上很多。 
+</code></pre>
+</div>
+
+<p>安装完jekyll之后，我们需要创建网站的各种目录结构和源文件。由于这些文件最终在github中管理，如何利用github创建网站可以看github pages.这里直接直接将整个过程融入一个完整blog的构建过程。
+让github管理本地文件有两种方式：
+由于github托管的网站必须是username.github.io,对应的仓库也是username.github.io
+1.首先git clone username.github.io到本地，会在本地创建一个 username.github.io文件夹，cd进去一看是空的，输入命令ls -a可以发现有一个.git文件，这个文件联系起了本地和远程git服务器。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git clone git@username.github.io.git
+$ cd username.github.io
+$ jekyll new blog
+$ cd blog
+$ jekyll serve
+</code></pre>
+</div>
+
+<p>2.可以事先在本地创建完blog之后，在创建git文件</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ jekyll new blog
+$ cd blog
+$ git init git init会在本地创建一个.git文件,Initialized empty Git repository in yourPath/.git/
+
+$ git add */git add —all
+$ git commit -m “commit”
+$ git remote add origin 
+git@git@username.github.io.git (若是第一次提交该项目的文件或是修改项目文件名后则需要这行这个命令，以后就可不用执行该命令)
+
+git push -u origin master 如果之前已经 add origin，则会报出如下错误： fatal: remote origin already exists. 解决方法：
+
+git remote set-url origin git@git@username.github.io.git 这将替换之前添加的orgin。
+</code></pre>
+</div>
+
+<p>此时访问username.github.io，将会看到你刚刚创建的网站。
+可以看到Jekyll目录结构</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>–_config.yml&gt;</td>
+    </tr>
+    <tr>
+      <td>–_drafts</td>
+    </tr>
+    <tr>
+      <td>–articles1.textile</td>
+    </tr>
+    <tr>
+      <td>–articles2.md</td>
+    </tr>
+    <tr>
+      <td>–_includes</td>
+    </tr>
+    <tr>
+      <td>–footer.html</td>
+    </tr>
+    <tr>
+      <td>–header.html</td>
+    </tr>
+    <tr>
+      <td>–_layouts</td>
+    </tr>
+    <tr>
+      <td>–default.html</td>
+    </tr>
+    <tr>
+      <td>–post.html</td>
+    </tr>
+    <tr>
+      <td>–_posts</td>
+    </tr>
+    <tr>
+      <td>–2014-06-17-articles1.textile</td>
+    </tr>
+    <tr>
+      <td>–2014-06-17-articles1.md</td>
+    </tr>
+    <tr>
+      <td>–_site</td>
+    </tr>
+    <tr>
+      <td>–index.html</td>
+    </tr>
+    <tr>
+      <td>–other files</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>_config.yml :保存配置数据。 
+_drafts :存放未发布的文章。<br />
+_includes :存放页面片段,即页头 ( head.html )、页脚<br />
+( footer.html )、导航<br />
+( navigation.html )、评论 
+( disqus_comments.html )等,这些 资源通过标签添加到index.html中,从而形 成一个完整的页面。 
+_layouts :存放模板文件。文章模板、 关于页面模板、首页模板等。 
+_posts :存放文章的文件。并且文章文 件名称要符合 YEAR-MONTH-DAY- title.MARKUP 格式。 
+_site :经过jekyll转换的页面。 
+index.html :网站首页。 
+other files :其他文件,存放css、 js、image等。</p>
+
+<p>Jekyll解析流程 
+首先会加载_posts及文件夹下的所有文章, 将其参数和文章内容组织保存在内存中,所 有的文章的内容、参数都在site.posts对象 (其他文件夹下的文章不会放入site.posts 中)。 
+其次加载_layouts文件夹下的所有模板。 再次加载_includes文件夹下的所有需要被引入的内容。 
+最后根据每一篇需要编译的文章选择的其参 数定义的模板来创建一个模板,并将当前文 章的内容、参数等进行扩展后放在page对 象、content对象中,然后进行模板的编 译,生成html文件,并按照一定规则放在 _site文件夹下。也就是说在创建一篇文章 时,其实所有文章的内容都已经被读取出来 了,这也为文章相互之间的关联提供了可 能。</p>
+
 					
 				</div>
 
