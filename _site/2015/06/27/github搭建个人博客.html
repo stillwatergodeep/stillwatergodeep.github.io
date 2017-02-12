@@ -337,8 +337,13 @@
 <p>mac中自带git和gem.这两者就不用安装了，gem是一种文件组织的包，一般的ruby的很多插件都有由这种各种的包提供。安装Jekyll需要它的支持。</p>
 <h4 id="安装jekyll"><em>安装jekyll</em></h4>
 <div class="highlighter-rouge"><pre class="highlight"><code>$ sudo gem update —system
-$ sudo gem install jekyll 注意需要sudo，否则 no permission. 直接运行以上命令会出现一些错误。运行以下命令
-$ gem sources -l 可以看到终端显示 \*\*\* CURRENT SOURCES \*\*\*
+$ sudo gem install jekyll 注意需要sudo，否则 no permission.
+</code></pre>
+</div>
+
+<p>直接运行以上命令会出现一些错误。运行以下命令</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gem sources -l 可以看到终端显示 \*\*\* CURRENT SOURCES \*\*\*
 </code></pre>
 </div>
 
@@ -354,8 +359,22 @@ source emove not present in cache</p>
 <h4 id="添加新源"><em>添加新源</em></h4>
 <div class="highlighter-rouge"><pre class="highlight"><code>$ gem sources -a https://ruby.taobao.org/ 这是一个完整 rubygems.org 镜像，你可以用此代替官方版本，同步频率目前为15分钟一次以保证尽量与官方服务同步。 添加完成之后查看一下是否更换成功
 
-$ gem sources -l &lt;!-- more --&gt; 更换markdown模板解释器 安装模板,默认的模板是Maruku,我们替 换为RDiscount。 
-$ sudo gem install rdiscount Maruku是纯ruby写的Markdown模板解释 器。 RDiscount是C写的模板解释器。速度快上很多。 
+$ gem sources -l &lt;!-- more --&gt;
+</code></pre>
+</div>
+
+<p>在最新版本的macos系统中可能出现无法安装的情况，按照以下步骤处理</p>
+
+<p>1.http://stackoverflow.com/questions/31972968/cant-install-gems-on-os-x-el-capitan</p>
+
+<p>2.更新xcode</p>
+
+<p>3.https://jekyllrb.com/docs/troubleshooting/#jekyll-amp-mac-os-x-1011</p>
+
+<p>更换markdown模板解释器
+安装模板,默认的模板是Maruku,我们替 换为RDiscount。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo gem install rdiscount Maruku是纯ruby写的Markdown模板解释 器。 RDiscount是C写的模板解释器。速度快上很多。 
 </code></pre>
 </div>
 
@@ -457,6 +476,8 @@ _site :经过jekyll转换的页面。
 index.html :网站首页。 
 other files :其他文件,存放css、 js、image等。</p>
 
+<p>更多配置：http://jekyllrb.com/docs/configuration/</p>
+
 <p>Jekyll解析流程 
 首先会加载_posts及文件夹下的所有文章, 将其参数和文章内容组织保存在内存中,所 有的文章的内容、参数都在site.posts对象 (其他文件夹下的文章不会放入site.posts 中)。 
 其次加载_layouts文件夹下的所有模板。 再次加载_includes文件夹下的所有需要被引入的内容。 
@@ -481,12 +502,12 @@ var duoshuoQuery = {short_name: "stillwater"};
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2013/08/26/JS%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.html" data-toggle="tooltip" data-placement="top" title="JS变量初始化过程">&larr; Previous Post</a>
+                        <a href="/2015/06/09/jar%E5%8C%85%E5%86%B2%E7%AA%81.html" data-toggle="tooltip" data-placement="top" title="jar包冲突好玩的排查方式">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90.html" data-toggle="tooltip" data-placement="top" title="bigtable 浅析">Next Post &rarr;</a>
+                        <a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90.html" data-toggle="tooltip" data-placement="top" title="“(译)bigtable 浅析"">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

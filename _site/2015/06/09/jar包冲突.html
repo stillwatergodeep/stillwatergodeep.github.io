@@ -46,14 +46,14 @@
 <!-- Blog Title -->
 <title>stillwaterli - A software Engineer and Web Developer from China.  </title>
 
-    <!--     <title>JS变量初始化过程 - stillwater</title>
+    <!--     <title>jar包冲突好玩的排查方式 - stillwater</title>
 --> 
 <!-- Property Metas --> 
 <meta property="og:image" content="/img/93TyTG3x.png"/>
 <meta property="og:title" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <meta property="og:site_name" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <!-- Canonical -->
-<link rel="canonical" href="http://localhost:4000/2013/08/26/JS%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.html">
+<link rel="canonical" href="http://localhost:4000/2015/06/09/jar%E5%8C%85%E5%86%B2%E7%AA%81.html">
 <!-- StyleSheet -->
 <link rel="stylesheet" href="/css/pygments.css">
 <link rel="stylesheet" href="/css/duoshuo.css">
@@ -310,7 +310,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>JS变量初始化过程</h1>
+                    <h1>jar包冲突好玩的排查方式</h1>
                     
                     <span class="meta">Posted by stillwater  </span>
                 </div>
@@ -325,235 +325,68 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<h2 id="顶级变量初始化"><a href="#2.1">顶级变量初始化</a></h2>
+				<p> 在测试脚本编写和应用部署时，经常遇到的一个问题是：java.lang.NoSuchMethodError。这个问题产生的根本原因是运行时应用加载的jar包版本不是应用代码真正需要的版本。要解决这个问题，就要让应用加载真正“HasSuchMethod”的类所在的jar包。解决这个问题，我把它归纳为以下几步：验证加载内容、查找包含该类的jar包、查找应用适用的jar版本、查看出错应用加载的jar包位置、替换错误jar包版本到需要的版本。</p>
 
-<h2 id="函数变量"><a href="#2.2">函数变量</a></h2>
+<p>   <strong> 验证加载内容</strong></p>
 
-<h2 id="没有scope的块"><a href="#2.3">没有scope的块</a></h2>
+<p>    通常，发生了NoSuchMethodError，在报错中我们可以查看到应用真实需要的方法和方法签名，例如如下的报错：</p>
 
-<p>JavaScript函数与变量机制与大部分语言完全不同，在JS中，所有的局部变量和函数都是特定内部对象的属性，即LexicalEnvironment（LE）</p>
+<p>java.lang.NoSuchMethodError: com.taobao.eagleeye.EagleEye.rpcClientRecv(Ljava/lang/String;I)V</p>
 
-<p>在浏览器中顶级的LE是window对象，也叫做全局变量</p>
+<p>    表明应用需要的是EagleEye类中的包含方法签名如：void rpcClientRecv(String str,int i)的方法。知道了这一点，我就自然需要去看一下应用中实际加载的EagleEye是什么样的情况，rpcClientRecv方法的签名是什么样子的。</p>
 
-<h2 id="2.1">顶级变量初始化</h2>
+<p>    要得到这些内容，可以用两个工具来获取，1是classdump工具，它通过Serviceability Agent技术在运行时dump指定的类的字节码文件。2是jdgui，这是使用得最多的反编译工具，它可以把classdump工具dump出来的字节码文件反编译成java代码，可以更直观得查看应用中加载的类是什么样子。</p>
 
-<p>当js即将执行时，有一个预处理阶段叫做变量实例化</p>
+<p>    classdump工具的使用：</p>
 
-<ul>
-  <li>首先，解释器扫描Function Declarations,也就是function name{},解释器将对每个声明创建一个函数并作为Window的一个变量</li>
-</ul>
+<p>    命令：java -classpath ”.:/opt/taobao/java/lib/sa-jdi.jar” sun.jvm.hotspot.tools.jcore.ClassDump 16528</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'f:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'g:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-</div>
-<p>此时，浏览器发现函数f,于是创建Function，将其存为window.f:
-<!-- more --></p>
+<p>    其中-classpath把sa-jdi的jar包加入到classpath中，ClassDump 是执行字节码文件dump的main方法入口类，16528是目标进程的pid，可以用jps命令得到。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 1. Function Declarations are initialized before the code is executed.</span>
-<span class="c1">// so, prior to first line we have: window = { f: function }</span>
-<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'f:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span> <span class="c1">// &lt;-- FunctionDeclaration</span>
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'g:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-</div>
-<p>　　而这也导致，f可以在声明之前调用
-	f()
-	function f() { alert(‘ok’) }
-	​```</p>
-<ul>
-  <li>解释器扫描var declarations,作为window的属性。但是此时变量并没有被赋值，所有的变量此时都是undefined。
-// 1. Function declarations are initialized before the code is executed.
-// window = { f: function }
-// 2. Variables are added as window properties.
-// window = { f: function, a: undefined, g: undefined }</li>
-</ul>
+<p>    这样，ClassDump会把当前加载的所有Java类都dump到当前目录下，如果有全限定名相同但内容不同的类同时存在于一个Java进程中，那么dump的时候会有覆盖现象，实际dump出来的是同名的类的最后一个。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1">// &lt;-- var</span>
+<p>    如果需要指定被dump的类的范围，可以自己写一个过滤器，在启动ClassDump工具时指定-Dsun.jvm.hotspot.tools.jcore.filter=filterClassName，如果需要指定dump出来的Class文件的存放路径，可以用-Dsun.jvm.hotspot.tools.jcore.outputDir=path来指定，path替换为实际路径。</p>
 
-<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'f:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
+<p>    对于上面讲的例子，我们只需要EagleEye类的内容，那么，就可以写一个FilterClass类来进行dump的过滤，写这个过滤类，需要实现sun.jvm.hotspot.tools.jcore.ClassFilter，具体实现如下图所示，InstanceKlass对应于HotSpot中表示Java类的内部对象，我们只要过滤类名以com/taobao/eagleeye的类就好。</p>
 
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'g:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span> <span class="c1">// &lt;-- var</span>
-</code></pre>
-</div>
-<p>　虽然g是一个函数表达式，但是解释器不关心这些，只要使用var声明，都会在此阶段处理,这也导致变量不能和函数同名</p>
+<p><img src="https://ww3.sinaimg.cn/large/006tNc79gy1fco765hjv3j30dt05lq3o.jpg" alt="img" /></p>
 
-<p>总结一下：</p>
+<p>写好了这个类之后，编译，把这个类的class文件放到要执行ClassDump命令的目录下，执行时增加如下参数：-Dsun.jvm.hotspot.tools.jcore.filter=MyFilter，ClassDump就会在当前目录dump出com.taobao.eagleeye.EagleEye类的字节码。</p>
 
-<blockquote>
-  <p>1.FunctionDeclarations become ready-to-use functions. That allows to call a function before it’s declaration.</p>
+<p>    然后使用jd-gui，jd-gui是一个绿色工具，直接打开字节码文件，可以看到rpcClientRecv方法，这里就可以看到，实际上当前jvm加载的是一个没有参数的rpcClientRecv方法。</p>
 
-  <p>2.Variables start as undefined.</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79gy1fco7724l7ej30sg0eo76g.jpg" alt="img" /></p>
 
-  <p>3.All assignments happen later, when the execution reaches them.</p>
-</blockquote>
+<p><strong>    查找包含该类的jar包、查找应用适用的jar版本</strong></p>
 
-<ul>
-  <li>代码执行</li>
-</ul>
+<p>    确认了当前出现错误的应用中确实加载了不符合要求的类之后，就需要去看一下，这个类是从哪里来的，在哪个jar包中。做这件事情比较简单，只需要去eclipse中执行ctrl+shift+t，输入类名，就可以看到当前eclipse的工程中依赖的各个版本的包含这个类的jar包。接下来你可以把各个版本的类都打开，检查这些版本的jar包中是否有符合要求的方法，即方法签名符合rpcClientRecv(Ljava/lang/String;I)V的方法。方法签名识别：其中L开头，；结尾的字符串标识了一个对象类型，这里的第一个参数是java.lang.String类型，第二个参数是int类型，V表示void类型返回。详细的jvm中字段类型和方法签名表示见下图：</p>
 
-<p>　　当变量活函数被访问时，解释器从window中获取</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79gy1fco77x349gj30j60gaac6.jpg" alt="img" /></p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">alert</span><span class="p">(</span><span class="s2">"a"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="c1">// true, because window.a exists</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// undefined, because assignment happens below</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="c1">// function, because it is Function Declaration</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="c1">// undefined, because assignment happens below</span>
-<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>  
-<span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">}</span> 
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">}</span>
-</code></pre>
-</div>
-<ul>
-  <li>赋值过后，a=5,g成为了函数，注意下面代码的区别：
-    <div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>  
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">}</span> 
-<span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// 5</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="c1">// function</span>
-</code></pre>
-    </div>
-    <p>　如果变量声明时未用var,那么在初始化时就不会被创建（或者说成为window的属性）,解释器看不到的：</p>
-  </li>
-</ul>
+<p>    通过这个步骤，我们知道了实际上我们的应用需要什么版本的jar包，那么，接下来自然就会想要知道应用当前加载的是什么版本的jar包，又是在哪里加载进来的。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">alert</span><span class="p">(</span><span class="s2">"b"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="c1">// false, there is no window.b</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">// error, b is not defined</span>
-<span class="nx">b</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="err">但赋值之后，</span><span class="nx">b</span><span class="err">成为</span><span class="nb">window</span><span class="err">的全局变量：</span><span class="nb">window</span><span class="p">.</span><span class="nx">b</span>
-<span class="nx">b</span> <span class="o">=</span> <span class="mi">5</span> 
-<span class="nx">alert</span><span class="p">(</span><span class="s2">"b"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="c1">// true, there is window.b = 5</span>
-</code></pre>
-</div>
-<p>考虑一下：下面代码的执行结果：</p>
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// window = {a:undefined}</span>
-<span class="k">if</span> <span class="p">(</span><span class="s2">"a"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">}</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<p>    <strong>查看出错应用加载的jar包和jar包位置</strong></p>
 
-<span class="err">​```</span><span class="nx">javascript</span>
-<span class="k">if</span> <span class="p">(</span><span class="s2">"a"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">}</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>The answer is “Error: no such variable”, because there is no variable a at the time of “a” in window check.</p>
+<p><strong>    </strong>在这个步骤，要想知道应用加载的是jar包的什么版本，需要使用jvm类加载跟踪器这个工具，这是一个基于java agent、instrument的，用于排查jar包冲突、类冲突、类版本冲突、NoClassDefFoundError、ClassNotFoundException、NoSuchMethodError 等类加载相关问题的辅助工具。这个工具的能够定时得把新加载入虚拟机类个jar包等数据输出到指定的html文件中。</p>
 
-<p>So, the if branch does not execute and there is no a at the time of alert.</p>
+<p>    工具的使用方式是：首先，下载得到jvminspect.jar；其次，修改目标应用的jvm配置，在jvm参数上增加如下的配置：JAVA_OPTIONS=$JAVA_OPTIONS -javaagent:jvminspect.jar=outputfile=jvm.inspect.output,flushIntervalSecond=300 -DHtmlFlusher.enableHyperlink=false；其中jvminspect.jar是下载得到的工具jar包，jvm.inspect.output是输出的文件地址，flushIntervalSecond参数指定的是定时刷新的时间间隔。增加了这个参数之后重启，就可以在jvm.inspect.output文件中查看这个jvm进程加载类的情况了。</p>
 
-<h2 id="2.2">函数变量</h2>
+<p>    我们关心的是出现NoSuchMethodError 所在的类，在这个例子中，这是com.taobao.eagleeye.EagleEye类，在输出的文件中我们可以看到这个类被jvm从jar包的哪个版本中加载，jar包的物理位置等信息。</p>
 
-<p>当函数执行时，每一个函数调用都会产生新的包含参数、变量、嵌套函数声明的LexicalEnvironment</p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79gy1fco781c45bj30sg030ac0.jpg" alt="img" /></p>
 
-<p>变量是内部用来读写变量的，和window不同，函数的LexicalEnvironment 是不能直接访问的</p>
+<p>    知道了这些信息，我们就很清楚得能够确定问题的原因。</p>
 
-<p>下面我们看一下函数执行的细节：</p>
+<p>    <strong>替换错误jar包版本到需要的版本</strong></p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">sayHi</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">phrase</span> <span class="o">=</span> <span class="s2">"Hi, "</span> <span class="o">+</span> <span class="nx">name</span>
-  <span class="nx">alert</span><span class="p">(</span><span class="nx">phrase</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="nx">sayHi</span><span class="p">(</span><span class="s1">'John'</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>1.在解释器开始执行函数代码时，会创建一个填充参数、局部变量、嵌套函数的LexicalEnvironment ，很显然参数具有初始值，而局部变量则是未定义的</p>
-
-<p>　　2.函数代码开始执行，最后执行赋值语句。内部的变量赋值意味着LexicalEnvironment相应的属性获得了新值</p>
-
-<p>so，phrase=”Hi, “+name 改变了LexicalEnvironment</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>function sayHi(name) {
-// LexicalEnvironment = { name: 'John', phrase: undefined }
-  var phrase = "Hi, " + name
-// LexicalEnvironment = { name: 'John', phrase: 'Hi, John'}
-  alert(phrase)
-}
-sayHi('John')
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-</code></pre>
-</div>
-<p>最后一行alert(phrase)从LexicalEnvironment 搜获phrase</p>
-
-<p>　　3.函数执行之后，LexicalEnvironment会废弃他的内容，因为这些变量不再需要，但是情况并不总是这样：
-　　</p>
-<blockquote>
-  <p>Specification peculiarities
-If we look into the recent ECMA-262 specification, there are actually two objects.</p>
-
-  <p>The first is a VariableEnvironment object, which is actually populated by variables and functions, declared by FunctionDeclaration, and then becomes immutable.</p>
-
-  <p>The second is a LexicalEnvironment object, which is almost same as VariableEnvironment, but it is actually used during the execution.</p>
-
-  <p>A more formal description can be found in the ECMA-262 standard, sections 10.2-10.5 and 13.</p>
-
-  <p>It is also noted that in JavaScript implementations, these two objects can be merged into one. So, we evade irrelevant details and use the term LexicalEnvironment everywhere.
-　　</p>
-
-</blockquote>
-
-<h2 id="2.3">没有scope的块</h2>
-
-<p>下面的代码没有任何区别</p>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">{</span>
-  <span class="nx">i</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-<p>​</p>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="p">{</span>
-
-  <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">5</span>
-
-<span class="p">}</span>
-
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code> 所有的变量声明在块执行之前就已经初始化
-
-这一点和Java、C++不用，在JS中，变量在循环之后依旧存在，因为他们的scope是函数
-​```javascript
-for(var i=0; i&lt;5; i++) { }
-alert(i) // 5, variable survives and keeps value
-</code></pre>
-</div>
-<p>在循环中声明变量很方便，但不要认为循环之后变量就不存在了，不要把循环当作其scope</p>
-
-<p>下面的代码的结果是什么：</p>
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
-
-  <span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">)</span>
-
-  <span class="kd">var</span> <span class="nb">window</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">}</span>
-<span class="nx">test</span><span class="p">()</span>
-</code></pre>
-</div>
-<p>var指令在预处理阶段就执行了</p>
-
-<p>因此，window在alert之前成了局部变量</p>
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">LexicalEnvironment</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">window</span><span class="p">:</span> <span class="kc">undefined</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-<p>所以当执行到第一行时，变量window存在但是未定义</p>
+<p><strong>    </strong>知道应用在那里加载了不期望被加载的jar包，我们就可以着手让应用把需要加载的正确版本包加载进来。不同的场景可以做不一样的操作，比如应用的war包中本身加载了错误版本的jar包，那你需要做的是修改应用的pom文件进行重新打包，把正确的jar包依赖到war包中；如果是由于某些环境的原因，classpath中存在了两个不同版本的jar包，那你就可以根据前面几步得到的信息，把错误版本（导致应用报NoClassDefFoundError、ClassNotFoundException、NoSuchMethodError等错）的版本删除，留下应用代码实际上依赖的jar包。</p>
 
 
 
                 <hr>
 
 
-<div id="ds-thread" class="ds-thread" data-url="/2013/08/26/JS%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.html" data-title="JS变量初始化过程" data-thread-key="JS变量初始化过程"></div>
+<div id="ds-thread" class="ds-thread" data-url="/2015/06/09/jar%E5%8C%85%E5%86%B2%E7%AA%81.html" data-title="jar包冲突好玩的排查方式" data-thread-key="jar包冲突好玩的排查方式"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name: "stillwater"};
 (function() {
@@ -567,9 +400,13 @@ var duoshuoQuery = {short_name: "stillwater"};
 
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/2014/08/26/LinkedHashMap.html" data-toggle="tooltip" data-placement="top" title=" LinkedHashMap的源码解读">&larr; Previous Post</a>
+                    </li>
+                    
                     
                     <li class="next">
-                        <a href="/2013/10/26/PNG-Loading.html" data-toggle="tooltip" data-placement="top" title="（转）使用 PNG 图片制作动态 Loading">Next Post &rarr;</a>
+                        <a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" data-toggle="tooltip" data-placement="top" title="github搭建个人博客">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

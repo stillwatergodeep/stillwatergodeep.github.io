@@ -344,8 +344,8 @@
 					<div>
 						<div class="post-meta">
 							<span class="entry-date date published updated">
-								<time datetime="2013-08-26T16:00:00+08:00">
-									<a href="http://localhost:4000/2013/08/26/JS%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.html">August 26, 2013</a>
+								<time datetime="2015-06-29T05:08:30+08:00">
+									<a href="http://localhost:4000/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown.html">June 29, 2015</a>
 								</time>
 							</span>
 							<span class="author vcard">
@@ -357,8 +357,8 @@
 						</div>
 
 						
-						<h1 class="post-title"><a href="/2013/08/26/JS%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.html" id="post-title-h1" rel="bookmark" title="JS变量初始化过程" itemprop="url">JS变量初始化过程</a></h1>
-						<h1 class="post-title-readmore"><a href="/2013/08/26/JS%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.html" rel="bookmark" title="JS变量初始化过程" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+						<h1 class="post-title"><a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown.html" id="post-title-h1" rel="bookmark" title="利用sublime快速编写markdown" itemprop="url">利用sublime快速编写markdown</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/29/%E5%88%A9%E7%94%A8sublime%E5%BF%AB%E9%80%9F%E7%BC%96%E5%86%99markdown.html" rel="bookmark" title="利用sublime快速编写markdown" itemprop="url" id="readmore-link"> ReadMore</a></h1>
 
 						
 
@@ -368,32 +368,31 @@
 			<article class="container hentry">
 				<div class="entry-content">
 					
-					<h1 id="js变量初始化过程">JS变量初始化过程</h1>
+					<p>插件实现插入带时间功能的说明：</p>
 
-<h2 id="顶级变量初始化">顶级变量初始化</h2>
+<h2 id="创建插件">创建插件：</h2>
 
-<h2 id="函数变量">函数变量</h2>
+<p>Tools → New Plugin:</p>
 
-<h2 id="没有scope的块">没有scope的块</h2>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">sublime_plugin</span>
+<span class="k">class</span> <span class="nc">addInfo</span><span class="p">(</span><span class="n">sublime_plugin</span><span class="o">.</span><span class="n">TextCommand</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edit</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="s">"insert_snippet"</span><span class="p">,</span> 
+            <span class="p">{</span>
+        <span class="s">"contents"</span><span class="p">:</span> <span class="s">"---""</span><span class="se">\n</span><span class="s">"</span><span class="c">#you have to start with contents</span>
+        <span class="s">" layout:      post""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" title:      ""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" subtitle:      ""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" author:      stillwater""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" dateTime:  "</span>  <span class="s">"</span><span class="si">%</span><span class="s">s"</span>  <span class="o">%</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"</span><span class="si">%</span><span class="s">Y-</span><span class="si">%</span><span class="s">m-</span><span class="si">%</span><span class="s">d </span><span class="si">%</span><span class="s">H:</span><span class="si">%</span><span class="s">M:</span><span class="si">%</span><span class="s">S"</span><span class="p">)</span> <span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">" description: Description""</span><span class="se">\n</span><span class="s">"</span>
+        <span class="s">"---"</span>
+            <span class="p">}</span>
+        <span class="p">)</span></code></pre></figure>
 
-<p>JavaScript函数与变量机制与大部分语言完全不同，在JS中，所有的局部变量和函数都是特定内部对象的属性，即LexicalEnvironment（LE）</p>
+<p>保存为Sublime Text 2\Packages\User\ addInfo.py</p>
 
-<p>在浏览器中顶级的LE是window对象，也叫做全局变量</p>
-
-<h2 id="顶级变量初始化-1">顶级变量初始化</h2>
-
-<p>当js即将执行时，有一个预处理阶段叫做变量实例化</p>
-
-<ul>
-  <li>首先，解释器扫描Function Declarations,也就是function name{},解释器将对每个声明创建一个函数并作为Window的一个变量</li>
-</ul>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'f:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'g:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-</div>
-<p>此时，浏览器发现函数f,于是创建Function，将其存为window.f:
 
 					
 				</div>
@@ -452,8 +451,8 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 					<div>
 						<div class="post-meta">
 							<span class="entry-date date published updated">
-								<time datetime="2012-10-26T00:00:00+08:00">
-									<a href="http://localhost:4000/2012/10/26/PNG-Loading.html">October 26, 2012</a>
+								<time datetime="2015-06-28T22:00:44+08:00">
+									<a href="http://localhost:4000/2015/06/28/preview-to-Jekyll-without-plugins.html">June 28, 2015</a>
 								</time>
 							</span>
 							<span class="author vcard">
@@ -465,8 +464,8 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 						</div>
 
 						
-						<h1 class="post-title"><a href="/2012/10/26/PNG-Loading.html" id="post-title-h1" rel="bookmark" title="（转）使用 PNG 图片制作动态 Loading" itemprop="url">（转）使用 PNG 图片制作动态 Loading</a></h1>
-						<h1 class="post-title-readmore"><a href="/2012/10/26/PNG-Loading.html" rel="bookmark" title="（转）使用 PNG 图片制作动态 Loading" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+						<h1 class="post-title"><a href="/2015/06/28/preview-to-Jekyll-without-plugins.html" id="post-title-h1" rel="bookmark" title="jekyll read more without plugins" itemprop="url">jekyll read more without plugins</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/28/preview-to-Jekyll-without-plugins.html" rel="bookmark" title="jekyll read more without plugins" itemprop="url" id="readmore-link"> ReadMore</a></h1>
 
 						
 
@@ -476,81 +475,468 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 			<article class="container hentry">
 				<div class="entry-content">
 					
-					<p>曾经遇到过在一个 GIF 图片里面制作一个半透明的 Loading，无论怎么折腾，总有锯齿，非常不好处理。最后无奈地使用了非半透明的“菊花”，视觉有所降级。</p>
+					<h3 id="adding-support-for--tag-to-jekyll-without-plugins">Adding support for 
+					
+				</div>
 
-<p>其实如果不兼容 IE 的话，还是可以使用 CSS3 + PNG 图片完成这个动态的 GIF Loading 的。具体效果见 <a href="http://pizn.github.io/demo/loading.html" target="_blank" title="demo">DEMO</a>。</p>
 
-<p>实现的方法和代码如下：</p>
 
-<pre name="colorcode" class="css">
-#loading {
-     width: 36px;
-     height: 36px;
-     position: absolute;
-     top: 50%;
-     left: 50%;
-     margin: -18px 0 0 -18px;
-     text-indent: -9999em;
-     overflow: hidden;
-     /** loading 图片地址 **/
-     background: url(loading.png) no-repeat 0 0;
-     /** webkit **/
-     -webkit-animation-name: loadRotate;
-     -webkit-animation-duration: 1s;
-     -webkit-animation-iteration-count: infinite;
-     -webkit-animation-timing-function: linear;
-     /** firefox **/ 
-     -moz-animation-name: loadRotate;
-     -moz-animation-duration: 1s;
-     -moz-animation-iteration-count: infinite;
-     -moz-animation-timing-function: linear;
-     /** w3c **/
-     animation-name: loadRotate;
-     animation-duration: 1s;
-     animation-iteration-count: infinite;
-     animation-timing-function: linear;
- }
- /** webkit **/
- @-webkit-keyframes loadRotate {
-     from {
-         -webkit-transform:rotate(0deg);
-     }
-     25% {
+				<!-- <div id="disqus_thread"></div> -->
+				<script type="text/javascript">
+				/* * * CONFIGURATION VARIABLES * * */
+				// var disqus_shortname = 'lucasgatsas2015';
 
-     }
-     to {
-         -webkit-transform:rotate(360deg);
-     }
- }
- /** firefox **/
- @-moz-keyframes loadRotate {
-     from {
-         -moz-transform:rotate(0deg);
-     }
-     to {
-         -moz-transform:rotate(360deg);
-     }
+				// /* * * DON'T EDIT BELOW THIS LINE * * */
+				// (function() {
+				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				// })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<br>
 
- }
- /** w3c **/
- @keyframes loadRotate {
-     form {
-         transform: rotate(0deg);
-     }
-     to {
-         transform: rotate(360deg);
-     }
- }
-</pre>
 
-<p>HTML 代码如下：</p>
-<pre class="html" name="colorcode">
-&lt;p id="loading"&gt;Loading&lt;/p&gt;
-</pre>
 
-<p>恩，这样就 OK 了。</p>
+<div class="[ col-xs-12 ] meine-visitenkarte"
+style="  background-color: #F7F7F7;
+padding-left: 20px;
+padding-bottom: 20px;
+border-radius: 4px;
+padding-top: 20px;
+text-align: -webkit-center;
+line-height: 30px;
+border: 1px solid rgba(0, 0, 0, 0.09);
+">
+<td colspan="999">
+	<a href="">Stillwater </a> 
+	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
+	<a href="">follow:</a>
+	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
+	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
 
-<p>后话：Loading 的“菊花”样式，有一个 JS 可以实现，就是 <a href="http://fgnass.github.com/spin.js/" title="spin.js" target="_blank">spin.js</a>，也能兼容 IE 。但其兼容 IE 的方式是使用滤镜，对性能有所影响。</p>
+	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+
+	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
+</td>
+</div>
+
+</article>
+
+
+	<article>
+		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
+			 -->
+			
+				<header class="intro">
+					
+					<div>
+						<div class="post-meta">
+							<span class="entry-date date published updated">
+								<time datetime="2015-06-28T22:00:44+08:00">
+									<a href="http://localhost:4000/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90.html">June 28, 2015</a>
+								</time>
+							</span>
+							<span class="author vcard">
+								<span class="fn">
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
+								</span>
+							</span>
+							
+						</div>
+
+						
+						<h1 class="post-title"><a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90.html" id="post-title-h1" rel="bookmark" title="“(译)bigtable 浅析"" itemprop="url">“(译)bigtable 浅析"</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/28/(%E8%AF%91)bigtable%E6%B5%85%E6%9E%90.html" rel="bookmark" title="“(译)bigtable 浅析"" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+
+						
+
+					</div>
+				</header>
+			</article>
+			<article class="container hentry">
+				<div class="entry-content">
+					
+					<h2 id="bigtable-浅析">bigtable 浅析</h2>
+<hr />
+<p>    Bigtable 是一个用来管理结构化数据的分布式存储系统，具有很好的伸缩性，能够在几千台应用服务器上处理PB数量级数据。谷歌有许多项目都把数据存储在Bigtable中，包括web indexing,Google Earth, and Google Finance. 这些应用对Bigtable的侧重点不同，但是他们都是海量数据和实时性的应用。尽管需求变化多端，Bigtable很好的提供了一个灵活多变，高性能额解决方案。</p>
+<h3 id="1introduction">1.INTRODUCTION</h3>
+<p>    在很多方面Bigtable都与数据库类似：他们有同样的实现策略。并行数据库和主存数据库都具有高伸缩性和高性能的特点。但是Bigtable提供了一种不同的接个口。Bigtable不支持完全的关系数据模型；相反，它给客户端提供了一种简单的数据模型，这种数据模型支持对数据分布和格式的动态控制，并且允许客户端推出底层存储中数据的分布特性。Bigtable的数据可以使用任意字符的行列进行索引，Bigtable也把数据当作不可解释的字符串（uninterpreted strings），尽管客户端常常把不同形式的结构化、半结构化的数据序列化形成这些字符。客户端可以控制通过进行选择模式控制数据的位置。最后一点，调整Bigtable的模式参数能让客户端动态控制是从内存还是硬盘提供数据。
+ <!--
+					
+				</div>
+
+
+
+				<!-- <div id="disqus_thread"></div> -->
+				<script type="text/javascript">
+				/* * * CONFIGURATION VARIABLES * * */
+				// var disqus_shortname = 'lucasgatsas2015';
+
+				// /* * * DON'T EDIT BELOW THIS LINE * * */
+				// (function() {
+				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				// })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<br>
+
+
+
+<div class="[ col-xs-12 ] meine-visitenkarte"
+style="  background-color: #F7F7F7;
+padding-left: 20px;
+padding-bottom: 20px;
+border-radius: 4px;
+padding-top: 20px;
+text-align: -webkit-center;
+line-height: 30px;
+border: 1px solid rgba(0, 0, 0, 0.09);
+">
+<td colspan="999">
+	<a href="">Stillwater </a> 
+	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
+	<a href="">follow:</a>
+	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
+	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
+
+	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+
+	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
+</td>
+</div>
+
+</article>
+
+
+	<article>
+		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
+			 -->
+			
+				<header class="intro">
+					
+					<div>
+						<div class="post-meta">
+							<span class="entry-date date published updated">
+								<time datetime="2015-06-27T22:00:44+08:00">
+									<a href="http://localhost:4000/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html">June 27, 2015</a>
+								</time>
+							</span>
+							<span class="author vcard">
+								<span class="fn">
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
+								</span>
+							</span>
+							
+						</div>
+
+						
+						<h1 class="post-title"><a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" id="post-title-h1" rel="bookmark" title="github搭建个人博客" itemprop="url">github搭建个人博客</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/27/github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html" rel="bookmark" title="github搭建个人博客" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+
+						
+
+					</div>
+				</header>
+			</article>
+			<article class="container hentry">
+				<div class="entry-content">
+					
+					<h3 id="githubmarkdownjekyll-搭建个人博客">GitHub+Markdown+Jekyll 搭建个人博客</h3>
+<hr />
+<blockquote>
+  <p>首先以下所有内容都是针对mac的，不同系统装的软件差不多，但过程千差万别，如果是其他系统凉快去。</p>
+</blockquote>
+
+<h3 id="准备工作"><em>准备工作</em>：</h3>
+<p>mac中自带git和gem.这两者就不用安装了，gem是一种文件组织的包，一般的ruby的很多插件都有由这种各种的包提供。安装Jekyll需要它的支持。</p>
+<h4 id="安装jekyll"><em>安装jekyll</em></h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo gem update —system
+$ sudo gem install jekyll 注意需要sudo，否则 no permission.
+</code></pre>
+</div>
+
+<p>直接运行以上命令会出现一些错误。运行以下命令</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gem sources -l 可以看到终端显示 \*\*\* CURRENT SOURCES \*\*\*
+</code></pre>
+</div>
+
+<p>https://rubygems.org
+可见gem的源默认是https://rubygems.org/，
+所以首先更换gem源，换源之前首先删除旧源
+	$ gem sources –remove https://rubygems.org
+注意不要多字符或少字符，不然会出现
+source https://rubygems.org not present in cache 
+remove前是—，否则会
+source emove not present in cache</p>
+
+<h4 id="添加新源"><em>添加新源</em></h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ gem sources -a https://ruby.taobao.org/ 这是一个完整 rubygems.org 镜像，你可以用此代替官方版本，同步频率目前为15分钟一次以保证尽量与官方服务同步。 添加完成之后查看一下是否更换成功
+
+$ gem sources -l &lt;!-- more --&gt;
+</code></pre>
+</div>
+
+<p>在最新版本的macos系统中可能出现无法安装的情况，按照以下步骤处理</p>
+
+<p>1.http://stackoverflow.com/questions/31972968/cant-install-gems-on-os-x-el-capitan</p>
+
+<p>2.更新xcode</p>
+
+<p>3.https://jekyllrb.com/docs/troubleshooting/#jekyll-amp-mac-os-x-1011</p>
+
+<p>更换markdown模板解释器
+安装模板,默认的模板是Maruku,我们替 换为RDiscount。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sudo gem install rdiscount Maruku是纯ruby写的Markdown模板解释 器。 RDiscount是C写的模板解释器。速度快上很多。 
+</code></pre>
+</div>
+
+<p>安装完jekyll之后，我们需要创建网站的各种目录结构和源文件。由于这些文件最终在github中管理，如何利用github创建网站可以看github pages.这里直接直接将整个过程融入一个完整blog的构建过程。
+让github管理本地文件有两种方式：
+由于github托管的网站必须是username.github.io,对应的仓库也是username.github.io
+1.首先git clone username.github.io到本地，会在本地创建一个 username.github.io文件夹，cd进去一看是空的，输入命令ls -a可以发现有一个.git文件，这个文件联系起了本地和远程git服务器。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git clone git@username.github.io.git
+$ cd username.github.io
+$ jekyll new blog
+$ cd blog
+$ jekyll serve
+</code></pre>
+</div>
+
+<p>2.可以事先在本地创建完blog之后，在创建git文件</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ jekyll new blog
+$ cd blog
+$ git init git init会在本地创建一个.git文件,Initialized empty Git repository in yourPath/.git/
+
+$ git add */git add —all
+$ git commit -m “commit”
+$ git remote add origin 
+git@git@username.github.io.git (若是第一次提交该项目的文件或是修改项目文件名后则需要这行这个命令，以后就可不用执行该命令)
+
+git push -u origin master 如果之前已经 add origin，则会报出如下错误： fatal: remote origin already exists. 解决方法：
+
+git remote set-url origin git@git@username.github.io.git 这将替换之前添加的orgin。
+</code></pre>
+</div>
+
+<p>此时访问username.github.io，将会看到你刚刚创建的网站。
+可以看到Jekyll目录结构</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>–_config.yml&gt;</td>
+    </tr>
+    <tr>
+      <td>–_drafts</td>
+    </tr>
+    <tr>
+      <td>–articles1.textile</td>
+    </tr>
+    <tr>
+      <td>–articles2.md</td>
+    </tr>
+    <tr>
+      <td>–_includes</td>
+    </tr>
+    <tr>
+      <td>–footer.html</td>
+    </tr>
+    <tr>
+      <td>–header.html</td>
+    </tr>
+    <tr>
+      <td>–_layouts</td>
+    </tr>
+    <tr>
+      <td>–default.html</td>
+    </tr>
+    <tr>
+      <td>–post.html</td>
+    </tr>
+    <tr>
+      <td>–_posts</td>
+    </tr>
+    <tr>
+      <td>–2014-06-17-articles1.textile</td>
+    </tr>
+    <tr>
+      <td>–2014-06-17-articles1.md</td>
+    </tr>
+    <tr>
+      <td>–_site</td>
+    </tr>
+    <tr>
+      <td>–index.html</td>
+    </tr>
+    <tr>
+      <td>–other files</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>_config.yml :保存配置数据。 
+_drafts :存放未发布的文章。<br />
+_includes :存放页面片段,即页头 ( head.html )、页脚<br />
+( footer.html )、导航<br />
+( navigation.html )、评论 
+( disqus_comments.html )等,这些 资源通过标签添加到index.html中,从而形 成一个完整的页面。 
+_layouts :存放模板文件。文章模板、 关于页面模板、首页模板等。 
+_posts :存放文章的文件。并且文章文 件名称要符合 YEAR-MONTH-DAY- title.MARKUP 格式。 
+_site :经过jekyll转换的页面。 
+index.html :网站首页。 
+other files :其他文件,存放css、 js、image等。</p>
+
+<p>更多配置：http://jekyllrb.com/docs/configuration/</p>
+
+<p>Jekyll解析流程 
+首先会加载_posts及文件夹下的所有文章, 将其参数和文章内容组织保存在内存中,所 有的文章的内容、参数都在site.posts对象 (其他文件夹下的文章不会放入site.posts 中)。 
+其次加载_layouts文件夹下的所有模板。 再次加载_includes文件夹下的所有需要被引入的内容。 
+最后根据每一篇需要编译的文章选择的其参 数定义的模板来创建一个模板,并将当前文 章的内容、参数等进行扩展后放在page对 象、content对象中,然后进行模板的编 译,生成html文件,并按照一定规则放在 _site文件夹下。也就是说在创建一篇文章 时,其实所有文章的内容都已经被读取出来 了,这也为文章相互之间的关联提供了可 能。</p>
+
+					
+				</div>
+
+
+
+				<!-- <div id="disqus_thread"></div> -->
+				<script type="text/javascript">
+				/* * * CONFIGURATION VARIABLES * * */
+				// var disqus_shortname = 'lucasgatsas2015';
+
+				// /* * * DON'T EDIT BELOW THIS LINE * * */
+				// (function() {
+				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				// })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<br>
+
+
+
+<div class="[ col-xs-12 ] meine-visitenkarte"
+style="  background-color: #F7F7F7;
+padding-left: 20px;
+padding-bottom: 20px;
+border-radius: 4px;
+padding-top: 20px;
+text-align: -webkit-center;
+line-height: 30px;
+border: 1px solid rgba(0, 0, 0, 0.09);
+">
+<td colspan="999">
+	<a href="">Stillwater </a> 
+	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
+	<a href="">follow:</a>
+	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
+	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
+
+	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+
+	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
+</td>
+</div>
+
+</article>
+
+
+	<article>
+		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
+			 -->
+			
+				<header class="intro">
+					
+					<div>
+						<div class="post-meta">
+							<span class="entry-date date published updated">
+								<time datetime="2015-06-09T22:00:44+08:00">
+									<a href="http://localhost:4000/2015/06/09/jar%E5%8C%85%E5%86%B2%E7%AA%81.html">June 09, 2015</a>
+								</time>
+							</span>
+							<span class="author vcard">
+								<span class="fn">
+									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
+								</span>
+							</span>
+							
+						</div>
+
+						
+						<h1 class="post-title"><a href="/2015/06/09/jar%E5%8C%85%E5%86%B2%E7%AA%81.html" id="post-title-h1" rel="bookmark" title="jar包冲突好玩的排查方式" itemprop="url">jar包冲突好玩的排查方式</a></h1>
+						<h1 class="post-title-readmore"><a href="/2015/06/09/jar%E5%8C%85%E5%86%B2%E7%AA%81.html" rel="bookmark" title="jar包冲突好玩的排查方式" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+
+						
+
+					</div>
+				</header>
+			</article>
+			<article class="container hentry">
+				<div class="entry-content">
+					
+					<p> 在测试脚本编写和应用部署时，经常遇到的一个问题是：java.lang.NoSuchMethodError。这个问题产生的根本原因是运行时应用加载的jar包版本不是应用代码真正需要的版本。要解决这个问题，就要让应用加载真正“HasSuchMethod”的类所在的jar包。解决这个问题，我把它归纳为以下几步：验证加载内容、查找包含该类的jar包、查找应用适用的jar版本、查看出错应用加载的jar包位置、替换错误jar包版本到需要的版本。</p>
+
+<p>   <strong> 验证加载内容</strong></p>
+
+<p>    通常，发生了NoSuchMethodError，在报错中我们可以查看到应用真实需要的方法和方法签名，例如如下的报错：</p>
+
+<p>java.lang.NoSuchMethodError: com.taobao.eagleeye.EagleEye.rpcClientRecv(Ljava/lang/String;I)V</p>
+
+<p>    表明应用需要的是EagleEye类中的包含方法签名如：void rpcClientRecv(String str,int i)的方法。知道了这一点，我就自然需要去看一下应用中实际加载的EagleEye是什么样的情况，rpcClientRecv方法的签名是什么样子的。</p>
+
+<p>    要得到这些内容，可以用两个工具来获取，1是classdump工具，它通过Serviceability Agent技术在运行时dump指定的类的字节码文件。2是jdgui，这是使用得最多的反编译工具，它可以把classdump工具dump出来的字节码文件反编译成java代码，可以更直观得查看应用中加载的类是什么样子。</p>
+
+<p>    classdump工具的使用：</p>
+
+<p>    命令：java -classpath ”.:/opt/taobao/java/lib/sa-jdi.jar” sun.jvm.hotspot.tools.jcore.ClassDump 16528</p>
+
+<p>    其中-classpath把sa-jdi的jar包加入到classpath中，ClassDump 是执行字节码文件dump的main方法入口类，16528是目标进程的pid，可以用jps命令得到。</p>
+
+<p>    这样，ClassDump会把当前加载的所有Java类都dump到当前目录下，如果有全限定名相同但内容不同的类同时存在于一个Java进程中，那么dump的时候会有覆盖现象，实际dump出来的是同名的类的最后一个。</p>
+
+<p>    如果需要指定被dump的类的范围，可以自己写一个过滤器，在启动ClassDump工具时指定-Dsun.jvm.hotspot.tools.jcore.filter=filterClassName，如果需要指定dump出来的Class文件的存放路径，可以用-Dsun.jvm.hotspot.tools.jcore.outputDir=path来指定，path替换为实际路径。</p>
+
+<p>    对于上面讲的例子，我们只需要EagleEye类的内容，那么，就可以写一个FilterClass类来进行dump的过滤，写这个过滤类，需要实现sun.jvm.hotspot.tools.jcore.ClassFilter，具体实现如下图所示，InstanceKlass对应于HotSpot中表示Java类的内部对象，我们只要过滤类名以com/taobao/eagleeye的类就好。</p>
+
+<p><img src="https://ww3.sinaimg.cn/large/006tNc79gy1fco765hjv3j30dt05lq3o.jpg" alt="img" /></p>
+
+<p>写好了这个类之后，编译，把这个类的class文件放到要执行ClassDump命令的目录下，执行时增加如下参数：-Dsun.jvm.hotspot.tools.jcore.filter=MyFilter，ClassDump就会在当前目录dump出com.taobao.eagleeye.EagleEye类的字节码。</p>
+
+<p>    然后使用jd-gui，jd-gui是一个绿色工具，直接打开字节码文件，可以看到rpcClientRecv方法，这里就可以看到，实际上当前jvm加载的是一个没有参数的rpcClientRecv方法。</p>
+
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79gy1fco7724l7ej30sg0eo76g.jpg" alt="img" /></p>
+
+<p><strong>    查找包含该类的jar包、查找应用适用的jar版本</strong></p>
+
+<p>    确认了当前出现错误的应用中确实加载了不符合要求的类之后，就需要去看一下，这个类是从哪里来的，在哪个jar包中。做这件事情比较简单，只需要去eclipse中执行ctrl+shift+t，输入类名，就可以看到当前eclipse的工程中依赖的各个版本的包含这个类的jar包。接下来你可以把各个版本的类都打开，检查这些版本的jar包中是否有符合要求的方法，即方法签名符合rpcClientRecv(Ljava/lang/String;I)V的方法。方法签名识别：其中L开头，；结尾的字符串标识了一个对象类型，这里的第一个参数是java.lang.String类型，第二个参数是int类型，V表示void类型返回。详细的jvm中字段类型和方法签名表示见下图：</p>
+
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79gy1fco77x349gj30j60gaac6.jpg" alt="img" /></p>
+
+<p>    通过这个步骤，我们知道了实际上我们的应用需要什么版本的jar包，那么，接下来自然就会想要知道应用当前加载的是什么版本的jar包，又是在哪里加载进来的。</p>
+
+<p>    <strong>查看出错应用加载的jar包和jar包位置</strong></p>
+
+<p><strong>    </strong>在这个步骤，要想知道应用加载的是jar包的什么版本，需要使用jvm类加载跟踪器这个工具，这是一个基于java agent、instrument的，用于排查jar包冲突、类冲突、类版本冲突、NoClassDefFoundError、ClassNotFoundException、NoSuchMethodError 等类加载相关问题的辅助工具。这个工具的能够定时得把新加载入虚拟机类个jar包等数据输出到指定的html文件中。</p>
+
+<p>    工具的使用方式是：首先，下载得到jvminspect.jar；其次，修改目标应用的jvm配置，在jvm参数上增加如下的配置：JAVA_OPTIONS=$JAVA_OPTIONS -javaagent:jvminspect.jar=outputfile=jvm.inspect.output,flushIntervalSecond=300 -DHtmlFlusher.enableHyperlink=false；其中jvminspect.jar是下载得到的工具jar包，jvm.inspect.output是输出的文件地址，flushIntervalSecond参数指定的是定时刷新的时间间隔。增加了这个参数之后重启，就可以在jvm.inspect.output文件中查看这个jvm进程加载类的情况了。</p>
+
+<p>    我们关心的是出现NoSuchMethodError 所在的类，在这个例子中，这是com.taobao.eagleeye.EagleEye类，在输出的文件中我们可以看到这个类被jvm从jar包的哪个版本中加载，jar包的物理位置等信息。</p>
+
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79gy1fco781c45bj30sg030ac0.jpg" alt="img" /></p>
+
+<p>    知道了这些信息，我们就很清楚得能够确定问题的原因。</p>
+
+<p>    <strong>替换错误jar包版本到需要的版本</strong></p>
+
+<p><strong>    </strong>知道应用在那里加载了不期望被加载的jar包，我们就可以着手让应用把需要加载的正确版本包加载进来。不同的场景可以做不一样的操作，比如应用的war包中本身加载了错误版本的jar包，那你需要做的是修改应用的pom文件进行重新打包，把正确的jar包依赖到war包中；如果是由于某些环境的原因，classpath中存在了两个不同版本的jar包，那你就可以根据前面几步得到的信息，把错误版本（导致应用报NoClassDefFoundError、ClassNotFoundException、NoSuchMethodError等错）的版本删除，留下应用代码实际上依赖的jar包。</p>
+
 
 					
 				</div>
@@ -611,7 +997,7 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 	
 
 	
-	<span class='next'>Next &raquo;</span>
+	<a class='next' href="/page3/">Next &raquo;</a>
 	
 </div>
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>order</key>
+	<array>
+		<string>2015-06-09-jar包冲突.md</string>
+	</array>
+	<key>resolutionData</key>
+	<dict>
+		<key>order</key>
+		<dict>
+			<key>2015-06-09-jar包冲突.md</key>
+			<dict>
+				<key>explicitUnassignment</key>
+				<true/>
+				<key>firstUnassignment</key>
+				<real>508612354.49790698</real>
+				<key>lastModification</key>
+				<real>508612354.49790698</real>
+				<key>version</key>
+				<dict>
+					<key>54118c1604aff02407daa57d30d21427fe8dc820e5d2f4b17d53b9a2637b44c6</key>
+					<integer>26</integer>
+				</dict>
+			</dict>
+		</dict>
+	</dict>
+	<key>storeFormatVersion</key>
+	<integer>1</integer>
+	<key>versioning</key>
+	<dict>
+		<key>order</key>
+		<dict>
+			<key>54118c1604aff02407daa57d30d21427fe8dc820e5d2f4b17d53b9a2637b44c6</key>
+			<integer>26</integer>
+		</dict>
+	</dict>
+</dict>
+</plist>

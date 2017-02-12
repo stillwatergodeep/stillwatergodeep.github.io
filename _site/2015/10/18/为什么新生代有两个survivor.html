@@ -46,14 +46,14 @@
 <!-- Blog Title -->
 <title>stillwaterli - A software Engineer and Web Developer from China.  </title>
 
-    <!--     <title>JS变量初始化过程 - stillwater</title>
+    <!--     <title>2015-10-18-为什么新生代有两个survivor - stillwater</title>
 --> 
 <!-- Property Metas --> 
 <meta property="og:image" content="/img/93TyTG3x.png"/>
 <meta property="og:title" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <meta property="og:site_name" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <!-- Canonical -->
-<link rel="canonical" href="http://localhost:4000/2013/08/26/JS%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.html">
+<link rel="canonical" href="http://localhost:4000/2015/10/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%96%B0%E7%94%9F%E4%BB%A3%E6%9C%89%E4%B8%A4%E4%B8%AAsurvivor.html">
 <!-- StyleSheet -->
 <link rel="stylesheet" href="/css/pygments.css">
 <link rel="stylesheet" href="/css/duoshuo.css">
@@ -310,7 +310,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>JS变量初始化过程</h1>
+                    <h1>2015-10-18-为什么新生代有两个survivor</h1>
                     
                     <span class="meta">Posted by stillwater  </span>
                 </div>
@@ -325,235 +325,35 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<h2 id="顶级变量初始化"><a href="#2.1">顶级变量初始化</a></h2>
+				<p>StackOverflow上面给出的解释是：</p>
 
-<h2 id="函数变量"><a href="#2.2">函数变量</a></h2>
+<p>The reason for the HotSpot JVM’s two survivor spaces is to reduce the need to deal with fragmentation. New objects are allocated in eden space. All well and good. When that’s full, you need a GC, so kill stale objects and move live ones to a survivor space, where they can mature for a while before being promoted to the old generation. Still good so far. The next time we run out of eden space, though, we have a conundrum. The next GC comes along and clears out some space in both eden and our survivor space, but the spaces aren’t contiguous. So is it better to</p>
 
-<h2 id="没有scope的块"><a href="#2.3">没有scope的块</a></h2>
+<ol>
+  <li>Try to fit the survivors from eden into the holes in the survivor space that were cleared by the GC?</li>
+  <li>Shift all the objects in the survivor space down to eliminate the fragmentation, and then move the survivors into it?</li>
+  <li>Just say “screw it, we’re moving everything around anyway,” and copy all of the survivors from both spaces into a completely separate space–the second survivor space–thus leaving you with a clean eden and survivor space where you can repeat the sequence on the next GC?</li>
+</ol>
 
-<p>JavaScript函数与变量机制与大部分语言完全不同，在JS中，所有的局部变量和函数都是特定内部对象的属性，即LexicalEnvironment（LE）</p>
+<p>Sun’s answer to the question is obvious.</p>
 
-<p>在浏览器中顶级的LE是window对象，也叫做全局变量</p>
+<p>  对于如何达到“无碎片”的目的，理解上可能有些困难，下面我把新生代回收机制详细解释一下：</p>
 
-<h2 id="2.1">顶级变量初始化</h2>
+<p>  注意，两个survivor是交替使用的，在任意一个时刻，必定有一个survivor为空，一个survivor中存放着对象（连续存放，无碎片）。回收过程如下：</p>
 
-<p>当js即将执行时，有一个预处理阶段叫做变量实例化</p>
+<p>  S1、GC，将eden中的live对象放入当前不为空的survivor中，将eden中的非live对象回收。如果survivor满了，下次回收执行S2；如果survivor未满，下次回收仍然以S1的方式回收；</p>
 
-<ul>
-  <li>首先，解释器扫描Function Declarations,也就是function name{},解释器将对每个声明创建一个函数并作为Window的一个变量</li>
-</ul>
+<p>  S2、GC，将eden和存放着对象的survivor中的live对象放入当前为空的survivor中，将非live对象回收。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'f:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'g:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-</div>
-<p>此时，浏览器发现函数f,于是创建Function，将其存为window.f:
-<!-- more --></p>
+<p>  可以看到，上述的新生代回收机制保证了一个survivor为空，另一个非空survivor中无碎片。</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 1. Function Declarations are initialized before the code is executed.</span>
-<span class="c1">// so, prior to first line we have: window = { f: function }</span>
-<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'f:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span> <span class="c1">// &lt;-- FunctionDeclaration</span>
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'g:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-</code></pre>
-</div>
-<p>　　而这也导致，f可以在声明之前调用
-	f()
-	function f() { alert(‘ok’) }
-	​```</p>
-<ul>
-  <li>解释器扫描var declarations,作为window的属性。但是此时变量并没有被赋值，所有的变量此时都是undefined。
-// 1. Function declarations are initialized before the code is executed.
-// window = { f: function }
-// 2. Variables are added as window properties.
-// window = { f: function, a: undefined, g: undefined }</li>
-</ul>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1">// &lt;-- var</span>
-
-<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'f:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span>
-
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg</span><span class="p">)</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">'g:'</span><span class="o">+</span><span class="nx">arg</span><span class="p">)</span> <span class="p">}</span> <span class="c1">// &lt;-- var</span>
-</code></pre>
-</div>
-<p>　虽然g是一个函数表达式，但是解释器不关心这些，只要使用var声明，都会在此阶段处理,这也导致变量不能和函数同名</p>
-
-<p>总结一下：</p>
-
-<blockquote>
-  <p>1.FunctionDeclarations become ready-to-use functions. That allows to call a function before it’s declaration.</p>
-
-  <p>2.Variables start as undefined.</p>
-
-  <p>3.All assignments happen later, when the execution reaches them.</p>
-</blockquote>
-
-<ul>
-  <li>代码执行</li>
-</ul>
-
-<p>　　当变量活函数被访问时，解释器从window中获取</p>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">alert</span><span class="p">(</span><span class="s2">"a"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="c1">// true, because window.a exists</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// undefined, because assignment happens below</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="c1">// function, because it is Function Declaration</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="c1">// undefined, because assignment happens below</span>
-<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>  
-<span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">}</span> 
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">}</span>
-</code></pre>
-</div>
-<ul>
-  <li>赋值过后，a=5,g成为了函数，注意下面代码的区别：
-    <div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span>  
-<span class="kd">var</span> <span class="nx">g</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="cm">/*...*/</span> <span class="p">}</span> 
-<span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// 5</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span> <span class="c1">// function</span>
-</code></pre>
-    </div>
-    <p>　如果变量声明时未用var,那么在初始化时就不会被创建（或者说成为window的属性）,解释器看不到的：</p>
-  </li>
-</ul>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">alert</span><span class="p">(</span><span class="s2">"b"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="c1">// false, there is no window.b</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">// error, b is not defined</span>
-<span class="nx">b</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="err">但赋值之后，</span><span class="nx">b</span><span class="err">成为</span><span class="nb">window</span><span class="err">的全局变量：</span><span class="nb">window</span><span class="p">.</span><span class="nx">b</span>
-<span class="nx">b</span> <span class="o">=</span> <span class="mi">5</span> 
-<span class="nx">alert</span><span class="p">(</span><span class="s2">"b"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="c1">// true, there is window.b = 5</span>
-</code></pre>
-</div>
-<p>考虑一下：下面代码的执行结果：</p>
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// window = {a:undefined}</span>
-<span class="k">if</span> <span class="p">(</span><span class="s2">"a"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">}</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-
-<span class="err">​```</span><span class="nx">javascript</span>
-<span class="k">if</span> <span class="p">(</span><span class="s2">"a"</span> <span class="k">in</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">}</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>The answer is “Error: no such variable”, because there is no variable a at the time of “a” in window check.</p>
-
-<p>So, the if branch does not execute and there is no a at the time of alert.</p>
-
-<h2 id="2.2">函数变量</h2>
-
-<p>当函数执行时，每一个函数调用都会产生新的包含参数、变量、嵌套函数声明的LexicalEnvironment</p>
-
-<p>变量是内部用来读写变量的，和window不同，函数的LexicalEnvironment 是不能直接访问的</p>
-
-<p>下面我们看一下函数执行的细节：</p>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">sayHi</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">phrase</span> <span class="o">=</span> <span class="s2">"Hi, "</span> <span class="o">+</span> <span class="nx">name</span>
-  <span class="nx">alert</span><span class="p">(</span><span class="nx">phrase</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="nx">sayHi</span><span class="p">(</span><span class="s1">'John'</span><span class="p">)</span>
-</code></pre>
-</div>
-<p>1.在解释器开始执行函数代码时，会创建一个填充参数、局部变量、嵌套函数的LexicalEnvironment ，很显然参数具有初始值，而局部变量则是未定义的</p>
-
-<p>　　2.函数代码开始执行，最后执行赋值语句。内部的变量赋值意味着LexicalEnvironment相应的属性获得了新值</p>
-
-<p>so，phrase=”Hi, “+name 改变了LexicalEnvironment</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>function sayHi(name) {
-// LexicalEnvironment = { name: 'John', phrase: undefined }
-  var phrase = "Hi, " + name
-// LexicalEnvironment = { name: 'John', phrase: 'Hi, John'}
-  alert(phrase)
-}
-sayHi('John')
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-</code></pre>
-</div>
-<p>最后一行alert(phrase)从LexicalEnvironment 搜获phrase</p>
-
-<p>　　3.函数执行之后，LexicalEnvironment会废弃他的内容，因为这些变量不再需要，但是情况并不总是这样：
-　　</p>
-<blockquote>
-  <p>Specification peculiarities
-If we look into the recent ECMA-262 specification, there are actually two objects.</p>
-
-  <p>The first is a VariableEnvironment object, which is actually populated by variables and functions, declared by FunctionDeclaration, and then becomes immutable.</p>
-
-  <p>The second is a LexicalEnvironment object, which is almost same as VariableEnvironment, but it is actually used during the execution.</p>
-
-  <p>A more formal description can be found in the ECMA-262 standard, sections 10.2-10.5 and 13.</p>
-
-  <p>It is also noted that in JavaScript implementations, these two objects can be merged into one. So, we evade irrelevant details and use the term LexicalEnvironment everywhere.
-　　</p>
-
-</blockquote>
-
-<h2 id="2.3">没有scope的块</h2>
-
-<p>下面的代码没有任何区别</p>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">{</span>
-  <span class="nx">i</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-<p>​</p>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="p">{</span>
-
-  <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">5</span>
-
-<span class="p">}</span>
-
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code> 所有的变量声明在块执行之前就已经初始化
-
-这一点和Java、C++不用，在JS中，变量在循环之后依旧存在，因为他们的scope是函数
-​```javascript
-for(var i=0; i&lt;5; i++) { }
-alert(i) // 5, variable survives and keeps value
-</code></pre>
-</div>
-<p>在循环中声明变量很方便，但不要认为循环之后变量就不存在了，不要把循环当作其scope</p>
-
-<p>下面的代码的结果是什么：</p>
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
-
-  <span class="nx">alert</span><span class="p">(</span><span class="nb">window</span><span class="p">)</span>
-
-  <span class="kd">var</span> <span class="nb">window</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="p">}</span>
-<span class="nx">test</span><span class="p">()</span>
-</code></pre>
-</div>
-<p>var指令在预处理阶段就执行了</p>
-
-<p>因此，window在alert之前成了局部变量</p>
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">LexicalEnvironment</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">window</span><span class="p">:</span> <span class="kc">undefined</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-<p>所以当执行到第一行时，变量window存在但是未定义</p>
-
+<p>  在执行一定次数的minor GC后，会通过Full GC将新生代的survivor中的对象移入老年代。</p>
 
 
                 <hr>
 
 
-<div id="ds-thread" class="ds-thread" data-url="/2013/08/26/JS%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B.html" data-title="JS变量初始化过程" data-thread-key="JS变量初始化过程"></div>
+<div id="ds-thread" class="ds-thread" data-url="/2015/10/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%96%B0%E7%94%9F%E4%BB%A3%E6%9C%89%E4%B8%A4%E4%B8%AAsurvivor.html" data-title="2015-10-18-为什么新生代有两个survivor" data-thread-key="2015-10-18-为什么新生代有两个survivor"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name: "stillwater"};
 (function() {
@@ -567,9 +367,13 @@ var duoshuoQuery = {short_name: "stillwater"};
 
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/2015/08/15/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97%E4%B9%8Bsimhash%E5%92%8C%E6%B5%B7%E6%98%8E%E8%B7%9D%E7%A6%BB.html" data-toggle="tooltip" data-placement="top" title="海量数据相似度计算之simhash和海明距离">&larr; Previous Post</a>
+                    </li>
+                    
                     
                     <li class="next">
-                        <a href="/2013/10/26/PNG-Loading.html" data-toggle="tooltip" data-placement="top" title="（转）使用 PNG 图片制作动态 Loading">Next Post &rarr;</a>
+                        <a href="/2016/10/12/AWK%E5%91%BD%E4%BB%A4.html" data-toggle="tooltip" data-placement="top" title="AWK命令">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

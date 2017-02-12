@@ -7,7 +7,7 @@ author:     "stillwater"
 ---
 
 ### GitHub+Markdown+Jekyll 搭建个人博客
----- 
+----
 > 首先以下所有内容都是针对mac的，不同系统装的软件差不多，但过程千差万别，如果是其他系统凉快去。
 
 
@@ -18,7 +18,9 @@ mac中自带git和gem.这两者就不用安装了，gem是一种文件组织的�
 	$ sudo gem update —system
 	$ sudo gem install jekyll
 注意需要sudo，否则 no permission.
+
 直接运行以上命令会出现一些错误。运行以下命令
+
 	$ gem sources -l
 可以看到终端显示
 \*\*\* CURRENT SOURCES \*\*\*
@@ -40,8 +42,20 @@ source emove not present in cache
 
 	$ gem sources -l
 <!-- more -->
+
+在最新版本的macos系统中可能出现无法安装的情况，按照以下步骤处理
+
+1.http://stackoverflow.com/questions/31972968/cant-install-gems-on-os-x-el-capitan
+
+2.更新xcode
+
+3.https://jekyllrb.com/docs/troubleshooting/#jekyll-amp-mac-os-x-1011
+
+
+
 更换markdown模板解释器
 安装模板,默认的模板是Maruku,我们替 换为RDiscount。 
+
 	$ sudo gem install rdiscount
 Maruku是纯ruby写的Markdown模板解释 器。 RDiscount是C写的模板解释器。速度快上很多。 
 
@@ -108,6 +122,8 @@ _posts :存放文章的文件。并且文章文 件名称要符合 YEAR-MONTH-DA
 _site :经过jekyll转换的页面。 
 index.html :网站首页。 
 other files :其他文件,存放css、 js、image等。 
+
+更多配置：http://jekyllrb.com/docs/configuration/
 
 Jekyll解析流程 
 首先会加载_posts及文件夹下的所有文章, 将其参数和文章内容组织保存在内存中,所 有的文章的内容、参数都在site.posts对象 (其他文件夹下的文章不会放入site.posts 中)。 

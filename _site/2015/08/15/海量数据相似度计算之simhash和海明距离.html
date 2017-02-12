@@ -46,14 +46,14 @@
 <!-- Blog Title -->
 <title>stillwaterli - A software Engineer and Web Developer from China.  </title>
 
-    <!--     <title>stillwater</title>
+    <!--     <title>海量数据相似度计算之simhash和海明距离 - stillwater</title>
 --> 
 <!-- Property Metas --> 
 <meta property="og:image" content="/img/93TyTG3x.png"/>
 <meta property="og:title" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <meta property="og:site_name" content="Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. "/>
 <!-- Canonical -->
-<link rel="canonical" href="http://localhost:4000/">
+<link rel="canonical" href="http://localhost:4000/2015/08/15/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97%E4%B9%8Bsimhash%E5%92%8C%E6%B5%B7%E6%98%8E%E8%B7%9D%E7%A6%BB.html">
 <!-- StyleSheet -->
 <link rel="stylesheet" href="/css/pygments.css">
 <link rel="stylesheet" href="/css/duoshuo.css">
@@ -302,349 +302,30 @@
 
 
 
-    <!-- Page Header -->
-
+    <!-- Post Header -->
+ 
     <header class="intro">
-    <div class="container head">
+
+    <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-<div class="hero-block">
-    <img class="img-circle portfolio-link" src="/img/photo.jpg"  href="#portfolioModal1" data-toggle="modal" width="150" height="150" alt="stillwater victory" title="stillwater victory">
-          </p>
-      </div><br><br>
-      <h1 id="top-title-font-weight-bold">
-        stillwater
-        </h1>
-      <!--    <hr class="small"> -->
-      <span class="subheading" id="textfloat">Hello, I'm stillwater.
-         <br> <br>
-         <!-- ///// Fade Out Navbar Profile Picture -///// New Adding Front Profile Picture Mo. 6. April 2015 --> 
-                       <!--
-                       <img src="https://pbs.twimg.com/profile_images/559425037925498880/UL8HyKsM_400x400.jpeg" id="small-img-nav" width="40" height="40" class="img-circle" alt="newspace"> -->
-                       <i class="fa fa-chevron-down" id="scroll-down"></i>
-                   </span>
-               </div>
-           </div>
-       </div>
-   </div>
+                <div class="post-heading">
+                    <h1>海量数据相似度计算之simhash和海明距离</h1>
+                    
+                    <span class="meta">Posted by stillwater  </span>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
-<!-- Main Content -->
-<div class="container front-end">
-	<div class="row">
-		<div class="posts">
-			<div class="content">
-	
-	<article>
-		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
-			 -->
-			
-				<header class="intro">
-					
-					<div>
-						<div class="post-meta">
-							<span class="entry-date date published updated">
-								<time datetime="2016-11-10T16:00:00+08:00">
-									<a href="http://localhost:4000/2016/11/10/Velocity%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB.html">November 10, 2016</a>
-								</time>
-							</span>
-							<span class="author vcard">
-								<span class="fn">
-									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
-								</span>
-							</span>
-							
-						</div>
 
-						
-						<h1 class="post-title"><a href="/2016/11/10/Velocity%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB.html" id="post-title-h1" rel="bookmark" title="Velocity源码阅读(转)" itemprop="url">Velocity源码阅读(转)</a></h1>
-						<h1 class="post-title-readmore"><a href="/2016/11/10/Velocity%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB.html" rel="bookmark" title="Velocity源码阅读(转)" itemprop="url" id="readmore-link"> ReadMore</a></h1>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-						
-
-					</div>
-				</header>
-			</article>
-			<article class="container hentry">
-				<div class="entry-content">
-					
-					<blockquote>
-  <p>Velocity 是一个基于Java的模板引擎。它高效、简洁，且有很好的可扩展性，适合在Web项目中做为MVC模型中的视图，也可以在内容生成、数据转换等应用中独立使用。本文将以源码阅读的方式，浅析velocity的实现机制，并通过几个小例子来阐述velocity中主要使用的技术点。</p>
-</blockquote>
-
-
-					
-				</div>
-
-
-
-				<!-- <div id="disqus_thread"></div> -->
-				<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES * * */
-				// var disqus_shortname = 'lucasgatsas2015';
-
-				// /* * * DON'T EDIT BELOW THIS LINE * * */
-				// (function() {
-				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				// })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-<br>
-
-
-
-<div class="[ col-xs-12 ] meine-visitenkarte"
-style="  background-color: #F7F7F7;
-padding-left: 20px;
-padding-bottom: 20px;
-border-radius: 4px;
-padding-top: 20px;
-text-align: -webkit-center;
-line-height: 30px;
-border: 1px solid rgba(0, 0, 0, 0.09);
-">
-<td colspan="999">
-	<a href="">Stillwater </a> 
-	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
-	<a href="">follow:</a>
-	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
-	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
-
-	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
-
-	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
-</td>
-</div>
-
-</article>
-
-
-	<article>
-		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
-			 -->
-			
-				<header class="intro">
-					
-					<div>
-						<div class="post-meta">
-							<span class="entry-date date published updated">
-								<time datetime="2016-10-12T16:00:00+08:00">
-									<a href="http://localhost:4000/2016/10/12/AWK%E5%91%BD%E4%BB%A4.html">October 12, 2016</a>
-								</time>
-							</span>
-							<span class="author vcard">
-								<span class="fn">
-									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
-								</span>
-							</span>
-							
-						</div>
-
-						
-						<h1 class="post-title"><a href="/2016/10/12/AWK%E5%91%BD%E4%BB%A4.html" id="post-title-h1" rel="bookmark" title="AWK命令" itemprop="url">AWK命令</a></h1>
-						<h1 class="post-title-readmore"><a href="/2016/10/12/AWK%E5%91%BD%E4%BB%A4.html" rel="bookmark" title="AWK命令" itemprop="url" id="readmore-link"> ReadMore</a></h1>
-
-						
-
-					</div>
-				</header>
-			</article>
-			<article class="container hentry">
-				<div class="entry-content">
-					
-					<p>简介
-awk是一个强大的文本分析工具，相对于grep的查找，sed的编辑，awk在其对数据分析并生成报告时，显得尤为强大。简单来说awk就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。</p>
-
-
-					
-				</div>
-
-
-
-				<!-- <div id="disqus_thread"></div> -->
-				<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES * * */
-				// var disqus_shortname = 'lucasgatsas2015';
-
-				// /* * * DON'T EDIT BELOW THIS LINE * * */
-				// (function() {
-				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				// })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-<br>
-
-
-
-<div class="[ col-xs-12 ] meine-visitenkarte"
-style="  background-color: #F7F7F7;
-padding-left: 20px;
-padding-bottom: 20px;
-border-radius: 4px;
-padding-top: 20px;
-text-align: -webkit-center;
-line-height: 30px;
-border: 1px solid rgba(0, 0, 0, 0.09);
-">
-<td colspan="999">
-	<a href="">Stillwater </a> 
-	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
-	<a href="">follow:</a>
-	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
-	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
-
-	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
-
-	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
-</td>
-</div>
-
-</article>
-
-
-	<article>
-		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
-			 -->
-			
-				<header class="intro">
-					
-					<div>
-						<div class="post-meta">
-							<span class="entry-date date published updated">
-								<time datetime="2015-10-18T22:00:44+08:00">
-									<a href="http://localhost:4000/2015/10/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%96%B0%E7%94%9F%E4%BB%A3%E6%9C%89%E4%B8%A4%E4%B8%AAsurvivor.html">October 18, 2015</a>
-								</time>
-							</span>
-							<span class="author vcard">
-								<span class="fn">
-									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
-								</span>
-							</span>
-							
-						</div>
-
-						
-						<h1 class="post-title"><a href="/2015/10/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%96%B0%E7%94%9F%E4%BB%A3%E6%9C%89%E4%B8%A4%E4%B8%AAsurvivor.html" id="post-title-h1" rel="bookmark" title="2015-10-18-为什么新生代有两个survivor" itemprop="url">2015-10-18-为什么新生代有两个survivor</a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/10/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%96%B0%E7%94%9F%E4%BB%A3%E6%9C%89%E4%B8%A4%E4%B8%AAsurvivor.html" rel="bookmark" title="2015-10-18-为什么新生代有两个survivor" itemprop="url" id="readmore-link"> ReadMore</a></h1>
-
-						
-
-					</div>
-				</header>
-			</article>
-			<article class="container hentry">
-				<div class="entry-content">
-					
-					<p>StackOverflow上面给出的解释是：</p>
-
-<p>The reason for the HotSpot JVM’s two survivor spaces is to reduce the need to deal with fragmentation. New objects are allocated in eden space. All well and good. When that’s full, you need a GC, so kill stale objects and move live ones to a survivor space, where they can mature for a while before being promoted to the old generation. Still good so far. The next time we run out of eden space, though, we have a conundrum. The next GC comes along and clears out some space in both eden and our survivor space, but the spaces aren’t contiguous. So is it better to</p>
-
-<ol>
-  <li>Try to fit the survivors from eden into the holes in the survivor space that were cleared by the GC?</li>
-  <li>Shift all the objects in the survivor space down to eliminate the fragmentation, and then move the survivors into it?</li>
-  <li>Just say “screw it, we’re moving everything around anyway,” and copy all of the survivors from both spaces into a completely separate space–the second survivor space–thus leaving you with a clean eden and survivor space where you can repeat the sequence on the next GC?</li>
-</ol>
-
-<p>Sun’s answer to the question is obvious.</p>
-
-<p>  对于如何达到“无碎片”的目的，理解上可能有些困难，下面我把新生代回收机制详细解释一下：</p>
-
-<p>  注意，两个survivor是交替使用的，在任意一个时刻，必定有一个survivor为空，一个survivor中存放着对象（连续存放，无碎片）。回收过程如下：</p>
-
-<p>  S1、GC，将eden中的live对象放入当前不为空的survivor中，将eden中的非live对象回收。如果survivor满了，下次回收执行S2；如果survivor未满，下次回收仍然以S1的方式回收；</p>
-
-<p>  S2、GC，将eden和存放着对象的survivor中的live对象放入当前为空的survivor中，将非live对象回收。</p>
-
-<p>  可以看到，上述的新生代回收机制保证了一个survivor为空，另一个非空survivor中无碎片。</p>
-
-<p>  在执行一定次数的minor GC后，会通过Full GC将新生代的survivor中的对象移入老年代。</p>
-
-					
-				</div>
-
-
-
-				<!-- <div id="disqus_thread"></div> -->
-				<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES * * */
-				// var disqus_shortname = 'lucasgatsas2015';
-
-				// /* * * DON'T EDIT BELOW THIS LINE * * */
-				// (function() {
-				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				// })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-<br>
-
-
-
-<div class="[ col-xs-12 ] meine-visitenkarte"
-style="  background-color: #F7F7F7;
-padding-left: 20px;
-padding-bottom: 20px;
-border-radius: 4px;
-padding-top: 20px;
-text-align: -webkit-center;
-line-height: 30px;
-border: 1px solid rgba(0, 0, 0, 0.09);
-">
-<td colspan="999">
-	<a href="">Stillwater </a> 
-	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
-	<a href="">follow:</a>
-	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
-	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
-
-	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
-
-	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
-</td>
-</div>
-
-</article>
-
-
-	<article>
-		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
-			 -->
-			
-				<header class="intro">
-					
-					<div>
-						<div class="post-meta">
-							<span class="entry-date date published updated">
-								<time datetime="2015-08-15T22:00:44+08:00">
-									<a href="http://localhost:4000/2015/08/15/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97%E4%B9%8Bsimhash%E5%92%8C%E6%B5%B7%E6%98%8E%E8%B7%9D%E7%A6%BB.html">August 15, 2015</a>
-								</time>
-							</span>
-							<span class="author vcard">
-								<span class="fn">
-									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
-								</span>
-							</span>
-							
-						</div>
-
-						
-						<h1 class="post-title"><a href="/2015/08/15/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97%E4%B9%8Bsimhash%E5%92%8C%E6%B5%B7%E6%98%8E%E8%B7%9D%E7%A6%BB.html" id="post-title-h1" rel="bookmark" title="海量数据相似度计算之simhash和海明距离" itemprop="url">海量数据相似度计算之simhash和海明距离</a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/08/15/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97%E4%B9%8Bsimhash%E5%92%8C%E6%B5%B7%E6%98%8E%E8%B7%9D%E7%A6%BB.html" rel="bookmark" title="海量数据相似度计算之simhash和海明距离" itemprop="url" id="readmore-link"> ReadMore</a></h1>
-
-						
-
-					</div>
-				</header>
-			</article>
-			<article class="container hentry">
-				<div class="entry-content">
-					
-					<p>通过 <a href="http://www.lanceyan.com/tech/arch/tensofmillioncrawler.html">采集系统</a> 我们采集了大量文本数据，但是文本中有很多重复数据影响我们对于结果的分析。分析前我们需要对这些数据去除重复，如何选择和设计文本的去重算法？常见的有余弦夹角算法、欧式距离、Jaccard相似度、最长公共子串、编辑距离等。这些算法对于待比较的文本数据不多时还比较好用，如果我们的爬虫每天采集的数据以千万计算，我们如何对于这些海量千万级的数据进行高效的合并去重。最简单的做法是拿着待比较的文本和数据库中所有的文本比较一遍如果是重复的数据就标示为重复。看起来很简单，我们来做个测试，就拿最简单的两个数据使用Apache提供的 Levenshtein for 循环100w次计算这两个数据的相似度。代码结果如下：</p>
+				<p>通过 <a href="http://www.lanceyan.com/tech/arch/tensofmillioncrawler.html">采集系统</a> 我们采集了大量文本数据，但是文本中有很多重复数据影响我们对于结果的分析。分析前我们需要对这些数据去除重复，如何选择和设计文本的去重算法？常见的有余弦夹角算法、欧式距离、Jaccard相似度、最长公共子串、编辑距离等。这些算法对于待比较的文本数据不多时还比较好用，如果我们的爬虫每天采集的数据以千万计算，我们如何对于这些海量千万级的数据进行高效的合并去重。最简单的做法是拿着待比较的文本和数据库中所有的文本比较一遍如果是重复的数据就标示为重复。看起来很简单，我们来做个测试，就拿最简单的两个数据使用Apache提供的 Levenshtein for 循环100w次计算这两个数据的相似度。代码结果如下：</p>
 
 <p>            <a href="http://www.google.com/search?hl=en&amp;q=allinurl:string+java.sun.com&amp;btnI=I'm%20Feeling%20Lucky">String</a> s1 = ”你妈妈喊你回家吃饭哦，回家罗回家罗” ;
             <a href="http://www.google.com/search?hl=en&amp;q=allinurl:string+java.sun.com&amp;btnI=I'm%20Feeling%20Lucky">String</a> s2 = ”你妈妈叫你回家吃饭啦，回家罗回家罗” ;
@@ -721,183 +402,40 @@ border: 1px solid rgba(0, 0, 0, 0.09);
 <p> </p>
 
 
-					
-				</div>
+
+                <hr>
 
 
-
-				<!-- <div id="disqus_thread"></div> -->
-				<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES * * */
-				// var disqus_shortname = 'lucasgatsas2015';
-
-				// /* * * DON'T EDIT BELOW THIS LINE * * */
-				// (function() {
-				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				// })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-<br>
-
-
-
-<div class="[ col-xs-12 ] meine-visitenkarte"
-style="  background-color: #F7F7F7;
-padding-left: 20px;
-padding-bottom: 20px;
-border-radius: 4px;
-padding-top: 20px;
-text-align: -webkit-center;
-line-height: 30px;
-border: 1px solid rgba(0, 0, 0, 0.09);
-">
-<td colspan="999">
-	<a href="">Stillwater </a> 
-	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
-	<a href="">follow:</a>
-	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
-	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
-
-	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
-
-	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
-</td>
-</div>
-
-</article>
-
-
-	<article>
-		<!-- <header class="intro-header" style="background-image: url('/')" style="margin-bottom:-40px;" alt="Lucas Gatsas lucas gatsas" title="lucas gatsas Lucas Gatsas">  
-			 -->
-			
-				<header class="intro">
-					
-					<div>
-						<div class="post-meta">
-							<span class="entry-date date published updated">
-								<time datetime="2015-07-10T16:00:00+08:00">
-									<a href="http://localhost:4000/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html">July 10, 2015</a>
-								</time>
-							</span>
-							<span class="author vcard">
-								<span class="fn">
-									<a href="http://localhost:4000/about/" title="About stillwater">stillwater</a>
-								</span>
-							</span>
-							
-						</div>
-
-						
-						<h1 class="post-title"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html" id="post-title-h1" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url">数据库悲观锁乐观锁</a></h1>
-						<h1 class="post-title-readmore"><a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html" rel="bookmark" title="数据库悲观锁乐观锁" itemprop="url" id="readmore-link"> ReadMore</a></h1>
-
-						
-
-					</div>
-				</header>
-			</article>
-			<article class="container hentry">
-				<div class="entry-content">
-					
-					<h2 id="悲观锁乐观锁">悲观锁&amp;乐观锁</h2>
-
-<p>悲观锁与乐观锁是并发访问资源解决冲突不一致的常用的方式，本文将就这两种锁的特点进行讨论。
-悲观锁：顾名思义，它对事物持消极态度，它假设他要修改的数据如果不加锁的话会被别人修改，所以它每次操作前先独占锁。悲观者的人生观是一件事情我必须要百分之百完全控制才会去做，否则就认为这件事情一定会出问题；
-而乐观者的人生观则相反，凡事不管最终结果如何，他都会先尝试去做，大不了最后不成功。
-这就是悲观锁与乐观锁的区别，悲观锁会把整个对象加锁占为自有后才去做操作，乐观锁不获取锁直接做操作，然后通过一定检测手段决定是否更新数据
-
-					
-				</div>
-
-
-
-				<!-- <div id="disqus_thread"></div> -->
-				<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES * * */
-				// var disqus_shortname = 'lucasgatsas2015';
-
-				// /* * * DON'T EDIT BELOW THIS LINE * * */
-				// (function() {
-				// 	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				// 	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-				// 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				// })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-<br>
-
-
-
-<div class="[ col-xs-12 ] meine-visitenkarte"
-style="  background-color: #F7F7F7;
-padding-left: 20px;
-padding-bottom: 20px;
-border-radius: 4px;
-padding-top: 20px;
-text-align: -webkit-center;
-line-height: 30px;
-border: 1px solid rgba(0, 0, 0, 0.09);
-">
-<td colspan="999">
-	<a href="">Stillwater </a> 
-	<a class="no-border" href=""><img src="/img/photo.jpg" width="50" height="50" style="border:2px solid #fff;border-radius:5em;margin:0;"></a> 
-	<a href="">follow:</a>
-	<a href="https://www.github.com/superstar4" target="_blank">    <i class="fa fa-github" id="spaceg-social-modal"></i> </a> 
-	<a class="follow" href="https://plus.google.com/u/0/101869488504092117335/posts" target="_blank"><i class="fa fa-google-plus"></i></a>
-
-	<a class="follow" href="" target="_blank"><i class="fa fa-facebook"></i></a>
-
-	<a class="follow" href="http://weibo.com/u/3948730723" target="_blank"><i class="fa fa-weibo"></i></a> 
-</td>
-</div>
-
-</article>
-
-
-
-
-
-<div class="pagination">
-	
-	<span>&laquo; Prev</span>
-	
-
-	
-	<a class='next' href="/page2/">Next &raquo;</a>
-	
-</div>
-
-</div>
-
-
-<script src="/js/jquery-1.11.1.js"></script>
-<script src="/js/jscroll/jquery.jscroll.js"></script>
-
+<div id="ds-thread" class="ds-thread" data-url="/2015/08/15/%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97%E4%B9%8Bsimhash%E5%92%8C%E6%B5%B7%E6%98%8E%E8%B7%9D%E7%A6%BB.html" data-title="海量数据相似度计算之simhash和海明距离" data-thread-key="海量数据相似度计算之simhash和海明距离"></div>
 <script type="text/javascript">
-$('.content').jscroll({
-	contentSelector: ".content",
-	nextSelector: '.next'
-});
+var duoshuoQuery = {short_name: "stillwater"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
 </script>
 
-		</div>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2015/07/10/%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81.html" data-toggle="tooltip" data-placement="top" title="数据库悲观锁乐观锁">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2015/10/18/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%96%B0%E7%94%9F%E4%BB%A3%E6%9C%89%E4%B8%A4%E4%B8%AAsurvivor.html" data-toggle="tooltip" data-placement="top" title="2015-10-18-为什么新生代有两个survivor">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
 
-
-	</div>
-</div>
-
-
-
+            </div>
+        </div>
+    </div>
+</article>
 <hr>
-
-
-
-
-
-
 
 
 
