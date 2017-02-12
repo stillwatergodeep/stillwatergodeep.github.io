@@ -46,7 +46,7 @@
 <!-- Blog Title -->
 <title>stillwaterli - A software Engineer and Web Developer from China.  </title>
 
-    <!--     <title>jekyll read more  - stillwater</title>
+    <!--     <title>jekyll read more without plugins - stillwater</title>
 --> 
 <!-- Property Metas --> 
 <meta property="og:image" content="/img/93TyTG3x.png"/>
@@ -310,7 +310,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>jekyll read more </h1>
+                    <h1>jekyll read more without plugins</h1>
                     
                     <span class="meta">Posted by stillwater  </span>
                 </div>
@@ -325,7 +325,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<p>###Adding support for <!-- more --> tag to Jekyll without plugins</p>
+				<h3 id="adding-support-for--tag-to-jekyll-without-plugins">Adding support for <!-- more --> tag to Jekyll without plugins</h3>
 
 <p>Here’s a quick tip for an approach I’ve started using to split post content at a given point for displaying in an archive page, without using a plugin.</p>
 
@@ -354,17 +354,16 @@ There are plugins to allow you to specify where to cut off the content for an ex
 
 <p>The split filter</p>
 
-<p>The first step is to split the content at the <!-- more --> marker using the split filter. When we use split filter, it turns out post.content in to an array with two (or more) parts.</p>
+<p>The first step is to split the content at the <!-- more --> marker using the split filter. When we use split filter, it turns out post.content in to an array with two (or more) parts.
+​  <br />
+    {% post.content | split:”<!-- more -->” %}
+​</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">&amp;#37;</span><span class="w"> </span><span class="err">post.content</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">split:</span><span class="nt">"&lt;!-- more --&gt;"</span><span class="w"> </span><span class="err">&amp;#37;}</span><span class="w">
-</span></code></pre>
-</div>
+<p>So we go from:
+​  <br />
+    post.content =&gt;</p>
 
-<p>So we go from:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>post.content =&gt;
-
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.
+<div class="highlighter-rouge"><pre class="highlight"><code>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.
 
 &lt;!-- more --&gt;
 
@@ -372,17 +371,15 @@ In in augue enim. Aenean fringilla accumsan augue, at convallis quam consequat n
 </code></pre>
 </div>
 
-<p>Then the second step is to use the first filter to just select the part of post.content that came before the <!-- more --> marker:</p>
+<p>Then the second step is to use the first filter to just select the part of post.content that came before the <!-- more --> marker:
+​  <br />
+    {% post.content | split:”<!-- more -->” | first %}</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">&amp;#37;</span><span class="w"> </span><span class="err">post.content</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">split:</span><span class="nt">"&lt;!-- more --&gt;"</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">first</span><span class="w"> </span><span class="err">&amp;#37;}</span><span class="w">
-</span></code></pre>
-</div>
+<p>Which gives us:
+​  <br />
+    post.content =&gt;</p>
 
-<p>Which gives us:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>post.content =&gt;
-
-["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla."]
+<div class="highlighter-rouge"><pre class="highlight"><code>["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla."]
 </code></pre>
 </div>
 
@@ -402,7 +399,7 @@ Update the examples I provided before, to use post.excerpt:</p>
                 <hr>
 
 
-<div id="ds-thread" class="ds-thread" data-url="/2015/06/28/preview-to-Jekyll-without-plugins.html" data-title="jekyll read more " data-thread-key="jekyll read more "></div>
+<div id="ds-thread" class="ds-thread" data-url="/2015/06/28/preview-to-Jekyll-without-plugins.html" data-title="jekyll read more without plugins" data-thread-key="jekyll read more without plugins"></div>
 <script type="text/javascript">
 var duoshuoQuery = {short_name: "stillwater"};
 (function() {

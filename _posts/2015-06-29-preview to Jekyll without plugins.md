@@ -1,6 +1,6 @@
 ---
  layout:      post
- title:      "jekyll read more "
+ title:      "jekyll read more without plugins"
  subtitle:   
  date:       2015-06-28 14:00:44
  author:     "stillwater"
@@ -9,7 +9,7 @@
 
 
 
-###Adding support for <!-- more --> tag to Jekyll without plugins
+### Adding support for <!-- more --> tag to Jekyll without plugins
 
 Here's a quick tip for an approach I've started using to split post content at a given point for displaying in an archive page, without using a plugin.
 
@@ -29,7 +29,7 @@ So a solution... Well, Jekyll supports the liquid filters split and first, so we
     {&#37; if post.content | size > 300 &#37;}
         <strong>Read more</strong>
     {&#37; endif &#37;}
-  
+
 
 And then if we include a <!-- more --> in our post at the point that we want to split, we'll get the post to cut off the content at that point.
 
@@ -40,28 +40,28 @@ So how does it work?
 The split filter
 
 The first step is to split the content at the <!-- more --> marker using the split filter. When we use split filter, it turns out post.content in to an array with two (or more) parts.
-    
+​    
     {&#37; post.content | split:"<!-- more -->" &#37;}
-    
+​    
 
 So we go from:
-    
+​    
     post.content =>
-    
+
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.
-    
+
     <!-- more -->
-    
+
     In in augue enim. Aenean fringilla accumsan augue, at convallis quam consequat nec."
-    
+
 Then the second step is to use the first filter to just select the part of post.content that came before the <!-- more --> marker:
-    
+​    
     {&#37; post.content | split:"<!-- more -->" | first &#37;}
-    
+
 Which gives us:
-    
+​    
     post.content =>
-    
+
     ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla."]
 
 I also take the steps to strip_html and trim the text to 300 characters.

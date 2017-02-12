@@ -5,14 +5,15 @@
     <description>Hello, My Name is stillwater, I'm a software Engineer and Web Developer from China. </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 12 Feb 2017 22:37:45 +0800</pubDate>
-    <lastBuildDate>Sun, 12 Feb 2017 22:37:45 +0800</lastBuildDate>
+    <pubDate>Sun, 12 Feb 2017 23:21:18 +0800</pubDate>
+    <lastBuildDate>Sun, 12 Feb 2017 23:21:18 +0800</lastBuildDate>
     <generator>Jekyll v3.4.0</generator>
     
       <item>
         <title>数据库悲观锁乐观锁</title>
-        <description>&lt;p&gt;悲观锁&amp;amp;乐观锁
-悲观锁与乐观锁是并发访问资源解决冲突不一致的常用的方式，本文将就这两种锁的特点进行讨论。
+        <description>&lt;h2 id=&quot;悲观锁乐观锁&quot;&gt;悲观锁&amp;amp;乐观锁&lt;/h2&gt;
+
+&lt;p&gt;悲观锁与乐观锁是并发访问资源解决冲突不一致的常用的方式，本文将就这两种锁的特点进行讨论。
 悲观锁：顾名思义，它对事物持消极态度，它假设他要修改的数据如果不加锁的话会被别人修改，所以它每次操作前先独占锁。悲观者的人生观是一件事情我必须要百分之百完全控制才会去做，否则就认为这件事情一定会出问题；
 而乐观者的人生观则相反，凡事不管最终结果如何，他都会先尝试去做，大不了最后不成功。
 这就是悲观锁与乐观锁的区别，悲观锁会把整个对象加锁占为自有后才去做操作，乐观锁不获取锁直接做操作，然后通过一定检测手段决定是否更新数据
@@ -81,7 +82,7 @@
         <title>利用sublime快速编写markdown</title>
         <description>&lt;p&gt;插件实现插入带时间功能的说明：&lt;/p&gt;
 
-&lt;p&gt;####1. 创建插件：&lt;/p&gt;
+&lt;h2 id=&quot;创建插件&quot;&gt;创建插件：&lt;/h2&gt;
 
 &lt;p&gt;Tools → New Plugin:&lt;/p&gt;
 
@@ -127,8 +128,8 @@
       </item>
     
       <item>
-        <title>jekyll read more </title>
-        <description>&lt;p&gt;###Adding support for &lt;!-- more --&gt; tag to Jekyll without plugins&lt;/p&gt;
+        <title>jekyll read more without plugins</title>
+        <description>&lt;h3 id=&quot;adding-support-for--tag-to-jekyll-without-plugins&quot;&gt;Adding support for &lt;!-- more --&gt; tag to Jekyll without plugins&lt;/h3&gt;
 
 &lt;p&gt;Here’s a quick tip for an approach I’ve started using to split post content at a given point for displaying in an archive page, without using a plugin.&lt;/p&gt;
 
@@ -157,17 +158,16 @@ There are plugins to allow you to specify where to cut off the content for an ex
 
 &lt;p&gt;The split filter&lt;/p&gt;
 
-&lt;p&gt;The first step is to split the content at the &lt;!-- more --&gt; marker using the split filter. When we use split filter, it turns out post.content in to an array with two (or more) parts.&lt;/p&gt;
+&lt;p&gt;The first step is to split the content at the &lt;!-- more --&gt; marker using the split filter. When we use split filter, it turns out post.content in to an array with two (or more) parts.
+​  &lt;br /&gt;
+    {% post.content | split:”&lt;!-- more --&gt;” %}
+​&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;amp;#37;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;post.content&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;split:&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;&amp;lt;!-- more --&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;amp;#37;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;p&gt;So we go from:
+​  &lt;br /&gt;
+    post.content =&amp;gt;&lt;/p&gt;
 
-&lt;p&gt;So we go from:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;post.content =&amp;gt;
-
-&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.
 
 &amp;lt;!-- more --&amp;gt;
 
@@ -175,17 +175,15 @@ In in augue enim. Aenean fringilla accumsan augue, at convallis quam consequat n
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Then the second step is to use the first filter to just select the part of post.content that came before the &lt;!-- more --&gt; marker:&lt;/p&gt;
+&lt;p&gt;Then the second step is to use the first filter to just select the part of post.content that came before the &lt;!-- more --&gt; marker:
+​  &lt;br /&gt;
+    {% post.content | split:”&lt;!-- more --&gt;” | first %}&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;amp;#37;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;post.content&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;split:&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;&amp;lt;!-- more --&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;first&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;amp;#37;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;p&gt;Which gives us:
+​  &lt;br /&gt;
+    post.content =&amp;gt;&lt;/p&gt;
 
-&lt;p&gt;Which gives us:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;post.content =&amp;gt;
-
-[&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.&quot;]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur libero nibh, semper quis libero sed, molestie molestie nulla.&quot;]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
